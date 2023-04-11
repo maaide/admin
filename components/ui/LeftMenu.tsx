@@ -18,11 +18,16 @@ export const LeftMenu: React.FC<PropsWithChildren> = ({ children }) => {
           <Link href='/ventas' className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-200 dark:hover:bg-neutral-700'><AiOutlineDollarCircle className='mt-auto mb-auto text-xl text-main' />Ventas</Link>
           <Link href='/productos' className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-200 dark:hover:bg-neutral-700'><MdOutlineLocalOffer className='mt-auto mb-auto text-xl text-main' />Productos</Link>
           {
-            router.asPath.includes('productos') || router.asPath.includes('categorias')
+            router.asPath.includes('productos')
               ? (
-                <div className='flex flex-col gap-2'>
-                  <Link href='/categorias' className='font-light text-neutral-400 flex gap-2 pt-1 pb-1 pl-9 pr-2 rounded hover:bg-neutral-200 dark:hover:bg-neutral-700'>Categorias</Link>
-                </div>
+                <>
+                  <div className='flex flex-col gap-2'>
+                    <Link href='/productos/categorias' className='font-light text-neutral-400 flex gap-2 pt-1 pb-1 pl-9 pr-2 rounded hover:bg-neutral-200 dark:hover:bg-neutral-700'>Categorias</Link>
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <Link href='/productos/codigos-promocionales' className='font-light text-neutral-400 flex gap-2 pt-1 pb-1 pl-9 pr-2 rounded hover:bg-neutral-200 dark:hover:bg-neutral-700'>Codigos promocionales</Link>
+                  </div>
+                </>
               )
               : ''
           }

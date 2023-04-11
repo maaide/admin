@@ -1,7 +1,7 @@
 import { LeftMenu, Spinner2 } from '@/components/ui'
 import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
-import { ICategory } from '../../interfaces/categories'
+import { ICategory } from '../../../interfaces/categories'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import Link from 'next/link'
@@ -21,7 +21,7 @@ const CategoryPage = () => {
   const router = useRouter()
 
   const getCategory = async () => {
-    const slug = router.asPath.replace('/categorias/', '')
+    const slug = router.asPath.replace('/productos/categorias/', '')
     const { data } = await axios.get(`https://server-production-e234.up.railway.app/categories/${slug}`)
     setCategoryInfo(data)
   }
@@ -33,7 +33,7 @@ const CategoryPage = () => {
   const handleSubmit = async () => {
     setUpdatingLoading(true)
     await axios.put(`https://server-production-e234.up.railway.app/categories/${categoryInfo._id}`, categoryInfo)
-    router.push('/categorias')
+    router.push('/productos/categorias')
   }
 
   return (
@@ -46,13 +46,13 @@ const CategoryPage = () => {
           <div className='flex m-auto w-1280'>
             <div className='flex gap-2 ml-auto w-fit'>
               <button onClick={handleSubmit} className='bg-main text-white text-sm rounded-md w-40 h-8'>{updatingLoading ? <Spinner2 /> : 'Modificar categoría'}</button>
-              <Link className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4' href='/productos'>Descartar</Link>
+              <Link className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4' href='/productos/categorias'>Descartar</Link>
             </div>
           </div>
         </div>
         <div className='p-6 bg-[#f6f6f7] mb-16 overflow-y-scroll dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)' }}>
           <div className='flex gap-3 mb-4 max-w-1280 m-auto'>
-            <Link href='/categorias' className='border rounded p-2 bg-white hover:bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-600'><BiArrowBack className='text-xl' /></Link>
+            <Link href='/productos/categorias' className='border rounded p-2 bg-white hover:bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-600'><BiArrowBack className='text-xl' /></Link>
             <h1 className='text-xl mt-auto mb-auto'>{ categoryInfo.category }</h1>
           </div>
           <form className='flex gap-4 max-w-1280 m-auto'>

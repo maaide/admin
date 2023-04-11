@@ -14,7 +14,7 @@ const Sells = () => {
   return (
     <>
       <Head>
-        <title></title>
+        <title>Ventas</title>
       </Head>
       <LeftMenu>
       <div className='p-6 bg-[#f6f6f7] overflow-y-scroll dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)' }}>
