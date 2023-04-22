@@ -1,9 +1,11 @@
 import { ShippingCost } from '@/components/product'
 import { LeftMenu, Spinner2 } from '@/components/ui'
 import { IClient } from '@/interfaces'
+import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 
 const NewClient = () => {
@@ -12,11 +14,32 @@ const NewClient = () => {
     email: ''
   })
   const [submitLoading, setSubmitLoading] = useState(false)
+  const [clientTags, setClientTags] = useState([])
+  const [newClientTag, setNewClientTag] = useState('')
+  const [loadingClientTag, setLoadingClientTag] = useState(false)
+
+  const router = useRouter()
 
   const initialEmail = ''
 
+  const getClientTags = async () => {
+    const tags = await axios.get('https://server-production-e234.up.railway.app/client-tag')
+    setClientTags(tags.data)
+  }
+
+  useEffect(() => {
+    getClientTags()
+  }, [])
+
   const inputChange = (e: any) => {
     setClientData({...clientData, [e.target.name]: e.target.value})
+  }
+
+  const submitForm = async () => {
+    setSubmitLoading(true)
+    await axios.post('https://server-production-e234.up.railway.app/clients', clientData)
+    setSubmitLoading(false)
+    router.push('/clientes')
   }
 
   return (
@@ -30,8 +53,8 @@ const NewClient = () => {
             <div className='flex gap-2 ml-auto w-fit'>
               {
                 clientData.email === initialEmail
-                  ? <button onClick={(e: any) => e.preventDefault()} className='bg-main/50 cursor-not-allowed pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4'>Crear producto</button>
-                  : <button className='bg-main text-white text-sm rounded-md w-36 h-8'>{submitLoading ? <Spinner2 /> : 'Crear producto'}</button>
+                  ? <button onClick={(e: any) => e.preventDefault()} className='bg-main/50 cursor-not-allowed pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4'>Crear cliente</button>
+                  : <button onClick={submitForm} className='bg-main text-white text-sm rounded-md w-36 h-8'>{submitLoading ? <Spinner2 /> : 'Crear cliente'}</button>
               }
               <Link className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4' href='/clientes'>Descartar</Link>
             </div>
@@ -83,10 +106,49 @@ const NewClient = () => {
             </div>
             <div className='flex gap-4 flex-col w-1/3'>
               <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
-                <button onClick={(e: any) => {
-                    e.preventDefault()
-                    console.log(clientData)
-                }}>Prueba</button>
+                <div className='mb-4'>
+                  <h3 className='mb-2 text-sm'>Tags</h3>
+                  {
+                    clientTags?.length
+                      ? <div className='flex gap-2'>
+                        {
+                          clientTags.map((tag: any) => (
+                            <div className='flex gap-1'>
+                              <input onChange={(e: any) => {
+                                if (clientData.tags) {
+                                  if (e.target.checked) {
+                                    const tags = clientData.tags.concat(e.target.value)
+                                    setClientData({...clientData, tags: tags})
+                                  } else {
+                                    const filter = clientData.tags.filter(tag => tag !== e.target.value)
+                                    setClientData({...clientData, tags: filter})
+                                  }
+                                } else {
+                                  setClientData({...clientData, tags: [e.target.value]})
+                                }
+                              }} value={tag.tag} type='checkbox' checked={clientData.tags?.find(e => e === tag.tag) ? true : false} />
+                              <p className='text-sm'>{tag.tag}</p>
+                            </div>
+                          ))
+                        }
+                      </div>
+                      : <p>No hay tags creados</p>
+                  }
+                </div>
+                <div>
+                  <h3 className='text-sm mb-2'>Nuevo tag</h3>
+                  <div className='flex gap-2'>
+                    <input type='text' placeholder='Nuevo tag' onChange={(e: any) => setNewClientTag(e.target.value)} value={newClientTag} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                    <button onClick={async (e: any) => {
+                      e.preventDefault()
+                      setLoadingClientTag(true)
+                      await axios.post('https://server-production-e234.up.railway.app/client-tag', { tag: newClientTag })
+                      setNewClientTag('')
+                      setLoadingClientTag(false)
+                      getClientTags()
+                    }} className='bg-main text-white text-sm rounded-md h-8 w-20'>{loadingClientTag ? <Spinner2 /> : 'Crear'}</button>
+                  </div>
+                </div>
               </div>
             </div>
           </form>

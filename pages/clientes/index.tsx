@@ -29,24 +29,42 @@ const ClientsPage = () => {
                     </div>
                   </div>
                 )
-                : (
-                  <table className='shadow-md w-full border dark:border-neutral-600'>
-                    <thead className='bg-white border-b w-full dark:bg-neutral-800 dark:border-neutral-600'>
-                      <th className='text-left p-2 font-normal'>Email</th>
-                    </thead>
-                    <tbody className='bg-white w-full dark:bg-neutral-800 dark:border-neutral-600'>
-                      {
-                        clients.map(client => (
-                          <tr className='border-b cursor-pointer w-full dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700' key={client._id}>
-                            <td className='p-2'>
-                              <p>{client.email}</p>
-                            </td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                )
+                : clients.length
+                  ? (
+                    <table className='shadow-md w-full border dark:border-neutral-600'>
+                      <thead className='bg-white border-b w-full dark:bg-neutral-800 dark:border-neutral-600'>
+                        <th className='text-left p-2 font-normal'>Email</th>
+                        <th className='text-left p-2 font-normal'>Nombre</th>
+                        <th className='text-left p-2 font-normal'>Telefono</th>
+                        <th className='text-left p-2 font-normal'>Región</th>
+                        <th className='text-left p-2 font-normal'>Ciudad</th>
+                      </thead>
+                      <tbody className='bg-white w-full dark:bg-neutral-800 dark:border-neutral-600'>
+                        {
+                          clients.map(client => (
+                            <tr className='border-b cursor-pointer w-full dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700' key={client._id}>
+                              <td className='p-2'>
+                                <p>{client.email}</p>
+                              </td>
+                              <td className='p-2'>
+                                <p>{client.firstName} {client.lastName}</p>
+                              </td>
+                              <td className='p-2'>
+                                <p>{client.phone}</p>
+                              </td>
+                              <td className='p-2'>
+                                <p>{client.region}</p>
+                              </td>
+                              <td className='p-2'>
+                                <p>{client.city}</p>
+                              </td>
+                            </tr>
+                          ))
+                        }
+                      </tbody>
+                    </table>
+                  )
+                  : <p>Aun no tienes clientes</p>
             }
           </div>
         </div>
