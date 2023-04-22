@@ -38,27 +38,12 @@ export const getProductsByTerm = async ( term: string ): Promise<IProduct[]> => 
   .select('name images price offerPrice stock slug -_id')
   .lean()
 
-  const updateProducts = products.map(product => {
-    product.images = product.images.map(image => {
-      return image.includes('http') ? image : `${ process.env.HOST_NAME}products/${ image }`
-    })
-
-    return product
-  })
-
-  return updateProducts
+  return products
 }
 
 export const getAllProducts = async (): Promise<IProduct[]> => {
   await db.dbConnect()
   const products = await Product.find().lean()
 
-  const updatedProducts = products.map(product => {
-    product.images = product.images.map( image => {
-      return image.includes('http') ? image : `${ process.env.HOST_NAME}products/${ image }`
-    })
-    return product
-  })
-
-  return JSON.parse( JSON.stringify( updatedProducts ) )
+  return JSON.parse( JSON.stringify( products ) )
 }

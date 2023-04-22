@@ -113,7 +113,7 @@ const NewClient = () => {
                       ? <div className='flex gap-2'>
                         {
                           clientTags.map((tag: any) => (
-                            <div className='flex gap-1'>
+                            <div className='flex gap-1' key={tag.tag}>
                               <input onChange={(e: any) => {
                                 if (clientData.tags) {
                                   if (e.target.checked) {
