@@ -2,11 +2,14 @@ import { LeftMenu, Spinner } from '@/components/ui'
 import { useClients } from '@/hooks/useClients'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 const ClientsPage = () => {
 
   const {clients, isLoadingClients} = useClients('/clients')
+
+  const router = useRouter()
 
   return (
     <>
@@ -42,7 +45,7 @@ const ClientsPage = () => {
                       <tbody className='bg-white w-full dark:bg-neutral-800 dark:border-neutral-600'>
                         {
                           clients.map(client => (
-                            <tr className='border-b cursor-pointer w-full dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700' key={client._id}>
+                            <tr onClick={() => router.push(`/clientes/${client._id}`)} className='border-b cursor-pointer w-full dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700' key={client._id}>
                               <td className='p-2'>
                                 <p>{client.email}</p>
                               </td>
