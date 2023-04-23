@@ -79,7 +79,7 @@ const ClientPage = () => {
                 {
                   clientData.tags?.length
                     ? clientData.tags.map(tag => (
-                      <span className='bg-neutral-200 pt-1 flex w-fit pb-1 pl-2 pr-2 text-sm rounded'>{tag}<IoClose className='mt-auto mb-auto ml-1 cursor-pointer' /></span>
+                      <span key={tag} className='bg-neutral-200 pt-1 flex w-fit pb-1 pl-2 pr-2 text-sm rounded'>{tag}<IoClose className='mt-auto mb-auto ml-1 cursor-pointer' /></span>
                     ))
                     : ''
                 }
