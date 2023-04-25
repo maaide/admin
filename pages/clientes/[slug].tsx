@@ -1,30 +1,44 @@
 import { LeftMenu, Spinner2 } from '@/components/ui'
-import { IClient } from '@/interfaces'
+import { IClient, ISell } from '@/interfaces'
+import { NumberFormat } from '@/utils'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
-import { IoClose } from 'react-icons/io5'
 
 const ClientPage = () => {
 
   const [clientData, setClientData] = useState<IClient>({
     email: ''
   })
-  const [submitLoading, setSubmitLoading] = useState(false)
+  const [tags, setTags] = useState([])
+  const [loadingClientTag, setLoadingClientTag] = useState(false)
+  const [newClientTag, setNewClientTag] = useState('')
+  const [clientSells, setClientSells] = useState<ISell[]>([])
 
   const router = useRouter()
 
   const getClientData = async () => {
     const slug = router.asPath.replace('/clientes/', '')
-    const {data} = await axios.get(`https://server-production-e234.up.railway.app/clients/${slug}`)
-    setClientData(data)
+    const response = await axios.get(`https://server-production-e234.up.railway.app/clients/${slug}`)
+    setClientData(response.data)
+    const sells = await axios.get(`https://server-production-e234.up.railway.app/sells-client/${response.data.email}`)
+    setClientSells(sells.data)
   }
 
   useEffect(() => {
     getClientData()
+  }, [])
+
+  const getClientTags = async () => {
+    const {data} = await axios.get('https://server-production-e234.up.railway.app/client-tag')
+    setTags(data)
+  }
+
+  useEffect(() => {
+    getClientTags()
   }, [])
 
   return (
@@ -45,6 +59,19 @@ const ClientPage = () => {
             <div className='flex gap-4 flex-col w-2/3'>
               <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
                 <h2 className='mb-4'>Pedidos</h2>
+                {
+                  clientSells.length
+                    ? clientSells.map(sell => (
+                      <div className='flex gap-4 cursor-pointer justify-between hover:bg-neutral-200 pt-4 pb-4 rounded pl-2 pr-2' key={sell._id}>
+                        <p className='mt-auto mb-auto text-sm'>{sell.pay}</p>
+                        <p className='mt-auto mb-auto text-sm'>{sell.state}</p>
+                        <p className='mt-auto mb-auto text-sm'>{sell.shippingMethod}</p>
+                        <p className='mt-auto mb-auto text-sm'>{sell.shippingState}</p>
+                        <p className='mt-auto mb-auto text-sm'>${NumberFormat(sell.total)}</p>
+                      </div>
+                    ))
+                    : ''
+                }
               </div>
             </div>
             <div className='flex gap-4 flex-col w-1/3'>
@@ -75,14 +102,55 @@ const ClientPage = () => {
                 </div>
               </div>
               <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
-                <h2 className='mb-4'>Tags</h2>
-                {
-                  clientData.tags?.length
-                    ? clientData.tags.map(tag => (
-                      <span key={tag} className='bg-neutral-200 pt-1 flex w-fit pb-1 pl-2 pr-2 text-sm rounded'>{tag}<IoClose className='mt-auto mb-auto ml-1 cursor-pointer' /></span>
-                    ))
-                    : ''
-                }
+                <div className='mb-4'>
+                  <h2 className='mb-4'>Tags</h2>
+                  {
+                    tags?.length
+                      ? <div className='flex gap-2'>
+                        {
+                          tags.map((tag: any) => (
+                            <div className='flex gap-1' key={tag.tag}>
+                              <input onChange={async (e: any) => {
+                                if (clientData.tags) {
+                                  if (e.target.checked) {
+                                    const tags = clientData.tags.concat(e.target.value)
+                                    setClientData({...clientData, tags: tags})
+                                    const updated = {...clientData, tags: tags}
+                                    await axios.put(`https://server-production-e234.up.railway.app/clients/${clientData._id}`, updated)
+                                  } else {
+                                    const filter = clientData.tags.filter(tag => tag !== e.target.value)
+                                    setClientData({...clientData, tags: filter})
+                                    const updated = {...clientData, tags: filter}
+                                    await axios.put(`https://server-production-e234.up.railway.app/clients/${clientData._id}`, updated)
+                                  }
+                                } else {
+                                  setClientData({...clientData, tags: [e.target.value]})
+                                  const updated = {...clientData, tags: [e.target.value]}
+                                  await axios.put(`https://server-production-e234.up.railway.app/clients/${clientData._id}`, updated)
+                                }
+                              }} value={tag.tag} type='checkbox' checked={clientData.tags?.find(e => e === tag.tag) ? true : false} />
+                              <p className='text-sm'>{tag.tag}</p>
+                            </div>
+                          ))
+                        }
+                      </div>
+                      : <p>No hay tags creados</p>
+                  }
+                </div>
+                <div>
+                  <h3 className='text-sm mb-2'>Nuevo tag</h3>
+                  <div className='flex gap-2'>
+                    <input type='text' placeholder='Nuevo tag' onChange={(e: any) => setNewClientTag(e.target.value)} value={newClientTag} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                    <button onClick={async (e: any) => {
+                      e.preventDefault()
+                      setLoadingClientTag(true)
+                      await axios.post('https://server-production-e234.up.railway.app/client-tag', { tag: newClientTag })
+                      setNewClientTag('')
+                      setLoadingClientTag(false)
+                      getClientTags()
+                    }} className='bg-main text-white text-sm rounded-md h-8 w-20'>{loadingClientTag ? <Spinner2 /> : 'Crear'}</button>
+                  </div>
+                </div>
               </div>
             </div>
           </form>

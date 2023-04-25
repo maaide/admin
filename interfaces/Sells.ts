@@ -2,6 +2,7 @@ import { ICartProduct } from './cart'
 
 export interface ISell {
     _id?: string
+    buyOrder?: string
     firstName: string
     lastName?: string
     email: string
