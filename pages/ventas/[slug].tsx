@@ -178,7 +178,11 @@ const SellPage = () => {
               </div>
               <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
                 <h2 className='mb-4'>Cancelar venta</h2>
-                <button className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md w-24'>Cancelar</button>
+                <button onClick={async () => {
+                  const sellUpdate = {...sell, state: 'Cancelado'}
+                  await axios.put(`https://server-production-e234.up.railway.app/sells/${sell._id}`, {sell: sellUpdate})
+                  router.push('/ventas')
+                }} className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md w-24'>Cancelar</button>
               </div>
             </div>
           </div>

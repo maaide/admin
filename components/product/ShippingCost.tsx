@@ -4,7 +4,7 @@ import { City, Region, IShipping, IClient } from '../../interfaces'
 
 interface Props {
   setClientData: any
-  clientData: IClient
+  clientData: any
 }
 
 export const ShippingCost: React.FC<Props> = ({setClientData, clientData}) => {

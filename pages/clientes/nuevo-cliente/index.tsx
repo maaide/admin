@@ -86,7 +86,7 @@ const NewClient = () => {
                 <div>
                   <h3 className='mb-2 font-light text-sm'>Telefono</h3>
                   <div className='flex gap-2'>
-                    <p className='border m-auto pt-1 pb-1 pl-2 pr-2 rounded'>+56</p>
+                    <p className='border m-auto pt-1 pb-1 pl-2 pr-2 rounded text-sm dark:border-neutral-600'>+56</p>
                     <input type='text' placeholder='Telefono' name='phone' onChange={inputChange} value={clientData.phone} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                   </div>
                 </div>
