@@ -6,7 +6,7 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 
-const newSell = () => {
+const NewSell = () => {
 
   const [sell, setSell] = useState<ISell>({
     address: '',
@@ -142,4 +142,4 @@ const newSell = () => {
   )
 }
 
-export default newSell
+export default NewSell
