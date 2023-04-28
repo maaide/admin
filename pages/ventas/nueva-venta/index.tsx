@@ -1,9 +1,12 @@
 import { ShippingCost } from '@/components/product'
 import { LeftMenu, Spinner2 } from '@/components/ui'
-import { ISell } from '@/interfaces'
+import { IProduct, ISell } from '@/interfaces'
+import { ICartProduct } from '@/interfaces/cart'
+import { NumberFormat } from '@/utils'
+import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 
 const NewSell = () => {
@@ -22,12 +25,40 @@ const NewSell = () => {
     state: '',
     total: 0
   })
+  const [products, setProducts] = useState<IProduct[]>([])
+  const [cart, setCart] = useState<ICartProduct[]>([])
   const [submitLoading, setSubmitLoading] = useState(false)
 
   const initialEmail = ''
 
-  const inputChange = (e: any) => {
+  const getProducts = async () => {
+    const products = await axios.get('https://server-production-e234.up.railway.app/products')
+    setProducts(products.data)
+  }
 
+  useEffect(() => {
+    getProducts()
+  }, [])
+
+  const inputChange = (e: any) => {
+    setSell({...sell, [e.target.name]: e.target.value})
+  }
+
+  const selectProduct = (e: any) => {
+    const product = products.find(product => product.name === e.target.value)
+    if (product) {
+      setCart(cart.concat({
+        category: product.category,
+        image: product.images[0],
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+        slug: product.slug,
+        _id: product._id,
+        beforePrice: product.beforePrice ? product.beforePrice : undefined,
+        stock: product.stock
+      }))
+    }
   }
 
   return (
@@ -91,48 +122,127 @@ const NewSell = () => {
                 </div>
                 <ShippingCost setClientData={setSell} clientData={sell} />
               </div>
+              <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
+                <h2 className='mb-4'>Productos</h2>
+                <div className='mb-4'>
+                  <select onChange={selectProduct} className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                    <option>Seleccionar producto</option>
+                    {
+                      products.length
+                        ? products.map(product => (
+                          <option key={product._id}>{product.name}</option>
+                        ))
+                        : ''
+                    }
+                  </select>
+                </div>
+                <div className='flex flex-col gap-2 mb-4'>
+                  {
+                    cart.length
+                      ? cart.map((product, index) => (
+                        <div className='flex gap-2 justify-between' key={product._id}>
+                          <div className='flex gap-2'>
+                            <img className='w-20 h-20' src={product.image} alt={`Imagen de producto ${product.name}`} />
+                            <div className='mt-auto mb-auto'>
+                              <p>{product.name}</p>
+                              <p>${NumberFormat(product.price)}</p>
+                              {
+                                products.find(prod => prod.name === product.name)?.variations?.length
+                                  ? (
+                                    <select onChange={(e: any) => {
+                                      const variation = products.find(prod => prod.name === product.name)?.variations?.find(variation => variation.variation === e.target.value)
+                                      product.variation = variation
+                                      cart[index] = product
+                                      setCart(cart)
+                                    }} className='font-light p-1 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                                      <option>Seleccionar variación</option>
+                                      {
+                                        products.find(prod => prod.name === product.name)?.variations?.map(variation => (
+                                          <option key={variation.variation}>{variation.variation}</option>
+                                        ))
+                                      }
+                                    </select>
+                                  )
+                                  : ''
+                              }
+                            </div>
+                          </div>
+                          <input type='number' value={product.quantity} onChange={(e: any) => {
+                            if (Number(product.stock) >= e.target.value && e.target.value >= 0) {
+                              const updatedCart = [...cart]
+                              updatedCart[index].quantity = e.target.value
+                              setCart(updatedCart)
+                            }
+                          }} className='font-light p-1.5 rounded h-fit border text-sm w-20 mt-auto mb-auto focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                          <p className='mt-auto mb-auto'>${NumberFormat(product.price * Number(product.quantity))}</p>
+                        </div>
+                      ))
+                      : ''
+                  }
+                </div>
+                <div className='flex gap-2 justify-between'>
+                  <p>Total</p>
+                  <p>${NumberFormat(cart.reduce((prev, curr) => prev + curr.price * curr.quantity, 0))}</p>
+                </div>
+              </div>
             </div>
             <div className='flex gap-4 flex-col w-1/3'>
               <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
                 <h2 className='mb-4'>Envío</h2>
-                <div className='mb-4'>
-                  <h3 className='mb-2 text-sm'>Metodo de envío</h3>
-                  <select className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
-                    <option>Seleccionar metodo de envío</option>
-                    <option>Envío express</option>
-                    <option>Chilexpress</option>
-                  </select>
-                </div>
-                <div>
-                  <h3 className='mb-2 text-sm'>Estado del envío</h3>
-                  <select className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
-                    <option>Seleccionar estado del envío</option>
-                    <option>No empaquetado</option>
-                    <option>Productos empaquetados</option>
-                    <option>Envío realizado</option>
-                  </select>
-                </div>
+                {
+                  sell.city !== ''
+                    ? (
+                      <>
+                        <div className='mb-4'>
+                          <h3 className='mb-2 text-sm'>Metodo de envío</h3>
+                          <select onChange={inputChange} name='shippingMethod' className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                            <option>Seleccionar metodo de envío</option>
+                            <option>Envío express</option>
+                            <option>Chilexpress</option>
+                          </select>
+                        </div>
+                        <div>
+                          <h3 className='mb-2 text-sm'>Estado del envío</h3>
+                          <select onChange={inputChange} name='shippingState' className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                            <option>Seleccionar estado del envío</option>
+                            <option>No empaquetado</option>
+                            <option>Productos empaquetados</option>
+                            <option>Envío realizado</option>
+                          </select>
+                        </div>
+                      </>
+                    )
+                    : <p className='text-sm'>Ingresa la región y ciudad para ver las opciones de envíos</p>
+                }
               </div>
               <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
                 <h2 className='mb-4'>Pago</h2>
-                <div className='mb-4'>
-                  <h3 className='mb-2 text-sm'>Metodo de pago</h3>
-                  <select className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
-                    <option>Seleccionar metodo de pago</option>
-                    <option>Pago en la entrega</option>
-                    <option>WebPay Plus</option>
-                  </select>
-                </div>
-                <div>
-                  <h3 className='mb-2 text-sm'>Estado del pago</h3>
-                  <select className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
-                    <option>Seleccionar estado del pago</option>
-                    <option>Pago no realizado</option>
-                    <option>Pago iniciado</option>
-                    <option>Pago rechazado</option>
-                    <option>Pago realizado</option>
-                  </select>
-                </div>
+                {
+                  sell.shippingMethod
+                    ? (
+                      <>
+                        <div className='mb-4'>
+                          <h3 className='mb-2 text-sm'>Metodo de pago</h3>
+                          <select onChange={inputChange} name='pay' className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                            <option>Seleccionar metodo de pago</option>
+                            <option>Pago en la entrega</option>
+                            <option>WebPay Plus</option>
+                          </select>
+                        </div>
+                        <div>
+                          <h3 className='mb-2 text-sm'>Estado del pago</h3>
+                          <select onChange={inputChange} name='state' className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                            <option>Seleccionar estado del pago</option>
+                            <option>Pago no realizado</option>
+                            <option>Pago iniciado</option>
+                            <option>Pago rechazado</option>
+                            <option>Pago realizado</option>
+                          </select>
+                        </div>
+                      </>
+                    )
+                    : <p className='text-sm'>Ingresa los datos de envío para ver las opciones de pago</p>
+                }
               </div>
             </div>
           </form>
