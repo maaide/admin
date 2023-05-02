@@ -1,7 +1,6 @@
 import { ShippingCost } from '@/components/product'
 import { LeftMenu, Spinner2 } from '@/components/ui'
 import { IProduct, ISell } from '@/interfaces'
-import { ICartProduct } from '@/interfaces/cart'
 import { NumberFormat } from '@/utils'
 import axios from 'axios'
 import Head from 'next/head'
@@ -237,7 +236,7 @@ const NewSell = () => {
                         <div className='mt-4 flex flex-col gap-2'>
                           {
                             chilexpress.map((service: any) => (
-                              <div className='flex gap-2 justify-between'>
+                              <div className='flex gap-2 justify-between' key={service.serviceDescription}>
                                 <div className='flex gap-2'>
                                   <input type='radio' name='shipping' onClick={() => setSell({...sell, shipping: service.serviceValue, total: Number(sell.cart.reduce((prev, curr) => prev + curr.price * curr.quantity, 0)) + Number(service.serviceValue)})} />
                                   <p className='text-sm'>{service.serviceDescription}</p>
