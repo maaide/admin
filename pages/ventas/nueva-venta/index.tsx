@@ -6,8 +6,10 @@ import { NumberFormat } from '@/utils'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
+import { IoClose } from 'react-icons/io5'
 
 const NewSell = () => {
 
@@ -26,8 +28,10 @@ const NewSell = () => {
     total: 0
   })
   const [products, setProducts] = useState<IProduct[]>([])
-  const [cart, setCart] = useState<ICartProduct[]>([])
   const [submitLoading, setSubmitLoading] = useState(false)
+  const [chilexpress, setChilexpress] = useState([])
+
+  const router = useRouter()
 
   const initialEmail = ''
 
@@ -47,7 +51,7 @@ const NewSell = () => {
   const selectProduct = (e: any) => {
     const product = products.find(product => product.name === e.target.value)
     if (product) {
-      setCart(cart.concat({
+      setSell({...sell, cart: sell.cart.concat({
         category: product.category,
         image: product.images[0],
         name: product.name,
@@ -57,8 +61,15 @@ const NewSell = () => {
         _id: product._id,
         beforePrice: product.beforePrice ? product.beforePrice : undefined,
         stock: product.stock
-      }))
+      })})
     }
+  }
+
+  const sellSubmit = async () => {
+    setSubmitLoading(true)
+    await axios.post('https://server-production-e234.up.railway.app/sells', sell)
+    setSubmitLoading(false)
+    router.push('/ventas')
   }
 
   return (
@@ -72,8 +83,8 @@ const NewSell = () => {
             <div className='flex gap-2 ml-auto w-fit'>
               {
                 sell.email === initialEmail
-                  ? <button onClick={(e: any) => e.preventDefault()} className='bg-main/50 cursor-not-allowed pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4'>Crear cliente</button>
-                  : <button className='bg-main text-white text-sm rounded-md w-36 h-8'>{submitLoading ? <Spinner2 /> : 'Crear cliente'}</button>
+                  ? <button onClick={(e: any) => e.preventDefault()} className='bg-main/50 cursor-not-allowed pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4'>Crear venta</button>
+                  : <button onClick={sellSubmit} className='bg-main text-white text-sm rounded-md w-36 h-8'>{submitLoading ? <Spinner2 /> : 'Crear venta'}</button>
               }
               <Link className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4' href='/ventas'>Descartar</Link>
             </div>
@@ -120,7 +131,7 @@ const NewSell = () => {
                   <h3 className='mb-2 font-light text-sm'>Departamento, local, etc. (Opcional)</h3>
                   <input type='text' placeholder='Departamento' name='departament' onChange={inputChange} value={sell.departament} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                 </div>
-                <ShippingCost setClientData={setSell} clientData={sell} />
+                <ShippingCost setClientData={setSell} clientData={sell} setChilexpress={setChilexpress} />
               </div>
               <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
                 <h2 className='mb-4'>Productos</h2>
@@ -138,8 +149,8 @@ const NewSell = () => {
                 </div>
                 <div className='flex flex-col gap-2 mb-4'>
                   {
-                    cart.length
-                      ? cart.map((product, index) => (
+                    sell.cart.length
+                      ? sell.cart.map((product, index) => (
                         <div className='flex gap-2 justify-between' key={product._id}>
                           <div className='flex gap-2'>
                             <img className='w-20 h-20' src={product.image} alt={`Imagen de producto ${product.name}`} />
@@ -147,13 +158,13 @@ const NewSell = () => {
                               <p>{product.name}</p>
                               <p>${NumberFormat(product.price)}</p>
                               {
-                                products.find(prod => prod.name === product.name)?.variations?.length
+                                products.find(prod => prod.name === product.name)?.nameVariations !== ''
                                   ? (
                                     <select onChange={(e: any) => {
                                       const variation = products.find(prod => prod.name === product.name)?.variations?.find(variation => variation.variation === e.target.value)
                                       product.variation = variation
-                                      cart[index] = product
-                                      setCart(cart)
+                                      sell.cart[index] = product
+                                      setSell({...sell, cart: sell.cart})
                                     }} className='font-light p-1 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
                                       <option>Seleccionar variación</option>
                                       {
@@ -169,12 +180,17 @@ const NewSell = () => {
                           </div>
                           <input type='number' value={product.quantity} onChange={(e: any) => {
                             if (Number(product.stock) >= e.target.value && e.target.value >= 0) {
-                              const updatedCart = [...cart]
+                              const updatedCart = [...sell.cart]
                               updatedCart[index].quantity = e.target.value
-                              setCart(updatedCart)
+                              setSell({...sell, cart: updatedCart})
                             }
                           }} className='font-light p-1.5 rounded h-fit border text-sm w-20 mt-auto mb-auto focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                           <p className='mt-auto mb-auto'>${NumberFormat(product.price * Number(product.quantity))}</p>
+                          <button onClick={(e: any) => {
+                            e.preventDefault()
+                            const updatedCart = sell.cart.filter(prod => prod.name !== product.name)
+                            setSell({...sell, cart: updatedCart})
+                          }}><IoClose className='mt-auto mb-auto text-lg' /></button>
                         </div>
                       ))
                       : ''
@@ -182,7 +198,7 @@ const NewSell = () => {
                 </div>
                 <div className='flex gap-2 justify-between'>
                   <p>Total</p>
-                  <p>${NumberFormat(cart.reduce((prev, curr) => prev + curr.price * curr.quantity, 0))}</p>
+                  <p>${NumberFormat(sell.cart.reduce((prev, curr) => prev + curr.price * curr.quantity, 0))}</p>
                 </div>
               </div>
             </div>
@@ -197,8 +213,8 @@ const NewSell = () => {
                           <h3 className='mb-2 text-sm'>Metodo de envío</h3>
                           <select onChange={inputChange} name='shippingMethod' className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
                             <option>Seleccionar metodo de envío</option>
-                            <option>Envío express</option>
                             <option>Chilexpress</option>
+                            <option>Blue-Express</option>
                           </select>
                         </div>
                         <div>
@@ -214,6 +230,27 @@ const NewSell = () => {
                     )
                     : <p className='text-sm'>Ingresa la región y ciudad para ver las opciones de envíos</p>
                 }
+                {
+                  chilexpress.length
+                    ? sell.shippingMethod === 'Chilexpress'
+                      ? (
+                        <div className='mt-4 flex flex-col gap-2'>
+                          {
+                            chilexpress.map((service: any) => (
+                              <div className='flex gap-2 justify-between'>
+                                <div className='flex gap-2'>
+                                  <input type='radio' name='shipping' onClick={() => setSell({...sell, shipping: service.serviceValue, total: Number(sell.cart.reduce((prev, curr) => prev + curr.price * curr.quantity, 0)) + Number(service.serviceValue)})} />
+                                  <p className='text-sm'>{service.serviceDescription}</p>
+                                </div>
+                                <p className='text-sm'>${NumberFormat(service.serviceValue)}</p>
+                              </div>
+                            ))
+                          }
+                        </div>
+                      )
+                      : ''
+                    : ''
+                }
               </div>
               <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
                 <h2 className='mb-4'>Pago</h2>
@@ -225,7 +262,6 @@ const NewSell = () => {
                           <h3 className='mb-2 text-sm'>Metodo de pago</h3>
                           <select onChange={inputChange} name='pay' className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
                             <option>Seleccionar metodo de pago</option>
-                            <option>Pago en la entrega</option>
                             <option>WebPay Plus</option>
                           </select>
                         </div>

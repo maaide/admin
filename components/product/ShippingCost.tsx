@@ -5,9 +5,10 @@ import { City, Region, IShipping, IClient } from '../../interfaces'
 interface Props {
   setClientData: any
   clientData: any
+  setChilexpress?: any
 }
 
-export const ShippingCost: React.FC<Props> = ({setClientData, clientData}) => {
+export const ShippingCost: React.FC<Props> = ({setClientData, clientData, setChilexpress}) => {
 
   const [regions, setRegions] = useState<Region[]>()
   const [citys, setCitys] = useState<City[]>()
@@ -62,7 +63,7 @@ export const ShippingCost: React.FC<Props> = ({setClientData, clientData}) => {
             'Ocp-Apim-Subscription-Key': '512b6b0ff709426d82968a33be83b4a1'
           }
         })
-        setShipping(request.data.data.courierServiceOptions)
+        setChilexpress(request.data.data.courierServiceOptions)
         setCity(e.target.value)
         setClientData({...clientData, city: e.target.value})
       }
