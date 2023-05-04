@@ -213,7 +213,6 @@ const NewSell = () => {
                           <select onChange={inputChange} name='shippingMethod' className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
                             <option>Seleccionar metodo de envío</option>
                             <option>Chilexpress</option>
-                            <option>Blue-Express</option>
                           </select>
                         </div>
                         <div>
