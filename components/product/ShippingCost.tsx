@@ -31,7 +31,6 @@ export const ShippingCost: React.FC<Props> = ({setClientData, clientData, setChi
     
       const regionChange = async (e: any) => {
         const region = regions?.find(region => region.regionName === e.target.value)
-        console.log(e.target.value)
         const request = await axios.get(`https://testservices.wschilexpress.com/georeference/api/v1.0/coverage-areas?RegionCode=${region?.regionId}&type=0`, {
           headers: {
             'Cache-Control': 'no-cache',

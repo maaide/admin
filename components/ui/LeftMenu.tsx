@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React, { PropsWithChildren } from 'react'
 import { IoSettingsOutline } from 'react-icons/io5'
-import { AiOutlineHome, AiOutlineDollarCircle, AiOutlineFund, AiOutlineNotification } from 'react-icons/ai'
+import { AiOutlineHome, AiOutlineDollarCircle, AiOutlineFund, AiOutlineNotification, AiOutlineMessage } from 'react-icons/ai'
 import { MdOutlineLocalOffer } from 'react-icons/md'
 import { HiOutlineUsers } from 'react-icons/hi'
 import { useRouter } from 'next/router'
@@ -34,6 +34,7 @@ export const LeftMenu: React.FC<PropsWithChildren> = ({ children }) => {
           <Link href='/estadisticas' className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-200 dark:hover:bg-neutral-700'><AiOutlineFund className='mt-auto mb-auto text-xl text-main' />Estadisticas</Link>
           <Link href='/clientes' className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-200 dark:hover:bg-neutral-700'><HiOutlineUsers className='mt-auto mb-auto text-xl text-main' />Clientes</Link>
           <Link href='/marketing' className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-200 dark:hover:bg-neutral-700'><AiOutlineNotification className='mt-auto mb-auto text-xl text-main' />Marketing</Link>
+          <Link href='/mensajes' className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-200 dark:hover:bg-neutral-700'><AiOutlineMessage className='mt-auto mb-auto text-xl text-main' />Mensajes</Link>
         </div>
         <div className='border-t pt-4 dark:border-neutral-800'>
           <Link href='/configuracion' className='font-light flex gap-2 rounded pt-1 pb-1 pl-2 pr-2 hover:bg-neutral-200 dark:hover:bg-neutral-700'><IoSettingsOutline className='mt-auto mb-auto text-xl text-main' />Configuración</Link>
