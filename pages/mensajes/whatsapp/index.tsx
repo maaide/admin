@@ -50,7 +50,7 @@ const WhatsappMessages = () => {
                 <div className='w-full h-full pr-6' style={{ overflow: 'overlay' }}>
                   {
                     messages?.map(message => (
-                      <div className='flex flex-col gap-2 mb-2'>
+                      <div key={message._id} className='flex flex-col gap-2 mb-2'>
                         {
                           message.message
                             ? (
