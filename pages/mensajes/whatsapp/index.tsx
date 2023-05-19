@@ -39,14 +39,14 @@ const WhatsappMessages = () => {
                     const response = await axios.get(`https://server-production-e234.up.railway.app/whatsapp/${phone}`)
                     setMessages(response.data)
                     setSelectedPhone(phone)
-                  }} key={phone} className='bg-white w-full text-left pt-5 pb-5 pl-2'>
+                  }} key={phone} className='bg-white w-full text-left pt-5 pb-5 pl-2 dark:bg-neutral-700/60'>
                     <p>{phone}</p>
                   </button>
                 ))
               }
             </div>
             <div className='w-1/2'>
-              <div className='bg-white p-4 flex flex-col gap-4 justify-between shadow-md rounded-xl w-full h-[70vh]'>
+              <div className='bg-white p-4 flex flex-col gap-4 justify-between shadow-md rounded-xl w-full h-[70vh] dark:bg-neutral-700/60'>
                 <div className='w-full h-full pr-6' style={{ overflow: 'overlay' }}>
                   {
                     messages?.map(message => (
@@ -54,7 +54,7 @@ const WhatsappMessages = () => {
                         {
                           message.message
                             ? (
-                              <div className='bg-neutral-200 p-1.5 rounded-md'>
+                              <div className='bg-neutral-200 p-1.5 rounded-md w-fit text-black'>
                                 <p>{message.message}</p>
                               </div>
                             )
@@ -63,7 +63,7 @@ const WhatsappMessages = () => {
                         {
                           message.response
                             ? (
-                              <div className='bg-main text-white p-1.5 rounded-md'>
+                              <div className='bg-main text-white p-1.5 rounded-md w-fit ml-auto'>
                                 <p>{message.response}</p>
                               </div>
                             )
@@ -73,26 +73,16 @@ const WhatsappMessages = () => {
                     ))
                   }
                 </div>
-                <div className='flex gap-2'>
-                  <input onChange={(e: any) => setNewMessage(e.target.value)} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg' />
-                  <button onClick={async () => {
-                    setMessages(messages.concat({phone: selectedPhone, response: newMessage, agent: true}))
-                    const newMe = newMessage
-                    setNewMessage('')
-                    axios.post('https://graph.facebook.com/v16.0/108940562202993/messages', {
-                      "messaging_product": "whatsapp",
-                      "to": selectedPhone,
-                      "type": "text",
-                      "text": {"body": newMe}
-                    }, {
-                      headers: {
-                          'Content-Type': 'application/json',
-                          "Authorization": `Bearer ${process.env.WHATSAPP_TOKEN}`
-                      }
-                    })
-                    axios.post('https://server-production-e234.up.railway.app/whatsapp', {phone: selectedPhone, response: newMe, agent: true})
-                  }} className='bg-main text-white w-24 rounded-md'>Enviar</button>
-                </div>
+                <form onSubmit={async (e: any) => {
+                  e.preventDefault()
+                  setMessages(messages.concat({phone: selectedPhone, response: newMessage, agent: true}))
+                  const newMe = newMessage
+                  setNewMessage('')
+                  axios.post('https://server-production-e234.up.railway.app/whatsapp', {phone: selectedPhone, response: newMe, agent: true})
+                }} className='flex gap-2'>
+                  <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />
+                  <button type='submit' className='bg-main text-white w-24 rounded-md'>Enviar</button>
+                </form>
               </div>
             </div>
           </div>
