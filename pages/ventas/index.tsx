@@ -17,7 +17,7 @@ const Sells = () => {
         <title>Ventas</title>
       </Head>
       <LeftMenu>
-      <div className='p-6 bg-[#f6f6f7] overflow-y-scroll dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)' }}>
+      <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
         <div className='flex justify-between w-full max-w-1280 m-auto mb-4'>
           <h1 className='text-xl'>Ventas</h1>
           <Link className='pt-1.5 pb-1.5 h-fit pl-7 pr-7 rounded-md bg-main text-white' href='/ventas/nueva-venta'>Nueva venta</Link>
