@@ -12,7 +12,7 @@ const InstagramMessages = () => {
   const [selectedInstagramId, setSelectedInstagramId] = useState()
 
   const getMessages = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/messenger')
+    const response = await axios.get('https://server-production-e234.up.railway.app/instagram')
     setInstagramIds(response.data)
   }
 
@@ -36,7 +36,7 @@ const InstagramMessages = () => {
               {
                 instagramIds?.map(instagramId => (
                   <button onClick={async () => {
-                    const response = await axios.get(`https://server-production-e234.up.railway.app/whatsapp/${instagramId}`)
+                    const response = await axios.get(`https://server-production-e234.up.railway.app/instagram/${instagramId}`)
                     setMessages(response.data)
                     setSelectedInstagramId(instagramId)
                   }} key={instagramId} className='bg-white w-full text-left pt-5 pb-5 pl-2 dark:bg-neutral-700/60'>
