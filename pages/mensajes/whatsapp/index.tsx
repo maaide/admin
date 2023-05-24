@@ -39,7 +39,7 @@ const WhatsappMessages = () => {
                     const response = await axios.get(`https://server-production-e234.up.railway.app/whatsapp/${phone}`)
                     setMessages(response.data)
                     setSelectedPhone(phone)
-                  }} key={phone} className='bg-white w-full text-left pt-5 pb-5 pl-2 dark:bg-neutral-700/60'>
+                  }} key={phone} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
                     <p>{phone}</p>
                   </button>
                 ))

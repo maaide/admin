@@ -39,7 +39,7 @@ const MessengerMessages = () => {
                     const response = await axios.get(`https://server-production-e234.up.railway.app/messenger/${messengerId}`)
                     setMessages(response.data)
                     setSelectedMessengerId(messengerId)
-                  }} key={messengerId} className='bg-white w-full text-left pt-5 pb-5 pl-2 dark:bg-neutral-700/60'>
+                  }} key={messengerId} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
                     <p>{messengerId}</p>
                   </button>
                 ))

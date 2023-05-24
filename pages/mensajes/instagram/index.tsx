@@ -32,14 +32,14 @@ const InstagramMessages = () => {
             <MessagesCategories />
           </div>
           <div className='w-full max-w-1280 flex m-auto gap-6'>
-            <div className='w-1/2'>
+            <div className='w-1/2 flex flex-col gap-2'>
               {
                 instagramIds?.map(instagramId => (
                   <button onClick={async () => {
                     const response = await axios.get(`https://server-production-e234.up.railway.app/instagram/${instagramId}`)
                     setMessages(response.data)
                     setSelectedInstagramId(instagramId)
-                  }} key={instagramId} className='bg-white w-full text-left pt-5 pb-5 pl-2 dark:bg-neutral-700/60'>
+                  }} key={instagramId} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
                     <p>{instagramId}</p>
                   </button>
                 ))
