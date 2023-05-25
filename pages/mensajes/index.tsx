@@ -27,7 +27,7 @@ const MessagePage = () => {
       </Head>
       <LeftMenu>
         <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
-        <div className='w-full max-w-1280 m-auto mb-4'>
+          <div className='w-full max-w-1280 m-auto mb-4'>
             <h1 className='text-xl mb-4'>Mensajes</h1>
             <MessagesCategories />
           </div>
@@ -46,8 +46,8 @@ const MessagePage = () => {
               }
             </div>
             <div className='w-1/2'>
-              <div className='bg-white p-4 flex flex-col gap-4 justify-between shadow-md rounded-xl w-full h-[70vh] dark:bg-neutral-700/60'>
-                <div className='w-full h-full pr-6' style={{ overflow: 'overlay' }}>
+              <div className='bg-white pt-4 pb-4 pl-4 flex flex-col gap-4 justify-between shadow-md rounded-xl w-full h-[70vh] dark:bg-neutral-700/60'>
+                <div className='w-full h-full pr-4' style={{ overflow: 'overlay' }}>
                   {
                     messages?.map(message => (
                       <div key={message._id} className='flex flex-col gap-2 mb-2'>
@@ -79,7 +79,7 @@ const MessagePage = () => {
                   const newMe = newMessage
                   setNewMessage('')
                   axios.post('https://server-production-e234.up.railway.app/chat/create', {senderId: chatId, response: newMe, agent: true})
-                }} className='flex gap-2'>
+                }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />
                   <button type='submit' className='bg-main text-white w-24 rounded-md'>Enviar</button>
                 </form>

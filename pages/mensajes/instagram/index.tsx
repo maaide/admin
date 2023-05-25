@@ -46,8 +46,8 @@ const InstagramMessages = () => {
               }
             </div>
             <div className='w-1/2'>
-              <div className='bg-white p-4 flex flex-col gap-4 justify-between shadow-md rounded-xl w-full h-[70vh] dark:bg-neutral-700/60'>
-                <div className='w-full h-full pr-6' style={{ overflow: 'overlay' }}>
+              <div className='bg-white pt-4 pb-4 pl-4 flex flex-col gap-4 justify-between shadow-md rounded-xl w-full h-[70vh] dark:bg-neutral-700/60'>
+                <div className='w-full h-full pr-4' style={{ overflow: 'overlay' }}>
                   {
                     messages?.map(message => (
                       <div key={message._id} className='flex flex-col gap-2 mb-2'>
@@ -79,7 +79,7 @@ const InstagramMessages = () => {
                   const newMe = newMessage
                   setNewMessage('')
                   axios.post('https://server-production-e234.up.railway.app/messenger', {instagramId: selectedInstagramId, response: newMe, agent: true})
-                }} className='flex gap-2'>
+                }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />
                   <button type='submit' className='bg-main text-white w-24 rounded-md'>Enviar</button>
                 </form>
