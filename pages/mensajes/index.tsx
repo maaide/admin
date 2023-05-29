@@ -2,7 +2,10 @@ import { LeftMenu, MessagesCategories } from '@/components/ui'
 import { IChatMessage } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import io from 'socket.io-client'
+
+const socket = io('https://server-production-e234.up.railway.app')
 
 const MessagePage = () => {
 
@@ -11,6 +14,9 @@ const MessagePage = () => {
   const [newMessage, setNewMessage] = useState('')
   const [chatId, setChatId] = useState()
 
+  const chatIdRef = useRef(chatId)
+  const messagesRef = useRef(messages)
+
   const getChats = async () => {
     const response = await axios.get('https://server-production-e234.up.railway.app/chat')
     setChatIds(response.data)
@@ -18,6 +24,26 @@ const MessagePage = () => {
 
   useEffect(() => {
     getChats()
+  }, [])
+
+  useEffect(() => {
+    chatIdRef.current = chatId
+  }, [chatId])
+
+  useEffect(() => {
+    messagesRef.current = messages
+  }, [messages])
+
+  useEffect(() => {
+    socket.on('message', message => {
+      if (chatIdRef.current === message.senderId) {
+        setMessages(messagesRef.current.concat([{ senderId: message.senderId, message: message.message, agent: true }]))
+      }
+    })
+
+    return () => {
+      socket.off('message', message => console.log(message))
+    }
   }, [])
 
   return (
