@@ -104,6 +104,7 @@ const MessagePage = () => {
                   setMessages(messages.concat({senderId: chatId, response: newMessage, agent: true}))
                   const newMe = newMessage
                   setNewMessage('')
+                  socket.emit('messageAdmin', { senderId: chatId, response: newMe })
                   axios.post('https://server-production-e234.up.railway.app/chat/create', {senderId: chatId, response: newMe, agent: true})
                 }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />
