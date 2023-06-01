@@ -2,7 +2,7 @@ import { LeftMenu, MessagesCategories } from '@/components/ui'
 import { IMessengerMessage } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const MessengerMessages = () => {
 
@@ -10,6 +10,8 @@ const MessengerMessages = () => {
   const [messages, setMessages] = useState<IMessengerMessage[]>([])
   const [newMessage, setNewMessage] = useState('')
   const [selectedMessengerId, setSelectedMessengerId] = useState()
+
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const getMessages = async () => {
     const response = await axios.get('https://server-production-e234.up.railway.app/messenger')
@@ -19,6 +21,16 @@ const MessengerMessages = () => {
   useEffect(() => {
     getMessages()
   }, [])
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (container) {
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: 'smooth'
+      })
+    }
+  }, [messages])
 
   return (
     <>
@@ -47,7 +59,7 @@ const MessengerMessages = () => {
             </div>
             <div className='w-1/2'>
               <div className='bg-white pt-4 pb-4 pl-4 flex flex-col gap-4 justify-between shadow-md rounded-xl w-full h-[70vh] dark:bg-neutral-700/60'>
-                <div className='w-full h-full pr-4' style={{ overflow: 'overlay' }}>
+                <div ref={containerRef} className='w-full h-full pr-4' style={{ overflow: 'overlay' }}>
                   {
                     messages?.map(message => (
                       <div key={message._id} className='flex flex-col gap-2 mb-2'>

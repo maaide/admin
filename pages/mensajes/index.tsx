@@ -16,6 +16,7 @@ const MessagePage = () => {
 
   const chatIdRef = useRef(chatId)
   const messagesRef = useRef(messages)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const getChats = async () => {
     const response = await axios.get('https://server-production-e234.up.railway.app/chat')
@@ -32,6 +33,16 @@ const MessagePage = () => {
 
   useEffect(() => {
     messagesRef.current = messages
+  }, [messages])
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (container) {
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: 'smooth'
+      })
+    }
   }, [messages])
 
   useEffect(() => {
@@ -73,7 +84,7 @@ const MessagePage = () => {
             </div>
             <div className='w-1/2'>
               <div className='bg-white pt-4 pb-4 pl-4 flex flex-col gap-4 justify-between shadow-md rounded-xl w-full h-[70vh] dark:bg-neutral-700/60'>
-                <div className='w-full h-full pr-4' style={{ overflow: 'overlay' }}>
+                <div ref={containerRef} className='w-full h-full pr-4' style={{ overflow: 'overlay' }}>
                   {
                     messages?.map(message => (
                       <div key={message._id} className='flex flex-col gap-2 mb-2'>
