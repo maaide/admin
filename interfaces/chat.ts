@@ -4,7 +4,14 @@ export interface IChatMessage {
     message?: string
     response?: string
     agent: boolean
+    adminView?: boolean
+    userView?: boolean
 
     createdAt?: Date
     updatedAt?: Date
+}
+
+export interface IChatId {
+    senderId: string
+    adminView: boolean
 }

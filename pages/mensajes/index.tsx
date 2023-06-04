@@ -1,5 +1,5 @@
 import { LeftMenu, MessagesCategories } from '@/components/ui'
-import { IChatMessage } from '@/interfaces'
+import { IChatId, IChatMessage } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
@@ -9,10 +9,10 @@ const socket = io('https://server-production-e234.up.railway.app')
 
 const MessagePage = () => {
 
-  const [chatIds, setChatIds] = useState([])
+  const [chatIds, setChatIds] = useState<IChatId[]>([])
   const [messages, setMessages] = useState<IChatMessage[]>([])
   const [newMessage, setNewMessage] = useState('')
-  const [chatId, setChatId] = useState()
+  const [chatId, setChatId] = useState('')
 
   const chatIdRef = useRef(chatId)
   const messagesRef = useRef(messages)
@@ -24,7 +24,9 @@ const MessagePage = () => {
   }
 
   useEffect(() => {
-    getChats()
+    const interval = setInterval(getChats, 5000)
+
+    return () => clearInterval(interval)
   }, [])
 
   useEffect(() => {
@@ -48,7 +50,7 @@ const MessagePage = () => {
   useEffect(() => {
     socket.on('message', message => {
       if (chatIdRef.current === message.senderId) {
-        setMessages(messagesRef.current.concat([{ senderId: message.senderId, message: message.message, agent: true }]))
+        setMessages(messagesRef.current.concat([{ senderId: message.senderId, message: message.message, agent: true, adminView: false, userView: true }]))
       }
     })
 
@@ -71,13 +73,20 @@ const MessagePage = () => {
           <div className='w-full max-w-1280 flex m-auto gap-6'>
             <div className='w-1/2 flex flex-col gap-2'>
               {
-                chatIds?.map(chatId => (
+                chatIds?.map((chat, i: any) => (
                   <button onClick={async () => {
-                    const response = await axios.get(`https://server-production-e234.up.railway.app/chat/${chatId}`)
+                    const response = await axios.get(`https://server-production-e234.up.railway.app/chat/${chat.senderId}`)
                     setMessages(response.data)
-                    setChatId(chatId)
-                  }} key={chatId} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
-                    <p>{chatId}</p>
+                    setChatId(chat.senderId)
+                    await axios.put(`https://server-production-e234.up.railway.app/chat/${chat.senderId}`)
+                    getChats()
+                  }} key={i} className='bg-white w-full text-left h-20 p-2 rounded-xl flex gap-4 justify-between dark:bg-neutral-700/60'>
+                    <p className='mt-auto mb-auto'>{chat.senderId}</p>
+                    {
+                      chat.adminView === false
+                        ? <div className=' mt-auto mb-auto w-3 h-3 rounded-full bg-main' />
+                        : ''
+                    }
                   </button>
                 ))
               }
