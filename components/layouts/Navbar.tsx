@@ -10,6 +10,8 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
 
   const [mounted, setMounted] = useState(false)
   const [loading, setLoading] = useState('block')
+  const [notificationsView, setNotificationsView] = useState(false)
+  const [notifications, setNotifications] = useState([])
 
   useEffect(() => {
     setMounted(true)
@@ -49,12 +51,33 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
           </div>
           <div className='flex gap-4'>
             {renderThemeChanger()}
-            <IoIosNotificationsOutline className='m-auto text-2xl' />
+            <button onClick={(e: any) => {
+              e.preventDefault()
+              if (notificationsView) {
+                setNotificationsView(false)
+              } else {
+                setNotificationsView(true)
+              }
+            }}><IoIosNotificationsOutline className='m-auto text-2xl' /></button>
             <button className='font-light'>Jorge Tapia</button>
           </div>
         </div>
       </div>
       <div className='w-full h-14' />
+      {
+        notificationsView
+          ? (
+            <div className='w-full absolute z-50 flex' onClick={(e: any) => {
+              e.preventDefault()
+              setNotificationsView(false)
+            }} style={{ height: 'calc(100% - 56px)' }}>
+              <div className='mt-[1px] p-4 h-fit ml-auto rounded-md shadow-md bg-white z-50 w-80'>
+                <p>Notificaciones</p>
+              </div>
+            </div>
+          )
+          : ''
+      }
       { children }
     </>
   )
