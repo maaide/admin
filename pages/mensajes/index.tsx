@@ -24,6 +24,10 @@ const MessagePage = () => {
   }
 
   useEffect(() => {
+    getChats()
+  }, [])
+
+  useEffect(() => {
     const interval = setInterval(getChats, 5000)
 
     return () => clearInterval(interval)
@@ -80,7 +84,7 @@ const MessagePage = () => {
                     setChatId(chat.senderId)
                     await axios.put(`https://server-production-e234.up.railway.app/chat/${chat.senderId}`)
                     getChats()
-                  }} key={i} className='bg-white w-full text-left h-20 p-2 rounded-xl flex gap-4 justify-between dark:bg-neutral-700/60'>
+                  }} key={i} className='bg-white w-full text-left h-20 p-2 rounded-xl flex gap-4 justify-between dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
                     <p className='mt-auto mb-auto'>{chat.senderId}</p>
                     {
                       chat.adminView === false
