@@ -4,6 +4,12 @@ export interface IInstagramMessage {
     message?: string
     response?: string
     agent: boolean
+    view?: boolean
     createdAt?: Date
     updatedAp?: Date
+}
+
+export interface IInstagramId {
+    instagramId: string
+    view: boolean
 }

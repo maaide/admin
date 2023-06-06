@@ -1,15 +1,15 @@
 import { LeftMenu, MessagesCategories } from '@/components/ui'
-import { IMessengerMessage } from '@/interfaces'
+import { IMessengerId, IMessengerMessage } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
 
 const MessengerMessages = () => {
 
-  const [messengerIds, setMessengerIds] = useState<[]>([])
+  const [messengerIds, setMessengerIds] = useState<IMessengerId[]>([])
   const [messages, setMessages] = useState<IMessengerMessage[]>([])
   const [newMessage, setNewMessage] = useState('')
-  const [selectedMessengerId, setSelectedMessengerId] = useState()
+  const [selectedMessengerId, setSelectedMessengerId] = useState('')
 
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -46,13 +46,18 @@ const MessengerMessages = () => {
           <div className='w-full max-w-1280 flex m-auto gap-6'>
             <div className='w-1/2'>
               {
-                messengerIds?.map(messengerId => (
+                messengerIds?.map(messenger => (
                   <button onClick={async () => {
-                    const response = await axios.get(`https://server-production-e234.up.railway.app/messenger/${messengerId}`)
+                    const response = await axios.get(`https://server-production-e234.up.railway.app/messenger/${messenger.messengerId}`)
                     setMessages(response.data)
-                    setSelectedMessengerId(messengerId)
-                  }} key={messengerId} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
-                    <p>{messengerId}</p>
+                    setSelectedMessengerId(messenger.messengerId)
+                  }} key={messenger.messengerId} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
+                    <p>{messenger.messengerId}</p>
+                    {
+                      messenger.view === false
+                        ? <div className=' mt-auto mb-auto w-3 h-3 rounded-full bg-main' />
+                        : ''
+                    }
                   </button>
                 ))
               }
@@ -87,10 +92,10 @@ const MessengerMessages = () => {
                 </div>
                 <form onSubmit={async (e: any) => {
                   e.preventDefault()
-                  setMessages(messages.concat({messengerId: selectedMessengerId, response: newMessage, agent: true}))
+                  setMessages(messages.concat({messengerId: selectedMessengerId, response: newMessage, agent: true, view: false}))
                   const newMe = newMessage
                   setNewMessage('')
-                  axios.post('https://server-production-e234.up.railway.app/messenger', {messengerId: selectedMessengerId, response: newMe, agent: true})
+                  axios.post('https://server-production-e234.up.railway.app/messenger', {messengerId: selectedMessengerId, response: newMe, agent: true, view: false})
                 }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />
                   <button type='submit' className='bg-main text-white w-24 rounded-md'>Enviar</button>

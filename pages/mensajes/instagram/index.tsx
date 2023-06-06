@@ -1,15 +1,15 @@
 import { LeftMenu, MessagesCategories } from '@/components/ui'
-import { IInstagramMessage } from '@/interfaces/'
+import { IInstagramId, IInstagramMessage } from '@/interfaces/'
 import axios from 'axios'
 import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
 
 const InstagramMessages = () => {
   
-  const [instagramIds, setInstagramIds] = useState<[]>([])
+  const [instagramIds, setInstagramIds] = useState<IInstagramId[]>([])
   const [messages, setMessages] = useState<IInstagramMessage[]>([])
   const [newMessage, setNewMessage] = useState('')
-  const [selectedInstagramId, setSelectedInstagramId] = useState()
+  const [selectedInstagramId, setSelectedInstagramId] = useState('')
 
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -46,13 +46,18 @@ const InstagramMessages = () => {
           <div className='w-full max-w-1280 flex m-auto gap-6'>
             <div className='w-1/2 flex flex-col gap-2'>
               {
-                instagramIds?.map(instagramId => (
+                instagramIds?.map(instagram => (
                   <button onClick={async () => {
-                    const response = await axios.get(`https://server-production-e234.up.railway.app/instagram/${instagramId}`)
+                    const response = await axios.get(`https://server-production-e234.up.railway.app/instagram/${instagram.instagramId}`)
                     setMessages(response.data)
-                    setSelectedInstagramId(instagramId)
-                  }} key={instagramId} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
-                    <p>{instagramId}</p>
+                    setSelectedInstagramId(instagram.instagramId)
+                  }} key={instagram.instagramId} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
+                    <p>{instagram.instagramId}</p>
+                    {
+                      instagram.view === false
+                        ? <div className=' mt-auto mb-auto w-3 h-3 rounded-full bg-main' />
+                        : ''
+                    }
                   </button>
                 ))
               }

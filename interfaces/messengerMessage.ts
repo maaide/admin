@@ -3,7 +3,13 @@ export interface IMessengerMessage {
     messengerId?: string
     message?: string
     response?: string
-    agent: boolean
+    agent: boolean,
+    view?: boolean
     createdAt?: Date
     updatedAp?: Date
+}
+
+export interface IMessengerId {
+    messengerId: string
+    view: boolean
 }

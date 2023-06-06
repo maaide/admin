@@ -1,15 +1,15 @@
 import { LeftMenu, MessagesCategories } from '@/components/ui'
-import { IWhatsappMessage } from '@/interfaces'
+import { IWhatsappId, IWhatsappMessage } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
 
 const WhatsappMessages = () => {
 
-  const [phones, setPhones] = useState<[]>([])
+  const [phones, setPhones] = useState<IWhatsappId[]>([])
   const [messages, setMessages] = useState<IWhatsappMessage[]>([])
   const [newMessage, setNewMessage] = useState('')
-  const [selectedPhone, setSelectedPhone] = useState()
+  const [selectedPhone, setSelectedPhone] = useState('')
 
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -50,9 +50,14 @@ const WhatsappMessages = () => {
                   <button onClick={async () => {
                     const response = await axios.get(`https://server-production-e234.up.railway.app/whatsapp/${phone}`)
                     setMessages(response.data)
-                    setSelectedPhone(phone)
-                  }} key={phone} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
-                    <p>{phone}</p>
+                    setSelectedPhone(phone.phone)
+                  }} key={phone.phone} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
+                    <p>{phone.phone}</p>
+                    {
+                      phone.view === false
+                        ? <div className=' mt-auto mb-auto w-3 h-3 rounded-full bg-main' />
+                        : ''
+                    }
                   </button>
                 ))
               }
@@ -87,10 +92,10 @@ const WhatsappMessages = () => {
                 </div>
                 <form onSubmit={async (e: any) => {
                   e.preventDefault()
-                  setMessages(messages.concat({phone: selectedPhone, response: newMessage, agent: true}))
+                  setMessages(messages.concat({phone: selectedPhone, response: newMessage, agent: true, view: false}))
                   const newMe = newMessage
                   setNewMessage('')
-                  axios.post('https://server-production-e234.up.railway.app/whatsapp', {phone: selectedPhone, response: newMe, agent: true})
+                  axios.post('https://server-production-e234.up.railway.app/whatsapp', {phone: selectedPhone, response: newMe, agent: true, view: false})
                 }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />
                   <button type='submit' className='bg-main text-white w-24 rounded-md'>Enviar</button>
