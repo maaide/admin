@@ -3,6 +3,9 @@ import { IMessengerId, IMessengerMessage } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
+import io from 'socket.io-client'
+
+const socket = io('https://server-production-e234.up.railway.app')
 
 const MessengerMessages = () => {
 
@@ -12,6 +15,8 @@ const MessengerMessages = () => {
   const [selectedMessengerId, setSelectedMessengerId] = useState('')
 
   const containerRef = useRef<HTMLDivElement>(null)
+  const messagesRef = useRef(messages)
+  const selectedMessengerIdRef = useRef(selectedMessengerId)
 
   const getMessages = async () => {
     const response = await axios.get('https://server-production-e234.up.railway.app/messenger')
@@ -29,6 +34,14 @@ const MessengerMessages = () => {
   }, [])
 
   useEffect(() => {
+    selectedMessengerIdRef.current = selectedMessengerId
+  }, [selectedMessengerId])
+
+  useEffect(() => {
+    messagesRef.current = messages
+  }, [messages])
+
+  useEffect(() => {
     const container = containerRef.current
     if (container) {
       container.scrollTo({
@@ -37,6 +50,18 @@ const MessengerMessages = () => {
       })
     }
   }, [messages])
+
+  useEffect(() => {
+    socket.on('messenger', message => {
+      if (selectedMessengerIdRef.current === message.messengerId) {
+        setMessages(messagesRef.current.concat([{ messengerId: message.phone, message: message.message, agent: true, view: false }]))
+      }
+    })
+
+    return () => {
+      socket.off('messenger', message => console.log(message))
+    }
+  }, [])
 
   return (
     <>

@@ -3,6 +3,9 @@ import { IWhatsappId, IWhatsappMessage } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
+import io from 'socket.io-client'
+
+const socket = io('https://server-production-e234.up.railway.app')
 
 const WhatsappMessages = () => {
 
@@ -12,6 +15,8 @@ const WhatsappMessages = () => {
   const [selectedPhone, setSelectedPhone] = useState('')
 
   const containerRef = useRef<HTMLDivElement>(null)
+  const messagesRef = useRef(messages)
+  const selectedPhoneRef = useRef(selectedPhone)
 
   const getMessages = async () => {
     const response = await axios.get('https://server-production-e234.up.railway.app/whatsapp')
@@ -29,6 +34,14 @@ const WhatsappMessages = () => {
   }, [])
 
   useEffect(() => {
+    selectedPhoneRef.current = selectedPhone
+  }, [selectedPhone])
+
+  useEffect(() => {
+    messagesRef.current = messages
+  }, [messages])
+
+  useEffect(() => {
     const container = containerRef.current
     if (container) {
       container.scrollTo({
@@ -37,6 +50,18 @@ const WhatsappMessages = () => {
       })
     }
   }, [messages])
+
+  useEffect(() => {
+    socket.on('whatsapp', message => {
+      if (selectedPhoneRef.current === message.phone) {
+        setMessages(messagesRef.current.concat([{ phone: message.phone, message: message.message, agent: true, view: false }]))
+      }
+    })
+
+    return () => {
+      socket.off('whatsapp', message => console.log(message))
+    }
+  }, [])
 
   return (
     <>

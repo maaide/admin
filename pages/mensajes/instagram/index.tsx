@@ -3,6 +3,9 @@ import { IInstagramId, IInstagramMessage } from '@/interfaces/'
 import axios from 'axios'
 import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
+import io from 'socket.io-client'
+
+const socket = io('https://server-production-e234.up.railway.app')
 
 const InstagramMessages = () => {
   
@@ -12,6 +15,8 @@ const InstagramMessages = () => {
   const [selectedInstagramId, setSelectedInstagramId] = useState('')
 
   const containerRef = useRef<HTMLDivElement>(null)
+  const messagesRef = useRef(messages)
+  const selectedInstagramIdRef = useRef(selectedInstagramId)
 
   const getMessages = async () => {
     const response = await axios.get('https://server-production-e234.up.railway.app/instagram')
@@ -29,6 +34,14 @@ const InstagramMessages = () => {
   }, [])
 
   useEffect(() => {
+    selectedInstagramIdRef.current = selectedInstagramId
+  }, [selectedInstagramId])
+
+  useEffect(() => {
+    messagesRef.current = messages
+  }, [messages])
+
+  useEffect(() => {
     const container = containerRef.current
     if (container) {
       container.scrollTo({
@@ -37,6 +50,18 @@ const InstagramMessages = () => {
       })
     }
   }, [messages])
+
+  useEffect(() => {
+    socket.on('instagram', message => {
+      if (selectedInstagramIdRef.current === message.instagramId) {
+        setMessages(messagesRef.current.concat([{ instagramId: message.instagramId, message: message.message, agent: true, view: false }]))
+      }
+    })
+
+    return () => {
+      socket.off('messenger', message => console.log(message))
+    }
+  }, [])
   
   return (
     <>
