@@ -83,7 +83,6 @@ const MessagePage = () => {
                     setMessages(response.data)
                     setChatId(chat.senderId)
                     await axios.put(`https://server-production-e234.up.railway.app/chat/${chat.senderId}`)
-                    getChats()
                   }} key={i} className='bg-white w-full text-left h-20 p-2 rounded-xl flex gap-4 justify-between dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
                     <p className='mt-auto mb-auto'>{chat.senderId}</p>
                     {
@@ -130,6 +129,7 @@ const MessagePage = () => {
                   setNewMessage('')
                   socket.emit('messageAdmin', { senderId: chatId, response: newMe })
                   axios.post('https://server-production-e234.up.railway.app/chat/create', {senderId: chatId, response: newMe, agent: true})
+                  getChats()
                 }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />
                   <button type='submit' className='bg-main text-white w-24 rounded-md'>Enviar</button>

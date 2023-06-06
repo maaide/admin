@@ -23,6 +23,12 @@ const MessengerMessages = () => {
   }, [])
 
   useEffect(() => {
+    const interval = setInterval(getMessages, 5000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
     const container = containerRef.current
     if (container) {
       container.scrollTo({
@@ -51,6 +57,8 @@ const MessengerMessages = () => {
                     const response = await axios.get(`https://server-production-e234.up.railway.app/messenger/${messenger.messengerId}`)
                     setMessages(response.data)
                     setSelectedMessengerId(messenger.messengerId)
+                    await axios.put(`https://server-production-e234.up.railway.app/messenger/${messenger.messengerId}`)
+                    getMessages()
                   }} key={messenger.messengerId} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
                     <p>{messenger.messengerId}</p>
                     {
@@ -96,6 +104,7 @@ const MessengerMessages = () => {
                   const newMe = newMessage
                   setNewMessage('')
                   axios.post('https://server-production-e234.up.railway.app/messenger', {messengerId: selectedMessengerId, response: newMe, agent: true, view: false})
+                  getMessages()
                 }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />
                   <button type='submit' className='bg-main text-white w-24 rounded-md'>Enviar</button>

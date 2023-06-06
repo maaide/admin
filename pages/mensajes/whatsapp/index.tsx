@@ -23,6 +23,12 @@ const WhatsappMessages = () => {
   }, [])
 
   useEffect(() => {
+    const interval = setInterval(getMessages, 5000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
     const container = containerRef.current
     if (container) {
       container.scrollTo({
@@ -48,11 +54,13 @@ const WhatsappMessages = () => {
               {
                 phones?.map(phone => (
                   <button onClick={async () => {
-                    const response = await axios.get(`https://server-production-e234.up.railway.app/whatsapp/${phone}`)
+                    const response = await axios.get(`https://server-production-e234.up.railway.app/whatsapp/${phone.phone}`)
                     setMessages(response.data)
                     setSelectedPhone(phone.phone)
-                  }} key={phone.phone} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
-                    <p>{phone.phone}</p>
+                    await axios.put(`https://server-production-e234.up.railway.app/whatsapp/${phone.phone}`)
+                    getMessages()
+                  }} key={phone.phone} className='bg-white w-full flex gap-2 justify-between text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
+                    <p className='mt-auto mb-auto'>{phone.phone}</p>
                     {
                       phone.view === false
                         ? <div className=' mt-auto mb-auto w-3 h-3 rounded-full bg-main' />
@@ -96,6 +104,7 @@ const WhatsappMessages = () => {
                   const newMe = newMessage
                   setNewMessage('')
                   axios.post('https://server-production-e234.up.railway.app/whatsapp', {phone: selectedPhone, response: newMe, agent: true, view: false})
+                  getMessages()
                 }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />
                   <button type='submit' className='bg-main text-white w-24 rounded-md'>Enviar</button>
