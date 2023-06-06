@@ -52,9 +52,11 @@ const WhatsappMessages = () => {
   }, [messages])
 
   useEffect(() => {
-    socket.on('whatsapp', message => {
+    socket.on('whatsapp', async (message) => {
       if (selectedPhoneRef.current === message.phone) {
         setMessages(messagesRef.current.concat([{ phone: message.phone, message: message.message, agent: true, view: true }]))
+        await axios.put(`https://server-production-e234.up.railway.app/whatsapp/${message.phone}`)
+        getMessages()
       }
     })
 

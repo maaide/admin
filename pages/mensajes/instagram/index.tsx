@@ -52,9 +52,11 @@ const InstagramMessages = () => {
   }, [messages])
 
   useEffect(() => {
-    socket.on('instagram', message => {
+    socket.on('instagram', async (message) => {
       if (selectedInstagramIdRef.current === message.instagramId) {
         setMessages(messagesRef.current.concat([{ instagramId: message.instagramId, message: message.message, agent: true, view: true }]))
+        await axios.put(`https://server-production-e234.up.railway.app/instagram/${message.phone}`)
+        getMessages()
       }
     })
 

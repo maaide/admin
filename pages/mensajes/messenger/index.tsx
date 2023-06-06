@@ -52,9 +52,11 @@ const MessengerMessages = () => {
   }, [messages])
 
   useEffect(() => {
-    socket.on('messenger', message => {
+    socket.on('messenger', async (message) => {
       if (selectedMessengerIdRef.current === message.messengerId) {
         setMessages(messagesRef.current.concat([{ messengerId: message.phone, message: message.message, agent: true, view: true }]))
+        await axios.put(`https://server-production-e234.up.railway.app/messenger/${message.phone}`)
+        getMessages()
       }
     })
 
