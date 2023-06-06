@@ -54,7 +54,7 @@ const MessengerMessages = () => {
   useEffect(() => {
     socket.on('messenger', message => {
       if (selectedMessengerIdRef.current === message.messengerId) {
-        setMessages(messagesRef.current.concat([{ messengerId: message.phone, message: message.message, agent: true, view: false }]))
+        setMessages(messagesRef.current.concat([{ messengerId: message.phone, message: message.message, agent: true, view: true }]))
       }
     })
 

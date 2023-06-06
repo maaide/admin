@@ -54,12 +54,12 @@ const InstagramMessages = () => {
   useEffect(() => {
     socket.on('instagram', message => {
       if (selectedInstagramIdRef.current === message.instagramId) {
-        setMessages(messagesRef.current.concat([{ instagramId: message.instagramId, message: message.message, agent: true, view: false }]))
+        setMessages(messagesRef.current.concat([{ instagramId: message.instagramId, message: message.message, agent: true, view: true }]))
       }
     })
 
     return () => {
-      socket.off('messenger', message => console.log(message))
+      socket.off('instagram', message => console.log(message))
     }
   }, [])
   

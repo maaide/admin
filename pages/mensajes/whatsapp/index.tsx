@@ -54,7 +54,7 @@ const WhatsappMessages = () => {
   useEffect(() => {
     socket.on('whatsapp', message => {
       if (selectedPhoneRef.current === message.phone) {
-        setMessages(messagesRef.current.concat([{ phone: message.phone, message: message.message, agent: true, view: false }]))
+        setMessages(messagesRef.current.concat([{ phone: message.phone, message: message.message, agent: true, view: true }]))
       }
     })
 
