@@ -86,7 +86,7 @@ const WhatsappMessages = () => {
                     setSelectedPhone(phone.phone)
                     await axios.put(`https://server-production-e234.up.railway.app/whatsapp/${phone.phone}`)
                     getMessages()
-                  }} key={phone.phone} className='bg-white w-full flex gap-2 justify-between text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
+                  }} key={phone.phone} className='bg-white w-full flex gap-2 justify-between text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
                     <p className='mt-auto mb-auto'>{phone.phone}</p>
                     {
                       phone.view === false

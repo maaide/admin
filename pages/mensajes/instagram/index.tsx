@@ -86,7 +86,7 @@ const InstagramMessages = () => {
                     setSelectedInstagramId(instagram.instagramId)
                     await axios.put(`https://server-production-e234.up.railway.app/instagram/${instagram.instagramId}`)
                     getMessages()
-                  }} key={instagram.instagramId} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60'>
+                  }} key={instagram.instagramId} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
                     <p>{instagram.instagramId}</p>
                     {
                       instagram.view === false
