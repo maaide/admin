@@ -54,7 +54,7 @@ const MessagePage = () => {
   useEffect(() => {
     socket.on('message', async (message) => {
       if (chatIdRef.current === message.senderId) {
-        setMessages(messagesRef.current.concat([{ senderId: message.senderId, message: message.message, agent: true, adminView: false, userView: true }]))
+        setMessages(messagesRef.current.concat([{ senderId: message.senderId, message: message.message, agent: true, adminView: true, userView: true }]))
         await axios.put(`https://server-production-e234.up.railway.app/whatsapp/${message.senderId}`)
         getChats()
       }
