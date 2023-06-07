@@ -105,7 +105,7 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
               e.preventDefault()
               setNotificationsView(false)
             }} style={{ height: 'calc(100% - 56px)' }}>
-              <div className='mt-[1px] mr-2 p-4 h-fit ml-auto rounded-md shadow-md bg-white z-50 w-80 dark:bg-neutral-800'>
+              <div className='mt-[1px] mr-2 p-4 h-fit max-h-[500px] ml-auto rounded-md shadow-md bg-white z-50 w-80 dark:bg-neutral-800' style={{ overflow: 'overlay' }}>
                 <p className='mb-4 text-lg'>Notificaciones</p>
                 <div className='flex flex-col gap-2'>
                   {
