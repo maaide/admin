@@ -22,8 +22,6 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
 
   const notificationsRef = useRef(notifications)
 
-  const router = useRouter()
-
   useEffect(() => {
     setMounted(true)
   }, [])

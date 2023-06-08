@@ -54,10 +54,7 @@ const WhatsappMessages = () => {
   useEffect(() => {
     socket.on('whatsapp', async (message) => {
       if (selectedPhoneRef.current === message.phone) {
-        setMessages(messagesRef.current.concat([{ phone: message.phone, message: message.message, agent: true, view: true }]))
-        setTimeout(async () => {
-          await axios.put(`https://server-production-e234.up.railway.app/whatsapp/${message.phone}`)
-        }, 1000)
+        setMessages(messagesRef.current.concat([{ phone: message.phone, message: message.message, agent: true, view: true, createdAt: new Date() }]))
       }
     })
 
@@ -144,7 +141,7 @@ const WhatsappMessages = () => {
                 </div>
                 <form onSubmit={async (e: any) => {
                   e.preventDefault()
-                  setMessages(messages.concat({phone: selectedPhone, response: newMessage, agent: true, view: false}))
+                  setMessages(messages.concat({phone: selectedPhone, response: newMessage, agent: true, view: false, createdAt: new Date()}))
                   const newMe = newMessage
                   setNewMessage('')
                   axios.post('https://server-production-e234.up.railway.app/whatsapp', {phone: selectedPhone, response: newMe, agent: true, view: false})
