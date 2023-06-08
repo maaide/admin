@@ -144,7 +144,7 @@ const MessengerMessages = () => {
                 </div>
                 <form onSubmit={async (e: any) => {
                   e.preventDefault()
-                  setMessages(messages.concat({messengerId: selectedMessengerId, response: newMessage, agent: true, view: false}))
+                  setMessages(messages.concat({messengerId: selectedMessengerId, response: newMessage, agent: true, view: false, createdAt: new Date()}))
                   const newMe = newMessage
                   setNewMessage('')
                   axios.post('https://server-production-e234.up.railway.app/messenger', {messengerId: selectedMessengerId, response: newMe, agent: true, view: false})
