@@ -141,10 +141,10 @@ const InstagramMessages = () => {
                 </div>
                 <form onSubmit={async (e: any) => {
                   e.preventDefault()
-                  setMessages(messages.concat({instagramId: selectedInstagramId, response: newMessage, agent: true, createdAt: new Date()}))
+                  setMessages(messages.concat({instagramId: selectedInstagramId, response: newMessage, agent: true, view: false, createdAt: new Date()}))
                   const newMe = newMessage
                   setNewMessage('')
-                  axios.post('https://server-production-e234.up.railway.app/instagram', {instagramId: selectedInstagramId, response: newMe, agent: true})
+                  await axios.post('https://server-production-e234.up.railway.app/instagram', {instagramId: selectedInstagramId, response: newMe, agent: true, view: false})
                   getMessages()
                 }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />

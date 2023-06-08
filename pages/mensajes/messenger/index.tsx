@@ -144,7 +144,7 @@ const MessengerMessages = () => {
                   setMessages(messages.concat({messengerId: selectedMessengerId, response: newMessage, agent: true, view: false, createdAt: new Date()}))
                   const newMe = newMessage
                   setNewMessage('')
-                  axios.post('https://server-production-e234.up.railway.app/messenger', {messengerId: selectedMessengerId, response: newMe, agent: true, view: false})
+                  await axios.post('https://server-production-e234.up.railway.app/messenger', {messengerId: selectedMessengerId, response: newMe, agent: true, view: false})
                   getMessages()
                 }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />
