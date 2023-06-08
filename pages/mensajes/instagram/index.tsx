@@ -55,9 +55,6 @@ const InstagramMessages = () => {
     socket.on('instagram', async (message) => {
       if (selectedInstagramIdRef.current === message.instagramId) {
         setMessages(messagesRef.current.concat([{ instagramId: message.instagramId, message: message.message, agent: true, view: true }]))
-        setTimeout(async () => {
-          await axios.put(`https://server-production-e234.up.railway.app/instagram/${message.instagramId}`)
-        }, 1000)
       }
     })
 

@@ -55,9 +55,6 @@ const MessengerMessages = () => {
     socket.on('messenger', async (message) => {
       if (selectedMessengerIdRef.current === message.messengerId) {
         setMessages(messagesRef.current.concat([{ messengerId: message.messengerId, message: message.message, agent: true, view: true }]))
-        setTimeout(async () => {
-          await axios.put(`https://server-production-e234.up.railway.app/messenger/${message.messengerId}`)
-        }, 1000)
       }
     })
 
