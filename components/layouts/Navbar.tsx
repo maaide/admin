@@ -26,7 +26,7 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
   }, [])
 
   const getNotifications = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/notifications')
+    const response = await axios.get('https://server-production-e234.up.railway.app/notifications/ultimate')
     setNotifications(response.data)
   }
 
@@ -106,19 +106,24 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
               setNotificationsView(false)
             }} style={{ height: 'calc(100% - 56px)' }}>
               <div className='mt-[1px] mr-2 p-4 h-fit max-h-[500px] ml-auto rounded-md shadow-md bg-white z-50 w-80 dark:bg-neutral-800' style={{ overflow: 'overlay' }}>
-                <p className='mb-4 text-lg'>Notificaciones</p>
-                <div className='flex flex-col gap-2'>
-                  {
-                    notifications.length
-                      ? notifications.map(notification => (
-                        <Link className='hover:bg-neutral-100 p-2 rounded-md dark:hover:bg-neutral-700' href={notification.url} key={notification.description}>
-                          <p>{notification.title}</p>
-                          <p>{notification.description}</p>
-                        </Link>
-                      ))
-                      : <p>No hay notificaciones</p>
-                  }
-                </div>
+                <p className='mb-4 text-lg border-b pb-2 mt-2 ml-2 mr-2 dark:border-neutral-600'>Notificaciones</p>
+                {
+                  notifications.length
+                    ? (
+                      <div className='flex flex-col gap-2'>
+                        {
+                          notifications.map(notification => (
+                            <Link className='hover:bg-neutral-100 p-2 rounded-md dark:hover:bg-neutral-700' href={notification.url} key={notification.description}>
+                              <p>{notification.title}</p>
+                              <p>{notification.description}</p>
+                            </Link>
+                          ))
+                        }
+                        <Link href='/notificaciones' className='text-main text-center hover:bg-neutral-100 p-2 rounded-md'>Ver todos</Link>
+                      </div>
+                    )
+                    : <p>No hay notificaciones</p>
+                }
               </div>
             </div>
           )
