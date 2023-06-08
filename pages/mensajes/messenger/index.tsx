@@ -89,7 +89,7 @@ const MessengerMessages = () => {
                       setSelectedMessengerId(messenger.messengerId)
                       await axios.put(`https://server-production-e234.up.railway.app/messenger/${messenger.messengerId}`)
                       getMessages()
-                    }} key={messenger.messengerId} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
+                    }} key={messenger.messengerId} className='bg-white w-full text-left h-20 p-2 flex gap-2 justify-between rounded-xl dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
                       <div className='mt-auto mb-auto'>
                         <p>{messenger.messengerId}</p>
                         <p className='text-sm text-neutral-600 dark:text-neutral-400'>{createdAt.getDay()}/{createdAt.getMonth() + 1} {createdAt.getHours()}:{createdAt.getMinutes() < 10 ? `0${createdAt.getMinutes()}` : createdAt.getMinutes()}</p>

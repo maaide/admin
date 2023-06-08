@@ -56,10 +56,8 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     socket.on('whatsapp', async (message) => {
-      if (message.message) {
-        await axios.post('https://server-production-e234.up.railway.app/notification', {title: 'Nuevo mensaje: WhatsApp', description: message.message, url: '/mensajes/whatsapp', view: false})
-        getNotifications()
-      }
+      await axios.post('https://server-production-e234.up.railway.app/notification', {title: 'Nuevo mensaje: WhatsApp', description: message.message, url: '/mensajes/whatsapp', view: false})
+      getNotifications()
     })
 
     return () => {
@@ -69,10 +67,8 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     socket.on('messenger', async (message) => {
-      if (message.message) {
-        await axios.post('https://server-production-e234.up.railway.app/notification', {title: 'Nuevo mensaje: Messenger', description: message.message, url: '/mensajes/messenger', view: false})
-        getNotifications()
-      }
+      await axios.post('https://server-production-e234.up.railway.app/notification', {title: 'Nuevo mensaje: Messenger', description: message.message, url: '/mensajes/messenger', view: false})
+      getNotifications()
     })
 
     return () => {
@@ -82,10 +78,8 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     socket.on('instagram', async (message) => {
-      if (message.message) {
-        await axios.post('https://server-production-e234.up.railway.app/notification', {title: 'Nuevo mensaje: Instagram', description: message.message, url: '/mensajes/instagram', view: false})
-        getNotifications()
-      }
+      await axios.post('https://server-production-e234.up.railway.app/notification', {title: 'Nuevo mensaje: Instagram', description: message.message, url: '/mensajes/instagram', view: false})
+      getNotifications()
     })
 
     return () => {

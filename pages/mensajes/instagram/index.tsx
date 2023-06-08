@@ -89,7 +89,7 @@ const InstagramMessages = () => {
                       setSelectedInstagramId(instagram.instagramId)
                       await axios.put(`https://server-production-e234.up.railway.app/instagram/${instagram.instagramId}`)
                       getMessages()
-                    }} key={instagram.instagramId} className='bg-white w-full text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
+                    }} key={instagram.instagramId} className='bg-white w-full text-left flex gap-2 justify-between h-20 p-2 rounded-xl dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
                       <div className='mt-auto mb-auto'>
                         <p>{instagram.instagramId}</p>
                         <p className='text-sm text-neutral-600 dark:text-neutral-400'>{createdAt.getDay()}/{createdAt.getMonth() + 1} {createdAt.getHours()}:{createdAt.getMinutes() < 10 ? `0${createdAt.getMinutes()}` : createdAt.getMinutes()}</p>
