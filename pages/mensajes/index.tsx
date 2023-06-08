@@ -2,6 +2,7 @@ import { LeftMenu, MessagesCategories } from '@/components/ui'
 import { IChatId, IChatMessage } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
 import io from 'socket.io-client'
 
@@ -54,10 +55,7 @@ const MessagePage = () => {
   useEffect(() => {
     socket.on('message', async (message) => {
       if (chatIdRef.current === message.senderId) {
-        setMessages(messagesRef.current.concat([{ senderId: message.senderId, message: message.message, agent: true, adminView: true, userView: true }]))
-        setTimeout(async () => {
-          await axios.put(`https://server-production-e234.up.railway.app/chat/${message.senderId}`)
-        }, 1000)
+        setMessages(messagesRef.current.concat([{ senderId: message.senderId, message: message.message, agent: true, adminView: true, userView: true, createdAt: message.createdAt }]))
       }
     })
 
@@ -144,7 +142,7 @@ const MessagePage = () => {
                 </div>
                 <form onSubmit={async (e: any) => {
                   e.preventDefault()
-                  setMessages(messages.concat({senderId: chatId, response: newMessage, agent: true, adminView: true}))
+                  setMessages(messages.concat({senderId: chatId, response: newMessage, agent: true, adminView: true, createdAt: new Date()}))
                   const newMe = newMessage
                   setNewMessage('')
                   socket.emit('messageAdmin', { senderId: chatId, response: newMe, adminView: true })
