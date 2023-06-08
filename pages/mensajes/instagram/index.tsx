@@ -54,7 +54,7 @@ const InstagramMessages = () => {
   useEffect(() => {
     socket.on('instagram', async (message) => {
       if (selectedInstagramIdRef.current === message.instagramId) {
-        setMessages(messagesRef.current.concat([{ instagramId: message.instagramId, message: message.message, agent: true, view: true }]))
+        setMessages(messagesRef.current.concat([{ instagramId: message.instagramId, message: message.message, agent: true, view: true, createdAt: new Date() }]))
       }
     })
 
