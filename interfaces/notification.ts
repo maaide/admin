@@ -3,4 +3,8 @@ export interface INotification {
     title: string
     description: string
     url: string
+    view?: boolean
+
+    createdAt?: Date
+    updatedAt?: Date
 }

@@ -28,12 +28,6 @@ const MessagePage = () => {
   }, [])
 
   useEffect(() => {
-    const interval = setInterval(getChats, 5000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  useEffect(() => {
     chatIdRef.current = chatId
   }, [chatId])
 
@@ -62,6 +56,16 @@ const MessagePage = () => {
 
     return () => {
       socket.off('message', message => console.log(message))
+    }
+  }, [])
+
+  useEffect(() => {
+    socket.on('newMessage', () => {
+      getChats()
+    })
+
+    return () => {
+      socket.off('newMessage', message => console.log(message))
     }
   }, [])
 
