@@ -80,50 +80,66 @@ const WhatsappMessages = () => {
           <div className='w-full max-w-1280 flex m-auto gap-6'>
             <div className='w-1/2'>
               {
-                phones?.map(phone => (
-                  <button onClick={async () => {
-                    const response = await axios.get(`https://server-production-e234.up.railway.app/whatsapp/${phone.phone}`)
-                    setMessages(response.data)
-                    setSelectedPhone(phone.phone)
-                    await axios.put(`https://server-production-e234.up.railway.app/whatsapp/${phone.phone}`)
-                    getMessages()
-                  }} key={phone.phone} className='bg-white w-full flex gap-2 justify-between text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
-                    <p className='mt-auto mb-auto'>{phone.phone}</p>
-                    {
-                      phone.view === false
-                        ? <div className=' mt-auto mb-auto w-3 h-3 rounded-full bg-main' />
-                        : ''
-                    }
-                  </button>
-                ))
+                phones?.map(phone => {
+                  const createdAt = new Date(phone.createdAt!)
+                  return (
+                    <button onClick={async () => {
+                      const response = await axios.get(`https://server-production-e234.up.railway.app/whatsapp/${phone.phone}`)
+                      setMessages(response.data)
+                      setSelectedPhone(phone.phone)
+                      await axios.put(`https://server-production-e234.up.railway.app/whatsapp/${phone.phone}`)
+                      getMessages()
+                    }} key={phone.phone} className='bg-white w-full flex gap-2 justify-between text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
+                      <div className='mt-auto mb-auto'>
+                        <p>{phone.phone}</p>
+                        <p className='text-sm text-neutral-600 dark:text-neutral-400'>{createdAt.getDay()}/{createdAt.getMonth() + 1} {createdAt.getHours()}:{createdAt.getMinutes() < 10 ? `0${createdAt.getMinutes()}` : createdAt.getMinutes()}</p>
+                      </div>
+                      {
+                        phone.view === false
+                          ? <div className=' mt-auto mb-auto w-3 h-3 rounded-full bg-main' />
+                          : ''
+                      }
+                    </button>
+                  )
+                })
+              }
+              {
+                phones.length
+                  ? ''
+                  : <p>No hay chats</p>
               }
             </div>
             <div className='w-1/2'>
               <div className='bg-white pt-4 pb-4 pl-4 flex flex-col gap-4 justify-between shadow-md rounded-xl w-full h-[70vh] dark:bg-neutral-700/60'>
                 <div ref={containerRef} className='w-full h-full pr-4' style={{ overflow: 'overlay' }}>
                   {
-                    messages?.map(message => (
-                      <div key={message._id} className='flex flex-col gap-2 mb-2'>
-                        {
-                          message.message
-                            ? (
-                              <div className='bg-neutral-200 p-1.5 rounded-md w-fit text-black'>
-                                <p>{message.message}</p>
-                              </div>
-                            )
-                            : ''
-                        }
-                        {
-                          message.response
-                            ? (
-                              <div className='bg-main text-white p-1.5 rounded-md w-fit ml-auto'>
-                                <p>{message.response}</p>
-                              </div>
-                            )
-                            : ''
-                        }
-                      </div>
-                    ))
+                    messages?.map(message => {
+                      const createdAt = new Date(message.createdAt!)
+                      return (
+                        <div key={message._id} className='flex flex-col gap-2 mb-2'>
+                          {
+                            message.message
+                              ? (
+                                <div className='bg-neutral-200 flex flex-col p-1.5 rounded-md w-fit text-black'>
+                                  <p>{message.message}</p>
+                                  <p className='text-sm text-neutral-600 dark:text-neutral-400'>{createdAt.getDay()}/{createdAt.getMonth() + 1} {createdAt.getHours()}:{createdAt.getMinutes() < 10 ? `0${createdAt.getMinutes()}` : createdAt.getMinutes()}</p>
+                                </div>
+                              )
+                              : ''
+                          }
+                          {
+                            message.response
+                              ? (
+                                <div className='bg-main flex flex-col text-white p-1.5 rounded-md w-fit ml-auto'>
+                                  <p>{message.response}</p>
+                                  <p className='text-sm ml-auto dark:text-neutral-400'>{createdAt.getDay()}/{createdAt.getMonth() + 1} {createdAt.getHours()}:{createdAt.getMinutes() < 10 ? `0${createdAt.getMinutes()}` : createdAt.getMinutes()}</p>
+                                </div>
+                              )
+                              : ''
+                          }
+                        </div>
+                      )
+                    })
                   }
                 </div>
                 <form onSubmit={async (e: any) => {

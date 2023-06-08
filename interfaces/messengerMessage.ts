@@ -12,4 +12,5 @@ export interface IMessengerMessage {
 export interface IMessengerId {
     messengerId: string
     view: boolean
+    createdAt?: Date
 }

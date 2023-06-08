@@ -12,4 +12,5 @@ export interface IInstagramMessage {
 export interface IInstagramId {
     instagramId: string
     view: boolean
+    createdAt?: Date
 }

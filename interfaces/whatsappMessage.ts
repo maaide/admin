@@ -12,4 +12,5 @@ export interface IWhatsappMessage {
 export interface IWhatsappId {
     phone: string
     view: boolean
+    createdAt?: Date
 }
