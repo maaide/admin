@@ -1,4 +1,4 @@
-import { LeftMenu, MessagesCategories } from '@/components/ui'
+import { LeftMenu, MessagesCategories, Spinner } from '@/components/ui'
 import { IChatId, IChatMessage } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
@@ -10,7 +10,7 @@ const socket = io('https://server-production-e234.up.railway.app')
 
 const MessagePage = () => {
 
-  const [chatIds, setChatIds] = useState<IChatId[]>([])
+  const [chatIds, setChatIds] = useState<IChatId[]>()
   const [messages, setMessages] = useState<IChatMessage[]>([])
   const [newMessage, setNewMessage] = useState('')
   const [chatId, setChatId] = useState('')
@@ -78,33 +78,38 @@ const MessagePage = () => {
           <div className='w-full max-w-1280 flex m-auto gap-6'>
             <div className='w-1/2 flex flex-col gap-2'>
               {
-                chatIds?.map((chat, i: any) => {
-                  const createdAt = new Date(chat.createdAt!)
-                  return (
-                    <button onClick={async () => {
-                      const response = await axios.get(`https://server-production-e234.up.railway.app/chat/${chat.senderId}`)
-                      setMessages(response.data)
-                      setChatId(chat.senderId)
-                      await axios.put(`https://server-production-e234.up.railway.app/chat/${chat.senderId}`)
-                      getChats()
-                    }} key={i} className='bg-white w-full text-left h-20 p-2 rounded-xl flex gap-4 justify-between dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
-                      <div className='mt-auto mb-auto'>
-                        <p>{chat.senderId}</p>
-                        <p className='text-sm text-neutral-600 dark:text-neutral-400'>{createdAt.getDay()}/{createdAt.getMonth() + 1} {createdAt.getHours()}:{createdAt.getMinutes() < 10 ? `0${createdAt.getMinutes()}` : createdAt.getMinutes()}</p>
+                chatIds === undefined
+                  ? (
+                    <div className='w-full flex mt-20'>
+                      <div className='w-fit m-auto'>
+                        <Spinner />
                       </div>
-                      {
-                        chat.adminView === false
-                          ? <div className=' mt-auto mb-auto w-3 h-3 rounded-full bg-main' />
-                          : ''
-                      }
-                    </button>
+                    </div>
                   )
-                })
-              }
-              {
-                chatIds.length
-                  ? ''
-                  : <p>No hay chats</p>
+                  : chatIds.length
+                    ? chatIds?.map((chat, i: any) => {
+                      const createdAt = new Date(chat.createdAt!)
+                      return (
+                        <button onClick={async () => {
+                          const response = await axios.get(`https://server-production-e234.up.railway.app/chat/${chat.senderId}`)
+                          setMessages(response.data)
+                          setChatId(chat.senderId)
+                          await axios.put(`https://server-production-e234.up.railway.app/chat/${chat.senderId}`)
+                          getChats()
+                        }} key={i} className='bg-white w-full text-left h-20 p-2 rounded-xl flex gap-4 justify-between dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
+                          <div className='mt-auto mb-auto'>
+                            <p>{chat.senderId}</p>
+                            <p className='text-sm text-neutral-600 dark:text-neutral-400'>{createdAt.getDay()}/{createdAt.getMonth() + 1} {createdAt.getHours()}:{createdAt.getMinutes() < 10 ? `0${createdAt.getMinutes()}` : createdAt.getMinutes()}</p>
+                          </div>
+                          {
+                            chat.adminView === false
+                              ? <div className=' mt-auto mb-auto w-3 h-3 rounded-full bg-main' />
+                              : ''
+                          }
+                        </button>
+                      )
+                    })
+                    : <p>No hay chats</p>
               }
             </div>
             <div className='w-1/2'>
