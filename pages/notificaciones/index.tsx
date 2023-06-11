@@ -1,4 +1,4 @@
-import { LeftMenu } from '@/components/ui'
+import { LeftMenu, Spinner } from '@/components/ui'
 import { INotification } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
@@ -11,7 +11,7 @@ const socket = io('https://server-production-e234.up.railway.app')
 
 const NotificationsPage = () => {
 
-  const [notifications, setNotifications] = useState<INotification[]>([])
+  const [notifications, setNotifications] = useState<INotification[]>()
 
   const router = useRouter()
 
@@ -39,29 +39,37 @@ const NotificationsPage = () => {
             <h1 className='text-xl p-2'>Notificaciones</h1>
             <div className='flex flex-col gap-2'>
               {
-                notifications.length
-                  ? notifications.map(notification => {
-                    const createdAt = new Date(notification.createdAt!)
-                    return (
-                      <Link href={notification.url} key={notification._id} className='flex gap-4 justify-between hover:bg-neutral-100 p-2 rounded-md' onClick={async () => {
-                        await axios.put(`https://server-production-e234.up.railway.app/notifications/${notification._id}`)
-                        socket.emit('newNotification', true)
-                        getNotifications()
-                      }}>
-                        <div>
-                          <p>{notification.title}</p>
-                          <p>{notification.description}</p>
-                          <p className='text-sm text-neutral-600 dark:text-neutral-400'>{createdAt.getDay()}/{createdAt.getMonth() + 1} {createdAt.getHours()}:{createdAt.getMinutes() < 10 ? `0${createdAt.getMinutes()}` : createdAt.getMinutes()}</p>
-                        </div>
-                        {
-                          notification.view
-                            ? ''
-                            : <div className='w-3 h-3 rounded-full bg-main mt-auto mb-auto' />
-                        }
-                      </Link>
-                    )
-                  })
-                  : <p>No hay notificaciones</p>
+                notifications === undefined
+                  ? (
+                    <div className='w-full flex mt-10 mb-10'>
+                      <div className='m-auto w-fit'>
+                        <Spinner />
+                      </div>
+                    </div>
+                  )
+                  : notifications.length
+                    ? notifications.map(notification => {
+                      const createdAt = new Date(notification.createdAt!)
+                      return (
+                        <Link href={notification.url} key={notification._id} className='flex gap-4 justify-between hover:bg-neutral-100 p-2 rounded-md' onClick={async () => {
+                          await axios.put(`https://server-production-e234.up.railway.app/notifications/${notification._id}`)
+                          socket.emit('newNotification', true)
+                          getNotifications()
+                        }}>
+                          <div>
+                            <p>{notification.title}</p>
+                            <p>{notification.description}</p>
+                            <p className='text-sm text-neutral-600 dark:text-neutral-400'>{createdAt.getDay()}/{createdAt.getMonth() + 1} {createdAt.getHours()}:{createdAt.getMinutes() < 10 ? `0${createdAt.getMinutes()}` : createdAt.getMinutes()}</p>
+                          </div>
+                          {
+                            notification.view
+                              ? ''
+                              : <div className='w-3 h-3 rounded-full bg-main mt-auto mb-auto' />
+                          }
+                        </Link>
+                      )
+                    })
+                    : <p>No hay notificaciones</p>
               }
             </div>
           </div>
