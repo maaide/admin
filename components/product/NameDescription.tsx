@@ -11,6 +11,11 @@ export const NameDescription: React.FC<Props> = ({information, setInformation}) 
 
   const [descriptionAi, setDescriptionAi] = useState('')
   const [descriptionAiLoading, setDescriptionAiLoading] = useState(false)
+  const [descriptionAiView, setDescriptionAiView] = useState(false)
+  const [mouseInModal, setMouseInModal] = useState(false)
+  const [type, setType] = useState('')
+  const [description, setDescription] = useState('')
+  const [newType, setNewType] = useState('')
 
   const inputChange = async (e: any) => {
     setInformation({ ...information, [e.target.name]: e.target.value })
@@ -37,17 +42,39 @@ export const NameDescription: React.FC<Props> = ({information, setInformation}) 
       <div>
         <h3 className='mb-2 font-light text-sm'>Descripción</h3>
         <textarea placeholder='Descripción del producto' name='description' onChange={inputChange} value={information.description} className='w-full mb-1 p-1.5 border rounded text-sm font-light h-36 focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+        <button onClick={(e: any) => {
+          e.preventDefault()
+          setDescriptionAiView(true)
+        }} className='w-[380px] cursor-pointer h-9 text-sm bg-gradient-to-r text-white rounded-md from-violet-500 to-fuchsia-500 hover:from-violet-700 hover:to-fuchsia-700'>Mejorar descripción con inteligencia artificial</button>
         {
-          information.description !== ''
+          descriptionAiView
             ? (
-                <button onClick={(e: any) => {
-                  e.preventDefault()
-                  generateDescription()
-                }} className='w-[380px] cursor-pointer h-9 text-sm bg-gradient-to-r text-white rounded-md from-violet-500 to-fuchsia-500 hover:from-violet-700 hover:to-fuchsia-700'>{descriptionAiLoading ? <svg aria-hidden="true" className="w-5 h-5 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-white" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg> : 'Mejorar descripción con inteligencia artificial'}</button>
+              <div onClick={() => mouseInModal ? '' : setDescriptionAiView(false)} className='bg-black/20 flex fixed top-[57px] left-[256px]' style={{ width: 'calc(100% - 256px)', height: 'calc(100% - 56px)' }}>
+                <div onMouseEnter={() => setMouseInModal(true)} onMouseLeave={() => setMouseInModal(false)} className='bg-white m-auto p-6 dark:bg-neutral-800 w-[500px] rounded-md shadow-xl'>
+                  <h3 className='mb-4'>Generar descripción del producto</h3>
+                  <p className='mb-2 text-sm'>Palabras claves del producto</p>
+                  <textarea onChange={(e: any) => setDescription(e.target.value)} value={description} placeholder='Datos del producto' className='font-light h-20 p-1.5 rounded border text-sm w-full focus:outline-none mb-4 focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  <p className='mb-2 text-sm'>Tono del texto</p>
+                  <select onChange={(e: any) => setType(e.target.value)} value={type} className='p-1.5 rounded mb-4 w-full border text-sm font-light focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                    <option>Experto</option>
+                    <option>Persuasivo</option>
+                    <option>Personalizado</option>
+                  </select>
+                  {
+                    type === 'Personalizado'
+                      ? (
+                        <div className='mb-4'>
+                          <p className='text-sm mb-2'>Tono personalizado</p>
+                          <input type='text' placeholder='Tono' onChange={(e: any) => setNewType(e.target.value)} value={newType} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                        </div>
+                      )
+                      : ''
+                  }
+                  <button onClick={generateDescription} className='w-full cursor-pointer h-9 text-sm bg-gradient-to-r text-white rounded-md from-violet-500 to-fuchsia-500 hover:from-violet-700 hover:to-fuchsia-700'>Generar descripción</button>
+                </div>
+              </div>
             )
-            : (
-                <button onClick={(e: any) => e.preventDefault()} className='w-[380px] cursor-not-allowed h-9 text-sm bg-gradient-to-r text-white rounded-md from-violet-300 to-fuchsia-300'>{descriptionAiLoading ? <svg aria-hidden="true" className="w-5 h-5 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-white" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/><path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/></svg> : 'Mejorar descripción con inteligencia artificial'}</button>
-            )
+            : ''
         }
         {
           descriptionAi !== ''
