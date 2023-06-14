@@ -1,6 +1,7 @@
 import { IProduct } from '@/interfaces'
 import axios from 'axios'
 import React, { useState } from 'react'
+import { Spinner2 } from '../ui'
 
 interface Props {
   information: IProduct,
@@ -21,10 +22,11 @@ export const NameDescription: React.FC<Props> = ({information, setInformation}) 
     setInformation({ ...information, [e.target.name]: e.target.value })
   }
 
-  const generateDescription = async () => {
+  const generateDescription = async (e: any) => {
+    e.preventDefault()
     setDescriptionAiLoading(true)
-    const response = await axios.post('https://server-production-e234.up.railway.app/ai-description-product', { description: information.description })
-    const filter = response.data[0].text.split('\n').filter((item: any) => item !== '')
+    const response = await axios.post('https://server-production-e234.up.railway.app/ai-description-product', { description: information.description, type: type === 'Personalizado' ? newType : type })
+    const filter = response.data[0].text.split('\n').filter((item: any) => item !== '').map((item: any) => item.substring(1))
     setDescriptionAi(filter)
     setDescriptionAiLoading(false)
   }
@@ -45,7 +47,7 @@ export const NameDescription: React.FC<Props> = ({information, setInformation}) 
         <button onClick={(e: any) => {
           e.preventDefault()
           setDescriptionAiView(true)
-        }} className='w-[380px] cursor-pointer h-9 text-sm bg-gradient-to-r text-white rounded-md from-violet-500 to-fuchsia-500 hover:from-violet-700 hover:to-fuchsia-700'>Mejorar descripción con inteligencia artificial</button>
+        }} className='w-[380px] cursor-pointer h-9 text-sm bg-gradient-to-r text-white rounded-md from-violet-500 to-fuchsia-500 hover:from-violet-700 hover:to-fuchsia-700'>Generar descripción con inteligencia artificial</button>
         {
           descriptionAiView
             ? (
@@ -70,15 +72,24 @@ export const NameDescription: React.FC<Props> = ({information, setInformation}) 
                       )
                       : ''
                   }
-                  <button onClick={generateDescription} className='w-full cursor-pointer h-9 text-sm bg-gradient-to-r text-white rounded-md from-violet-500 to-fuchsia-500 hover:from-violet-700 hover:to-fuchsia-700'>Generar descripción</button>
+                  <button onClick={generateDescription} className='w-full cursor-pointer h-9 text-sm bg-gradient-to-r text-white rounded-md from-violet-500 to-fuchsia-500 hover:from-violet-700 hover:to-fuchsia-700'>{descriptionAiLoading ? <Spinner2 /> : 'Generar descripción'}</button>
+                  {
+                    descriptionAi !== ''
+                      ? (
+                        <div>
+                          <textarea placeholder='Descripción generada por la inteligencia artificial' name='descriptionAi' value={descriptionAi} onChange={changeDescriptionAi} className='w-full mt-3 p-1.5 mb-4 border rounded text-sm font-light h-36 focus:outline-none focus:border-main focus:ring-1 focus:ring-main' />
+                          <button className='p-1.5 text-sm bg-main text-white rounded-md w-full' onClick={(e: any) => {
+                            e.preventDefault()
+                            setDescriptionAiView(false)
+                            setInformation({...information, description: descriptionAi})
+                          }}>Usar descripción</button>
+                        </div>
+                      )
+                      : ''
+                  }
                 </div>
               </div>
             )
-            : ''
-        }
-        {
-          descriptionAi !== ''
-            ? <textarea placeholder='Descripción generada por la inteligencia artificial' name='descriptionAi' value={descriptionAi} onChange={changeDescriptionAi} className='w-full mt-3 p-1.5 border rounded text-sm font-light h-36 focus:outline-none focus:border-main focus:ring-1 focus:ring-main' />
             : ''
         }
       </div>

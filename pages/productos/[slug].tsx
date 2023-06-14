@@ -9,6 +9,7 @@ import { CategoryProduct, Media, NameDescription, Price, ProductOffer, ProductSe
 import { IProductsOffer } from '../../interfaces/products'
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import { IoCloseOutline } from 'react-icons/io5'
 
 const ProductPage = () => {
 
@@ -37,6 +38,10 @@ const ProductPage = () => {
   const [productsOffer, setProductsOffer] = useState<IProductsOffer[]>([{productsSale: [], price: 0}])
   const [submitLoading, setSubmitLoading] = useState(false)
   const [deleteLoading, setDeleteLoading] = useState(false)
+  const [quantityOffers, setQuantityOffers] = useState([{
+    quantity: undefined,
+    descount: undefined
+  }])
 
   const router = useRouter()
 
@@ -63,6 +68,10 @@ const ProductPage = () => {
       descriptionSeo: data.descriptionSeo
     })
     setProductsOffer(data.productsOffer?.length ? data.productsOffer : [{productsSale: [], price: 0}])
+    setQuantityOffers(data.quantityOffers?.length ? data.quantityOffers : [{
+      quantity: undefined,
+      descount: undefined
+    }])
   }
 
   const getCategories = async () => {
@@ -77,7 +86,7 @@ const ProductPage = () => {
 
   const handleSubmit = async () => {
     setSubmitLoading(true)
-    await axios.put(`https://server-production-e234.up.railway.app/products/${information._id}`, { name: information.name, description: information.description, category: information.category, price: information.price, beforePrice: information.beforePrice, images: information.images, stock: information.stock, slug: information.slug, state: information.state, tags: information.tags, titleSeo: information.titleSeo, descriptionSeo: information.descriptionSeo, variations: information.variations, nameVariations: information.nameVariations, productsOffer: productsOffer, cost: information.cost })
+    await axios.put(`https://server-production-e234.up.railway.app/products/${information._id}`, { name: information.name, description: information.description, category: information.category, price: information.price, beforePrice: information.beforePrice, images: information.images, stock: information.stock, slug: information.slug, state: information.state, tags: information.tags, titleSeo: information.titleSeo, descriptionSeo: information.descriptionSeo, variations: information.variations, nameVariations: information.nameVariations, productsOffer: productsOffer, cost: information.cost, quantityOffers: quantityOffers })
     router.push('/productos')
   }
 
@@ -112,6 +121,46 @@ const ProductPage = () => {
             <div className='w-1/3 flex flex-col gap-4'>
               <Visibility setInformation={setInformation} information={information} />
               <Price information={information} setInformation={setInformation} />
+              <div className='bg-white p-4 rounded-md shadow border border-white dark:bg-neutral-800 dark:border-neutral-700'>
+                <div>
+                  <h2 className='mb-4'>Descuentos por cantidad</h2>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th className='font-normal text-sm text-left'>Cantidad</th>
+                        <th className='font-normal text-sm text-left'>Descuento</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        quantityOffers.map((offer, index) => (
+                          <tr>
+                            <td><input type='number' placeholder='Cantidad' onChange={(e: any) => {
+                              const quantity = quantityOffers
+                              quantity[index].quantity = e.target.value
+                              setQuantityOffers(quantity)
+                            }} value={offer.quantity} className='font-light w-[120px] p-1.5 rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' /></td>
+                            <td><input type='number' placeholder='%' onChange={(e: any) => {
+                              const quantity = quantityOffers
+                              quantity[index].descount = e.target.value
+                              setQuantityOffers(quantity)
+                            }} value={offer.descount} className='font-light p-1.5 w-[120px] rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' /></td>
+                            <td><button><IoCloseOutline className='text-xl' /></button></td>
+                          </tr>
+                        ))
+                      }
+                    </tbody>
+                  </table>
+                  <button onClick={(e: any) => {
+                    e.preventDefault()
+                    setQuantityOffers(quantityOffers.concat({
+                      quantity: undefined,
+                      descount: undefined
+                    }))
+                  }} className='bg-main mt-2 text-white text-sm rounded-md w-36 h-8'>Agregar fila</button>
+                </div>
+              </div>
               <CategoryProduct categories={categories} information={information} setInformation={setInformation} setNewCategory={setNewCategory} />
               <div className='bg-white p-4 rounded-md shadow border border-white dark:bg-neutral-800 dark:border-neutral-700'>
                 <h2 className='mb-4'>Eliminar producto</h2>

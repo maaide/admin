@@ -19,6 +19,7 @@ export interface IProduct {
   sku?: string,
   titleSeo?: string
   descriptionSeo?: string
+  quantityOffers?: IQuantityOffer[]
 
   createdAt?: string
   updatedAt?: string
@@ -54,4 +55,9 @@ export interface IVariation {
   image?: string
   stock: number
   sku?: string
+}
+
+export interface IQuantityOffer {
+  quantity: number
+  descount: number
 }
