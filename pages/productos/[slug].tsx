@@ -135,7 +135,7 @@ const ProductPage = () => {
                     <tbody>
                       {
                         quantityOffers.map((offer, index) => (
-                          <tr>
+                          <tr key={index}>
                             <td><input type='number' placeholder='Cantidad' onChange={(e: any) => {
                               const quantity = quantityOffers
                               quantity[index].quantity = e.target.value
