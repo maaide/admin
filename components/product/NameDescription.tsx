@@ -26,8 +26,7 @@ export const NameDescription: React.FC<Props> = ({information, setInformation}) 
     e.preventDefault()
     setDescriptionAiLoading(true)
     const response = await axios.post('https://server-production-e234.up.railway.app/ai-description-product', { description: information.description, type: type === 'Personalizado' ? newType : type })
-    const filter = response.data[0].text.split('\n').filter((item: any) => item !== '')
-    setDescriptionAi(filter)
+    setDescriptionAi(response.data)
     setDescriptionAiLoading(false)
   }
 

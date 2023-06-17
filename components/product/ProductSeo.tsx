@@ -27,8 +27,8 @@ export const ProductSeo: React.FC<Props> = ({information, setInformation}) => {
     e.preventDefault()
     setAiLoading(true)
     const response = await axios.post('https://server-production-e234.up.railway.app/ai-product-seo', { description: description, type: type === 'Personalizado' ? newType : type })
-    const filterTitleSeo = response.data.title[0].text.split('\n').filter((item: any) => item !== '')[0].replace(/"/g, '')
-    const filterDescriptionSeo = response.data.description[0].text.split('\n').filter((item: any) => item !== '')[0]
+    const filterTitleSeo = response.data.title
+    const filterDescriptionSeo = response.data.description
     setTitleSeo(filterTitleSeo)
     setDescriptionSeo(filterDescriptionSeo)
     setAiLoading(false)
