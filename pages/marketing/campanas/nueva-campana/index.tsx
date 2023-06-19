@@ -1,9 +1,10 @@
 import { LeftMenu, Spinner2 } from '@/components/ui'
+import { IStoreData } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const NewCampaign = () => {
 
@@ -19,12 +20,22 @@ const NewCampaign = () => {
   })
   const [date, setDate] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [storeData, setStoreData] = useState<IStoreData>()
 
   const router = useRouter()
 
+  const getStoreData = async () => {
+    const response = await axios.get('https://server-production-e234.up.railway.app/store-data')
+    setStoreData(response.data[0])
+  }
+
+  useEffect(() => {
+    getStoreData()
+  }, [])
+
   const submit = async () => {
     setLoading(true)
-    await axios.post('http://localhost:4000/new-campaign', email)
+    await axios.post('https://server-production-e234.up.railway.app/new-campaign', email)
     router.push('/marketing/campanas')
     setLoading(false)
   }
@@ -43,7 +54,7 @@ const NewCampaign = () => {
             </div>
           </div>
         </div>
-        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
+        <div className='p-6 mb-16 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
           <div className='flex justify-between w-full max-w-1280 m-auto mb-4'>
             <h1 className='text-xl'>Nueva campaña</h1>
           </div>
@@ -65,14 +76,38 @@ const NewCampaign = () => {
               </div>
             </div>
             <div className='w-full flex'>
-              <div className='flex gap-6 m-auto'>
+              <div className='flex flex-wrap gap-6 m-auto'>
                 <div className='w-[600px] flex flex-col gap-4 m-auto bg-white pt-6 pb-6'>
                   <img className='w-64 m-auto' src='https://res.cloudinary.com/blasspod/image/upload/v1664841659/blaspod/ouxxwsmqodpemvffqs7b.png' />
                   <h1 className='m-auto text-3xl text-center'>{email.title}</h1>
                   <p className='m-auto text-center'>{email.paragraph}</p>
-                  <Link href={email.url} className='py-2 px-7 bg-main w-fit m-auto text-white'>{email.buttonText}</Link>
+                  {
+                    email.buttonText
+                      ? <Link href={email.url} className='py-2 px-7 bg-main w-fit m-auto text-white'>{email.buttonText}</Link>
+                      : ''
+                  }
+                  <div className='border-t pt-6 px-6 flex gap-4 justify-between'>
+                    {
+                      storeData
+                        ? (
+                          <>
+                            <div className='flex flex-col gap-2'>
+                              <p className='text-sm'>{storeData.name}</p>
+                              <p className='text-sm'>{storeData.email}</p>
+                              <p className='text-sm'>{storeData.phone}</p>
+                            </div>
+                            <div className='flex flex-col gap-2'>
+                              <p className='text-sm text-right'>{storeData.address}</p>
+                              <p className='text-sm text-right'>{storeData.city}, {storeData.region}</p>
+                            </div>
+                          </>
+                        )
+                        : ''
+                    }
+                    
+                  </div>
                 </div>
-                <div className='p-4 bg-white w-96 rounded-md shadow-md'>
+                <div className='p-4 m-auto bg-white w-96 rounded-md shadow-md'>
                   <h2 className='text-lg mb-4'>Contenido</h2>
                   <p className='mb-2 text-sm'>Titulo</p>
                   <input type='text' placeholder='Titulo' onChange={(e: any) => setEmail({...email, title: e.target.value})} value={email.title} className='font-light p-1.5 rounded mb-4 border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
