@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react'
 const NewCampaign = () => {
 
   const [email, setEmail] = useState({
-    address: '',
+    address: 'Todos los suscriptores',
     affair: '',
     summary: '',
     title: 'Te damos la bienvenida a nuestra tienda',
