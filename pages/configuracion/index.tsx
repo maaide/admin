@@ -19,8 +19,10 @@ const Configuration = () => {
   const [citys, setCitys] = useState<City[]>()
 
   const getStoreData = async () => {
-    const {data} = await axios.get('https://server-production-e234.up.railway.app/store-data')
-    setStoreData(data[0])
+    const response = await axios.get('https://server-production-e234.up.railway.app/store-data')
+    if (response.data.length) {
+      setStoreData(response.data[0])
+    }
   }
 
   useEffect(() => {
