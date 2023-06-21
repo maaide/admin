@@ -119,7 +119,7 @@ const NewCampaign = () => {
                   <input type='text' placeholder='Url' onChange={(e: any) => setEmail({...email, url: e.target.value})} value={email.url} className='font-light mb-4 p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                   <p className='mb-2 text-sm'>Programar envio</p>
                   <div className='flex gap-2 mb-2'>
-                    <input type='radio' name='send' onClick={() => setEmail({...email, date: new Date()})} />
+                    <input type='radio' name='send' onClick={() => setEmail({...email, date: undefined})} />
                     <p className='text-sm'>En este momento</p>
                   </div>
                   <div className='flex gap-2'>
