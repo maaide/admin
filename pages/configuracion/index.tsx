@@ -1,4 +1,4 @@
-import { LeftMenu } from '@/components/ui'
+import { LeftMenu, Spinner2 } from '@/components/ui'
 import { City, IStoreData, Region } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
@@ -17,6 +17,7 @@ const Configuration = () => {
   })
   const [regions, setRegions] = useState<Region[]>()
   const [citys, setCitys] = useState<City[]>()
+  const [loading, setLoading] = useState(false)
 
   const getStoreData = async () => {
     const response = await axios.get('https://server-production-e234.up.railway.app/store-data')
@@ -63,12 +64,26 @@ const Configuration = () => {
     setStoreData({...storeData, city: e.target.value})
   }
 
+  const handleSubmit = async () => {
+    setLoading(true)
+    await axios.post('https://server-production-e234.up.railway.app/store-data', storeData)
+    setLoading(false)
+  }
+
   return (
     <>
       <Head>
         <title>Configuración</title>
       </Head>
       <LeftMenu>
+        <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 256px)' }}>
+          <div className='flex m-auto w-1280'>
+            <div className='flex gap-2 ml-auto w-fit'>
+              <button onClick={handleSubmit} className='bg-main text-white text-sm rounded-md w-40 h-8'>{loading ? <Spinner2 /> : 'Guardar datos'}</button>
+              <Link className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4' href='/productos'>Descartar</Link>
+            </div>
+          </div>
+        </div>
         <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
           <div className='flex w-full max-w-1280 m-auto gap-8 mb-4'>
             <div className='bg-white w-1/4 h-fit shadow-md p-4 rounded-md dark:bg-neutral-800'>
