@@ -1,5 +1,5 @@
 import { LeftMenu, Spinner2 } from '@/components/ui'
-import { IStoreData } from '@/interfaces'
+import { IEmail, IStoreData } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 
 const NewCampaign = () => {
 
-  const [email, setEmail] = useState({
+  const [email, setEmail] = useState<IEmail>({
     address: 'Todos los suscriptores',
     affair: '',
     summary: '',
@@ -16,7 +16,7 @@ const NewCampaign = () => {
     paragraph: '¡Hola ${nombre}! Nos hace muy felices tenerte con nosotros, aquí te dejamos el código de descuento que te prometimos',
     buttonText: 'Visitar tienda',
     url: '',
-    date: new Date()
+    date: undefined
   })
   const [date, setDate] = useState(false)
   const [loading, setLoading] = useState(false)
