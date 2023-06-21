@@ -13,7 +13,7 @@ const NewCampaign = () => {
     affair: '',
     summary: '',
     title: 'Te damos la bienvenida a nuestra tienda',
-    paragraph: '¡Hola ${nombre}! Nos hace muy felices tenerte con nosotros, aquí te dejamos el código de descuento que te prometimos',
+    paragraph: '¡Hola ${name}! Nos hace muy felices tenerte con nosotros, aquí te dejamos el código de descuento que te prometimos',
     buttonText: 'Visitar tienda',
     url: '',
     date: undefined
