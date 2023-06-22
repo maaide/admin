@@ -1,4 +1,5 @@
 export interface IEmail {
+    _id?: string
     address: string
     affair: string
     title: string

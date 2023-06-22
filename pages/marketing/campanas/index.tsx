@@ -63,7 +63,7 @@ const CampaignPage = () => {
                               const month = String(campaignDate.getUTCMonth() + 1).padStart(2, '0')
                               const year = String(campaignDate.getUTCFullYear())
                               return (
-                                <tr className='border-b border-neutral-300 dark:border-neutral-600'>
+                                <tr key={campaign._id} className='border-b border-neutral-300 dark:border-neutral-600'>
                                   <td className='p-2'>{campaign.address}</td>
                                   <td className='p-2'>{campaign.affair}</td>
                                   <td className='p-2'>{`${day}/${month}/${year}`}</td>
