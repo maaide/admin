@@ -1,5 +1,5 @@
 import { LeftMenu, Spinner2 } from '@/components/ui'
-import { IEmail, IStoreData } from '@/interfaces'
+import { IClientTag, IEmail, IStoreData } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -11,7 +11,6 @@ const NewCampaign = () => {
   const [email, setEmail] = useState<IEmail>({
     address: 'Todos los suscriptores',
     affair: '',
-    summary: '',
     title: 'Te damos la bienvenida a nuestra tienda',
     paragraph: '¡Hola ${name}! Nos hace muy felices tenerte con nosotros, aquí te dejamos el código de descuento que te prometimos',
     buttonText: 'Visitar tienda',
@@ -21,6 +20,7 @@ const NewCampaign = () => {
   const [date, setDate] = useState(false)
   const [loading, setLoading] = useState(false)
   const [storeData, setStoreData] = useState<IStoreData>()
+  const [clientTags, setClientTags] = useState<IClientTag[]>([])
 
   const router = useRouter()
 
@@ -31,6 +31,15 @@ const NewCampaign = () => {
 
   useEffect(() => {
     getStoreData()
+  }, [])
+
+  const getClientTags = async () => {
+    const response = await axios.get('https://server-production-e234.up.railway.app/client-tag')
+    setClientTags(response.data)
+  }
+
+  useEffect(() => {
+    getClientTags()
   }, [])
 
   const submit = async () => {
@@ -64,15 +73,18 @@ const NewCampaign = () => {
                 <p className='text-sm mt-auto mb-auto'>Para:</p>
                 <select className='p-1.5 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
                   <option>Todos los suscriptores</option>
+                  {
+                    clientTags.length
+                      ? clientTags.map(clientTag => (
+                        <option key={clientTag.tag}>{clientTag.tag}</option>
+                      ))
+                      : ''
+                  }
                 </select>
               </div>
-              <div className='flex gap-[33px] mb-2'>
+              <div className='flex gap-[33px]'>
                 <p className='text-sm mt-auto mb-auto'>Asunto:</p>
                 <input type='text' placeholder='Asunto' onChange={(e: any) => setEmail({...email, affair: e.target.value})} value={email.affair} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-              </div>
-              <div className='flex gap-4'>
-                <p className='text-sm mt-auto mb-auto'>Resumen:</p>
-                <input type='text' placeholder='Resumen' onChange={(e: any) => setEmail({...email, summary: e.target.value})} value={email.summary} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
               </div>
             </div>
             <div className='w-full flex'>
@@ -104,7 +116,6 @@ const NewCampaign = () => {
                         )
                         : ''
                     }
-                    
                   </div>
                 </div>
                 <div className='p-4 m-auto bg-white w-96 rounded-md shadow-md'>

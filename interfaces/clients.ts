@@ -10,3 +10,7 @@ export interface IClient {
   city?: string
   tags?: string[]
 }
+
+export interface IClientTag {
+  tag: string
+}
