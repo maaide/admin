@@ -4,7 +4,7 @@ import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 const NewCampaign = () => {
 
@@ -71,7 +71,7 @@ const NewCampaign = () => {
             <div className='bg-white p-4 w-full rounded-md shadow-md'>
               <div className='flex gap-12 mb-2'>
                 <p className='text-sm mt-auto mb-auto'>Para:</p>
-                <select className='p-1.5 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                <select onChange={(e: ChangeEvent<HTMLSelectElement>) => setEmail({ ...email, address: e.target.value })} value={email.address} className='p-1.5 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
                   <option>Todos los suscriptores</option>
                   {
                     clientTags.length
