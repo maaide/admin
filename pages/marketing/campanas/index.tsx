@@ -45,35 +45,37 @@ const CampaignPage = () => {
                   )
                   : campaigns.length
                     ? (
-                      <table className='w-full'>
-                        <thead>
-                          <tr className='border-b border-neutral-300 dark:border-neutral-600'>
-                            <th className='p-2 text-left'>Receptores</th>
-                            <th className='p-2 text-left'>Asunto</th>
-                            <th className='p-2 text-left'>Fecha</th>
-                            <th className='p-2 text-left'>Completado</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {
-                            campaigns.map(campaign => {
-                              const campaignDate = new Date(campaign.date!)
-                              const date = new Date()
-                              const day = String(campaignDate.getUTCDate()).padStart(2, '0')
-                              const month = String(campaignDate.getUTCMonth() + 1).padStart(2, '0')
-                              const year = String(campaignDate.getUTCFullYear())
-                              return (
-                                <tr key={campaign._id} className='border-b border-neutral-300 dark:border-neutral-600'>
-                                  <td className='p-2'>{campaign.address}</td>
-                                  <td className='p-2'>{campaign.affair}</td>
-                                  <td className='p-2'>{`${day}/${month}/${year}`}</td>
-                                  <td className='p-2'>{campaignDate < date ? 'Completado' : 'No completado'}</td>
-                                </tr>
-                              )
-                            })
-                          }
-                        </tbody>
-                      </table>
+                      <div className='bg-white p-2 rounded-md shadow-md dark:bg-neutral-800 dark:border dark:border-neutral-700'>
+                        <table className='w-full'>
+                          <thead>
+                            <tr className='border-neutral-300 dark:border-neutral-600'>
+                              <th className='p-2 text-left font-medium'>Receptores</th>
+                              <th className='p-2 text-left font-medium'>Asunto</th>
+                              <th className='p-2 text-left font-medium'>Fecha</th>
+                              <th className='p-2 text-left font-medium'>Estado</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {
+                              campaigns.map(campaign => {
+                                const campaignDate = new Date(campaign.date!)
+                                const date = new Date()
+                                const day = String(campaignDate.getUTCDate()).padStart(2, '0')
+                                const month = String(campaignDate.getUTCMonth() + 1).padStart(2, '0')
+                                const year = String(campaignDate.getUTCFullYear())
+                                return (
+                                  <tr key={campaign._id} className='border-t border-neutral-300 dark:border-neutral-600'>
+                                    <td className='p-2'>{campaign.address}</td>
+                                    <td className='p-2'>{campaign.affair}</td>
+                                    <td className='p-2'>{`${day}/${month}/${year}`}</td>
+                                    <td className='p-2'>{campaignDate < date ? 'Completado' : 'No completado'}</td>
+                                  </tr>
+                                )
+                              })
+                            }
+                          </tbody>
+                        </table>
+                      </div>
                     )
                     : <p>No hay campañas creadas</p>
               }
