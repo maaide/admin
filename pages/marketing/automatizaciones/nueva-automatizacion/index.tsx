@@ -80,7 +80,7 @@ const NewAutomatization = () => {
           <div className='w-full flex max-w-1280 m-auto'>
             <div className='m-auto flex gap-8'>
               <div className='flex flex-col mb-4 h-fit'>
-                <div className='w-[500px] p-4 flex flex-col gap-2 bg-white m-auto rounded-md shadow-md'>
+                <div className='w-[500px] p-4 flex flex-col gap-2 bg-white m-auto rounded-md shadow-md dark:bg-neutral-800'>
                   <p>Selecciona el segmento de usuarios para la automatización</p>
                   <select className='p-1.5 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
                     <option>Todos los suscriptores</option>
@@ -96,8 +96,8 @@ const NewAutomatization = () => {
                 {
                   automatization.automatization.map((email, index) => (
                     <>
-                      <div className='h-[40px] w-[2px] bg-neutral-300 m-auto' />
-                      <div className='w-[500px] p-4 flex flex-col gap-2 bg-white m-auto rounded-md shadow-md'>
+                      <div className='h-[40px] w-[2px] bg-neutral-300 m-auto dark:bg-neutral-700' />
+                      <div className='w-[500px] p-4 flex flex-col gap-2 bg-white m-auto rounded-md shadow-md dark:bg-neutral-800'>
                         <p>Tiempo de espera</p>
                         <div className='flex gap-2'>
                           <input onChange={(e: any) => {
@@ -116,8 +116,8 @@ const NewAutomatization = () => {
                           </select>
                         </div>
                       </div>
-                      <div className='h-[40px] w-[2px] bg-neutral-300 m-auto' />
-                      <div key={email.affair} className='w-[500px] p-4 flex flex-col gap-2 bg-white m-auto rounded-md shadow-md'>
+                      <div className='h-[40px] w-[2px] bg-neutral-300 m-auto dark:bg-neutral-700' />
+                      <div key={email.affair} className='w-[500px] p-4 flex flex-col gap-2 bg-white m-auto rounded-md shadow-md dark:bg-neutral-800'>
                         <p>Enviar correo</p>
                         <p className='text-sm'>Asunto: {email.title}</p>
                         <button onClick={(e: any) => editEmail(email, index, e)} className='bg-main text-white text-sm rounded-md w-36 h-8'>Editar Correo</button>
@@ -142,7 +142,7 @@ const NewAutomatization = () => {
                 (tempEmail.buttonText !== '' || tempEmail.paragraph !== '' || tempEmail.title !== '')
                   ? (
                     <div className='flex flex-col gap-6'>
-                      <div className='w-[600px] p-4 flex flex-col gap-2 bg-white rounded-md shadow-md'>
+                      <div className='w-[600px] p-4 flex flex-col gap-2 bg-white rounded-md shadow-md dark:bg-neutral-800'>
                         <h2>Configuración correo</h2>
                         <div className='flex'>
                           <p className='text-sm mt-auto mb-auto w-32'>Asunto:</p>
@@ -179,7 +179,7 @@ const NewAutomatization = () => {
                           })
                         }} className='bg-main text-white text-sm rounded-md w-36 mt-2 h-8'>Guardar</button>
                       </div>
-                      <div className='flex flex-col h-fit gap-4 p-4 bg-white w-[600px]'>
+                      <div className='flex flex-col h-fit gap-4 p-4 bg-white w-[600px] dark:bg-neutral-800'>
                         <img className='w-64 mx-auto' src='https://res.cloudinary.com/blasspod/image/upload/v1664841659/blaspod/ouxxwsmqodpemvffqs7b.png' />
                         <h1 className='text-center mx-auto text-3xl'>{tempEmail.title}</h1>
                         <p className='text-center mx-auto'>{tempEmail.paragraph}</p>
@@ -188,7 +188,7 @@ const NewAutomatization = () => {
                             ? <Link className='py-2 px-7 bg-main w-fit m-auto text-white' href={tempEmail.url}>{tempEmail.buttonText}</Link>
                             : ''
                         }
-                        <div className='border-t pt-6 px-6 flex gap-4 justify-between'>
+                        <div className='border-t pt-6 px-6 flex gap-4 justify-between dark:border-neutral-700'>
                           {
                             storeData
                               ? (
