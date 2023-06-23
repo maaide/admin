@@ -84,7 +84,7 @@ const NewCampaign = () => {
               </div>
               <div className='flex gap-[33px]'>
                 <p className='text-sm mt-auto mb-auto'>Asunto:</p>
-                <input type='text' placeholder='Asunto' onChange={(e: any) => setEmail({...email, affair: e.target.value})} value={email.affair} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                <input type='text' placeholder='Asunto' onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail({...email, affair: e.target.value})} value={email.affair} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
               </div>
             </div>
             <div className='w-full flex'>

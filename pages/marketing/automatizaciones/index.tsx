@@ -1,9 +1,25 @@
-import { LeftMenu } from '@/components/ui'
+import { LeftMenu, Spinner } from '@/components/ui'
+import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const AutomatizationsPage = () => {
+
+  const [loading, setLoading] = useState(false)
+  const [automatizations, setAutomatizations] = useState([])
+
+  const getAutomatizations = async () => {
+    setLoading(true)
+    const response = await axios.get('https://server-production-e234.up.railway.app/automatizations')
+    setAutomatizations(response.data)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    getAutomatizations()
+  }, [])
+
   return (
     <>
       <Head>
@@ -15,8 +31,35 @@ const AutomatizationsPage = () => {
             <h1 className='text-xl'>Automatizaciones</h1>
             <Link href='/marketing/automatizaciones/nueva-automatizacion' className='pt-1.5 pb-1.5 h-fit pl-7 pr-7 rounded-md bg-main text-white'>Crear automatización</Link>
           </div>
-          <div>
-
+          <div className='w-full max-w-1280 m-auto'>
+            {
+              loading
+                ? (
+                  <div className='w-full flex mt-20'>
+                    <div className='m-auto w-fit'>
+                      <Spinner />
+                    </div>
+                  </div>
+                )
+                : automatizations.length
+                  ? (
+                    <table>
+                      <thead>
+                        <tr>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          automatizations.map(automatization => {
+                            return <p key={automatization}></p>
+                          })
+                        }
+                      </tbody>
+                    </table>
+                  )
+                  : ''
+            }
           </div>
         </div>
       </LeftMenu>
