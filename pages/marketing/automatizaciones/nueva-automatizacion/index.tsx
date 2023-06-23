@@ -3,6 +3,7 @@ import { IAutomatization, IClientTag, IEmailAutomatization, IStoreData } from '@
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 
 const NewAutomatization = () => {
@@ -32,6 +33,8 @@ const NewAutomatization = () => {
   })
   const [storeData, setStoreData] = useState<IStoreData>()
 
+  const router = useRouter()
+
   const getClientTags = async () => {
     const response = await axios.get('https://server-production-e234.up.railway.app/client-tag')
     setClientTags(response.data)
@@ -55,6 +58,14 @@ const NewAutomatization = () => {
     setTempEmail({ affair: email.affair, buttonText: email.buttonText, index: index, paragraph: email.paragraph, title: email.title, url: email.url })
   }
 
+  const handleSubmit = async (e: any) => {
+    e.preventDefaul()
+    setLoading(true)
+    await axios.post('https://server-production-e234.up.railway.app/automatization', automatization)
+    router.push('/marketing/automatizaciones')
+    setLoading(false)
+  }
+
   return (
     <>
       <Head>
@@ -68,7 +79,7 @@ const NewAutomatization = () => {
               <input onChange={(e: any) => setAutomatization({ ...automatization, name: e.target.value })} value={automatization.name} type='text' placeholder='Nombre' className='font-light p-1.5 rounded border text-sm w-96 focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
             </div>
             <div className='flex gap-2 w-fit'>
-              <button className='bg-main text-white m-auto text-sm rounded-md w-48 h-8'>{loading ? <Spinner2 /> : 'Crear automatización'}</button>
+              <button onClick={handleSubmit} className='bg-main text-white m-auto text-sm rounded-md w-48 h-8'>{loading ? <Spinner2 /> : 'Crear automatización'}</button>
               <Link className='bg-red-600 h-8 flex m-auto text-white text-sm rounded-md pl-4 pr-4' href='/productos'><p className='m-auto'>Descartar</p></Link>
             </div>
           </div>
