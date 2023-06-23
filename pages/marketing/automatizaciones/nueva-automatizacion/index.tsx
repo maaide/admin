@@ -1,9 +1,9 @@
 import { LeftMenu, Spinner2 } from '@/components/ui'
-import { IAutomatization, IClientTag } from '@/interfaces'
+import { IAutomatization, IClientTag, IEmailAutomatization, IStoreData } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 const NewAutomatization = () => {
 
@@ -12,9 +12,9 @@ const NewAutomatization = () => {
     name: '',
     automatization: [{
       affair: '',
-      title: '',
-      paragraph: '',
-      buttonText: '',
+      title: 'Te damos la bienvenida a nuestra tienda',
+      paragraph: '¡Hola ${name}! Nos hace muy felices tenerte con nosotros, aquí te dejamos el código de descuento que te prometimos',
+      buttonText: 'Visitar tienda',
       url: '',
       number: 0,
       time: ''
@@ -22,6 +22,15 @@ const NewAutomatization = () => {
   })
   const [clientTags, setClientTags] = useState<IClientTag[]>([])
   const [loading, setLoading] = useState(false)
+  const [tempEmail, setTempEmail] = useState({
+    affair: '',
+    buttonText: '',
+    paragraph: '',
+    title: '',
+    url: '',
+    index: 0
+  })
+  const [storeData, setStoreData] = useState<IStoreData>()
 
   const getClientTags = async () => {
     const response = await axios.get('https://server-production-e234.up.railway.app/client-tag')
@@ -31,6 +40,20 @@ const NewAutomatization = () => {
   useEffect(() => {
     getClientTags()
   }, [])
+
+  const getStoreData = async () => {
+    const response = await axios.get('https://server-production-e234.up.railway.app/store-data')
+    setStoreData(response.data[0])
+  }
+
+  useEffect(() => {
+    getStoreData()
+  }, [])
+
+  const editEmail = (email: IEmailAutomatization, index: any, e: any) => {
+    e.preventDefault()
+    setTempEmail({ affair: email.affair, buttonText: email.buttonText, index: index, paragraph: email.paragraph, title: email.title, url: email.url })
+  }
 
   return (
     <>
@@ -54,63 +77,142 @@ const NewAutomatization = () => {
           <div className='w-full max-w-1280 m-auto mb-6'>
             <h1 className='text-xl mb-4'>Nueva automatización</h1>
           </div>
-          <div className='w-full flex flex-col max-w-1280 m-auto mb-4'>
-            <div className='w-[500px] p-4 flex flex-col gap-2 bg-white m-auto rounded-md shadow-md'>
-              <p>Selecciona el segmento de usuarios para la automatización</p>
-              <select className='p-1.5 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
-                <option>Todos los suscriptores</option>
+          <div className='w-full flex max-w-1280 m-auto'>
+            <div className='m-auto flex gap-8'>
+              <div className='flex flex-col mb-4 h-fit'>
+                <div className='w-[500px] p-4 flex flex-col gap-2 bg-white m-auto rounded-md shadow-md'>
+                  <p>Selecciona el segmento de usuarios para la automatización</p>
+                  <select className='p-1.5 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                    <option>Todos los suscriptores</option>
+                    {
+                      clientTags.length
+                        ? clientTags.map(clientTag => (
+                          <option key={clientTag.tag}>{clientTag.tag}</option>
+                        ))
+                        : ''
+                    }
+                  </select>
+                </div>
                 {
-                  clientTags.length
-                    ? clientTags.map(clientTag => (
-                      <option key={clientTag.tag}>{clientTag.tag}</option>
-                    ))
-                    : ''
+                  automatization.automatization.map((email, index) => (
+                    <>
+                      <div className='h-[40px] w-[2px] bg-neutral-300 m-auto' />
+                      <div className='w-[500px] p-4 flex flex-col gap-2 bg-white m-auto rounded-md shadow-md'>
+                        <p>Tiempo de espera</p>
+                        <div className='flex gap-2'>
+                          <input onChange={(e: any) => {
+                            const data = automatization.automatization
+                            data[index].number = e.target.value
+                            setAutomatization({ ...automatization, automatization: data })
+                          }} value={automatization.automatization[index].number} type='text' placeholder='Tiempo' className='font-light p-1.5 rounded border text-sm w-44 focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                          <select onChange={(e: any) => {
+                            const data = automatization.automatization
+                            data[index].time = e.target.value
+                            setAutomatization({ ...automatization, automatization: data })
+                          }} value={automatization.automatization[index].time} className='p-1.5 rounded border text-sm font-light focus:outline-none w-44 focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                            <option>Días</option>
+                            <option>Horas</option>
+                            <option>Minutos</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className='h-[40px] w-[2px] bg-neutral-300 m-auto' />
+                      <div key={email.affair} className='w-[500px] p-4 flex flex-col gap-2 bg-white m-auto rounded-md shadow-md'>
+                        <p>Enviar correo</p>
+                        <p className='text-sm'>Asunto: {email.title}</p>
+                        <button onClick={(e: any) => editEmail(email, index, e)} className='bg-main text-white text-sm rounded-md w-36 h-8'>Editar Correo</button>
+                      </div>
+                    </>
+                  ))
                 }
-              </select>
-            </div>
-            {
-              automatization.automatization.map((email, index) => (
-                <>
-                  <div className='h-[40px] w-[2px] bg-neutral-300 m-auto' />
-                  <div className='w-[500px] p-4 flex flex-col gap-2 bg-white m-auto rounded-md shadow-md'>
-                    <p>Tiempo de espera</p>
-                    <div className='flex gap-2'>
-                      <input onChange={(e: any) => {
-                        const data = automatization.automatization
-                        data[index].number = e.target.value
-                        setAutomatization({ ...automatization, automatization: data })
-                      }} value={automatization.automatization[index].number} type='text' placeholder='Tiempo' className='font-light p-1.5 rounded border text-sm w-44 focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-                      <select onChange={(e: any) => {
-                        const data = automatization.automatization
-                        data[index].time = e.target.value
-                        setAutomatization({ ...automatization, automatization: data })
-                      }} value={automatization.automatization[index].time} className='p-1.5 rounded border text-sm font-light focus:outline-none w-44 focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
-                        <option>Días</option>
-                        <option>Horas</option>
-                        <option>Minutos</option>
-                      </select>
+                <button onClick={(e: any) => {
+                  e.preventDefault()
+                  setAutomatization({ ...automatization, automatization: automatization.automatization.concat({
+                    affair: '',
+                    title: 'Te damos la bienvenida a nuestra tienda',
+                    paragraph: '¡Hola ${name}! Nos hace muy felices tenerte con nosotros, aquí te dejamos el código de descuento que te prometimos',
+                    buttonText: 'Visitar tienda',
+                    url: '',
+                    number: 0,
+                    time: ''
+                  }) })
+                }} className='mt-6 bg-main text-white text-sm rounded-md w-36 m-auto h-8'>Agregar paso</button>
+              </div>
+              {
+                (tempEmail.buttonText !== '' || tempEmail.paragraph !== '' || tempEmail.title !== '')
+                  ? (
+                    <div className='flex flex-col gap-6'>
+                      <div className='w-[600px] p-4 flex flex-col gap-2 bg-white rounded-md shadow-md'>
+                        <h2>Configuración correo</h2>
+                        <div className='flex'>
+                          <p className='text-sm mt-auto mb-auto w-32'>Asunto:</p>
+                          <input onChange={(e: ChangeEvent<HTMLInputElement>) => setTempEmail({ ...tempEmail, affair: e.target.value })} value={tempEmail.affair} type='text' placeholder='Asunto' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                        </div>
+                        <div className='flex'>
+                          <p className='text-sm mt-auto mb-auto w-32'>Titulo:</p>
+                          <input onChange={(e: ChangeEvent<HTMLInputElement>) => setTempEmail({ ...tempEmail, title: e.target.value })} value={tempEmail.title} type='text' placeholder='Titulo' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                        </div>
+                        <div className='flex'>
+                          <p className='text-sm mt-auto mb-auto w-32'>Parrafo:</p>
+                          <textarea onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setTempEmail({ ...tempEmail, paragraph: e.target.value })} value={tempEmail.paragraph} placeholder='Parrafo' className='font-light h-16 p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                        </div>
+                        <div className='flex'>
+                          <p className='text-sm mt-auto mb-auto w-32'>Texto boton:</p>
+                          <input onChange={(e: ChangeEvent<HTMLInputElement>) => setTempEmail({ ...tempEmail, buttonText: e.target.value })} value={tempEmail.buttonText} type='text' placeholder='Boton' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                        </div>
+                        <div className='flex'>
+                          <p className='text-sm mt-auto mb-auto w-32'>Url:</p>
+                          <input onChange={(e: ChangeEvent<HTMLInputElement>) => setTempEmail({ ...tempEmail, url: e.target.value })} value={tempEmail.url} type='text' placeholder='Url' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                        </div>
+                        <button onClick={(e: any) => {
+                          e.preventDefault()
+                          const data = automatization.automatization
+                          data[tempEmail.index] = { ...data[tempEmail.index], affair: tempEmail.affair, buttonText: tempEmail.buttonText, paragraph: tempEmail.paragraph, title: tempEmail.title, url: tempEmail.url }
+                          setAutomatization({ ...automatization, automatization: data })
+                          setTempEmail({
+                            affair: '',
+                            buttonText: '',
+                            paragraph: '',
+                            title: '',
+                            url: '',
+                            index: 0
+                          })
+                        }} className='bg-main text-white text-sm rounded-md w-36 mt-2 h-8'>Guardar</button>
+                      </div>
+                      <div className='flex flex-col h-fit gap-4 p-4 bg-white w-[600px]'>
+                        <img className='w-64 mx-auto' src='https://res.cloudinary.com/blasspod/image/upload/v1664841659/blaspod/ouxxwsmqodpemvffqs7b.png' />
+                        <h1 className='text-center mx-auto text-3xl'>{tempEmail.title}</h1>
+                        <p className='text-center mx-auto'>{tempEmail.paragraph}</p>
+                        {
+                          tempEmail.buttonText !== ''
+                            ? <Link className='py-2 px-7 bg-main w-fit m-auto text-white' href={tempEmail.url}>{tempEmail.buttonText}</Link>
+                            : ''
+                        }
+                        <div className='border-t pt-6 px-6 flex gap-4 justify-between'>
+                          {
+                            storeData
+                              ? (
+                                <>
+                                  <div className='flex flex-col gap-2'>
+                                    <p className='text-sm'>{storeData.name}</p>
+                                    <p className='text-sm'>{storeData.email}</p>
+                                    <p className='text-sm'>{storeData.phone}</p>
+                                  </div>
+                                  <div className='flex flex-col gap-2'>
+                                    <p className='text-sm text-right'>{storeData.address}</p>
+                                    <p className='text-sm text-right'>{storeData.city}, {storeData.region}</p>
+                                  </div>
+                                </>
+                              )
+                              : ''
+                          }
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className='h-[40px] w-[2px] bg-neutral-300 m-auto' />
-                  <div key={email.affair} className='w-[500px] p-4 flex flex-col gap-2 bg-white m-auto rounded-md shadow-md'>
-                    <p>Enviar correo</p>
-                    <button className='w-fit py-2 px-4 rounded bg-main text-white'>Editar Correo</button>
-                  </div>
-                </>
-              ))
-            }
-            <button onClick={(e: any) => {
-              e.preventDefault()
-              setAutomatization({ ...automatization, automatization: automatization.automatization.concat({
-                affair: '',
-                title: '',
-                paragraph: '',
-                buttonText: '',
-                url: '',
-                number: 0,
-                time: ''
-              }) })
-            }} className='mt-6 bg-main text-white text-sm rounded-md w-36 m-auto h-8'>Agregar paso</button>
+                  )
+                  : ''
+              }
+            </div>
           </div>
         </div>
       </LeftMenu>
