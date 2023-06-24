@@ -18,7 +18,7 @@ const NewAutomatization = () => {
       buttonText: 'Visitar tienda',
       url: '',
       number: 0,
-      time: ''
+      time: 'Días'
     }]
   })
   const [clientTags, setClientTags] = useState<IClientTag[]>([])
@@ -59,7 +59,7 @@ const NewAutomatization = () => {
   }
 
   const handleSubmit = async (e: any) => {
-    e.preventDefaul()
+    e.preventDefault()
     setLoading(true)
     await axios.post('https://server-production-e234.up.railway.app/automatization', automatization)
     router.push('/marketing/automatizaciones')
@@ -130,7 +130,7 @@ const NewAutomatization = () => {
                       <div className='h-[40px] w-[2px] bg-neutral-300 m-auto dark:bg-neutral-700' />
                       <div key={email.affair} className='w-[500px] p-4 flex flex-col gap-2 bg-white m-auto rounded-md shadow-md dark:bg-neutral-800'>
                         <p>Enviar correo</p>
-                        <p className='text-sm'>Asunto: {email.title}</p>
+                        <p className='text-sm'>Asunto: {email.affair}</p>
                         <button onClick={(e: any) => editEmail(email, index, e)} className='bg-main text-white text-sm rounded-md w-36 h-8'>Editar Correo</button>
                       </div>
                     </>
@@ -145,7 +145,7 @@ const NewAutomatization = () => {
                     buttonText: 'Visitar tienda',
                     url: '',
                     number: 0,
-                    time: ''
+                    time: 'Días'
                   }) })
                 }} className='mt-6 bg-main text-white text-sm rounded-md w-36 m-auto h-8'>Agregar paso</button>
               </div>
