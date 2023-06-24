@@ -10,6 +10,7 @@ export interface IEmailAutomatization {
     paragraph: string
     buttonText: string
     url: string
-    number: number
-    time: string
+    number?: number
+    time?: string
+    date?: Date
 }

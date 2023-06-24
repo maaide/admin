@@ -1,4 +1,5 @@
 import { LeftMenu, Spinner } from '@/components/ui'
+import { IAutomatization } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -7,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 const AutomatizationsPage = () => {
 
   const [loading, setLoading] = useState(false)
-  const [automatizations, setAutomatizations] = useState([])
+  const [automatizations, setAutomatizations] = useState<IAutomatization[]>([])
 
   const getAutomatizations = async () => {
     setLoading(true)
@@ -43,20 +44,30 @@ const AutomatizationsPage = () => {
                 )
                 : automatizations.length
                   ? (
-                    <table>
-                      <thead>
-                        <tr>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {
-                          automatizations.map(automatization => {
-                            return <p key={automatization}></p>
-                          })
-                        }
-                      </tbody>
-                    </table>
+                    <div className='bg-white p-2 rounded-md shadow-md dark:bg-neutral-800 dark:border dark:border-neutral-700'>
+                      <table className='w-full'>
+                        <thead>
+                          <tr>
+                            <th className='p-2 text-left font-normal'>Nombre</th>
+                            <th className='p-2 text-left font-normal'>Segmento</th>
+                            <th className='p-2 text-left font-normal'>Pasos</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            automatizations.map(automatization => {
+                              return (
+                                <tr>
+                                  <td className='p-2 border-t'>{automatization.name}</td>
+                                  <td className='p-2 border-t'>{automatization.address}</td>
+                                  <td className='p-2 border-t'>{automatization.automatization.length}</td>
+                                </tr>
+                              )
+                            })
+                          }
+                        </tbody>
+                      </table>
+                    </div>
                   )
                   : ''
             }
