@@ -95,6 +95,7 @@ const Configuration = () => {
                 <Link href='/configuracion/pasarela-de-pago'>Pasarela de pago</Link>
                 <Link href='/configuracion/plan'>Plan</Link>
                 <Link href='/configuracion/politicas'>Politicas</Link>
+                <Link href='/configuracion/dominio'>Dominio</Link>
               </div>
             </div>
             <div className='w-3/4'>
