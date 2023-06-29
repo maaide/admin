@@ -1,14 +1,26 @@
 import { LeftMenu, Spinner2 } from '@/components/ui'
+import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 const Configuration = () => {
 
   const [loading, setLoading] = useState(false)
+  const [domain, setDomain] = useState('')
+
+  const getDomain = async () => {
+    const response = await axios.get('https://server-production-e234.up.railway.app/domain')
+    setDomain(response.data.domain)
+  }
+
+  useEffect(() => {
+    getDomain()
+  }, [])
 
   const handleSubmit = async () => {
     setLoading(true)
+    await axios.post('https://server-production-e234.up.railway.app/domain', { domain: domain })
     setLoading(false)
   }
 
@@ -47,7 +59,7 @@ const Configuration = () => {
                 <p className='text-sm'>Este cambio tiene un tiempo de demora de maximo un día habil, se le enviara un email cuando el cambio se haya realizado</p>
                 <div className='flex gap-2'>
                   <p className='text-sm my-auto'>Dominio</p>
-                  <input type='text' placeholder='Dominio' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  <input type='text' onChange={(e: ChangeEvent<HTMLInputElement>) => setDomain(e.target.value)} value={domain} placeholder='Dominio' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                 </div>
               </div>
             </div>
