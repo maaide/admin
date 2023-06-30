@@ -11,6 +11,7 @@ const NewAutomatization = () => {
   const [automatization, setAutomatization] = useState<IAutomatization>({
     address: 'Todos los suscriptores',
     name: '',
+    date: new Date(),
     automatization: [{
       affair: '',
       title: 'Te damos la bienvenida a nuestra tienda',
@@ -61,7 +62,7 @@ const NewAutomatization = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     setLoading(true)
-    await axios.post('https://server-production-e234.up.railway.app/automatization', automatization)
+    await axios.post('https://server-production-e234.up.railway.app/automatization', { address: automatization.address, name: automatization.name, date: new Date(), automatization: automatization.automatization })
     router.push('/marketing/automatizaciones')
     setLoading(false)
   }
