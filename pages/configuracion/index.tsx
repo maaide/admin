@@ -14,7 +14,8 @@ const Configuration = () => {
     address: '',
     region: '',
     city: '',
-    logo: ''
+    logo: '',
+    logoWhite: ''
   })
   const [regions, setRegions] = useState<Region[]>()
   const [citys, setCitys] = useState<City[]>()
@@ -22,9 +23,7 @@ const Configuration = () => {
 
   const getStoreData = async () => {
     const response = await axios.get('https://server-production-e234.up.railway.app/store-data')
-    if (response.data.length) {
-      setStoreData(response.data[0])
-    }
+    setStoreData(response.data)
   }
 
   useEffect(() => {
@@ -59,6 +58,19 @@ const Configuration = () => {
         }
       })
       setStoreData({...storeData, logo: response.data.image.url})
+    }
+  }
+
+  const imageChange2 = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
+      const response = await axios.post('https://server-production-e234.up.railway.app/product-image-upload', {image: e.target.files[0]}, {
+        headers: {
+          accept: 'application/json',
+          'Accept-Language': 'en-US,en;q=0.8',
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      setStoreData({...storeData, logoWhite: response.data.image.url})
     }
   }
 
@@ -131,9 +143,13 @@ const Configuration = () => {
                     <input type='text' name='phone' value={storeData.phone} onChange={inputChange} placeholder='Telefono de la tienda' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                   </div>
                 </div>
-                <div>
+                <div className='mb-4'>
                   <p className='text-sm mb-2'>Logo de la tienda</p>
                   <input onChange={imageChange} type='file' className='text-sm' />
+                </div>
+                <div>
+                  <p className='text-sm mb-2'>Logo blanco de la tienda</p>
+                  <input onChange={imageChange2} type='file' className='text-sm' />
                 </div>
               </div>
               <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
