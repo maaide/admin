@@ -57,7 +57,7 @@ const AutomatizationsPage = () => {
                           {
                             automatizations.map(automatization => {
                               return (
-                                <tr>
+                                <tr key={automatization.name}>
                                   <td className='p-2 border-t'>{automatization.name}</td>
                                   <td className='p-2 border-t'>{automatization.address}</td>
                                   <td className='p-2 border-t'>{automatization.automatization.length}</td>

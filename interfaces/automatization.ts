@@ -1,7 +1,6 @@
 export interface IAutomatization {
     address: string
     name: string
-    date?: Date
     automatization: IEmailAutomatization[]
 }
 

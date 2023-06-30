@@ -11,7 +11,6 @@ const NewAutomatization = () => {
   const [automatization, setAutomatization] = useState<IAutomatization>({
     address: 'Todos los suscriptores',
     name: '',
-    date: new Date(),
     automatization: [{
       affair: '',
       title: 'Te damos la bienvenida a nuestra tienda',
