@@ -3,7 +3,7 @@ import { City, IStoreData, Region } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 const Configuration = () => {
 
@@ -13,7 +13,8 @@ const Configuration = () => {
     phone: '',
     address: '',
     region: '',
-    city: ''
+    city: '',
+    logo: ''
   })
   const [regions, setRegions] = useState<Region[]>()
   const [citys, setCitys] = useState<City[]>()
@@ -47,6 +48,19 @@ const Configuration = () => {
   useEffect(() => {
     requestRegions()
   }, [])
+
+  const imageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
+      const response = await axios.post('https://server-production-e234.up.railway.app/product-image-upload', {image: e.target.files[0]}, {
+        headers: {
+          accept: 'application/json',
+          'Accept-Language': 'en-US,en;q=0.8',
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      setStoreData({...storeData, logo: response.data.image.url})
+    }
+  }
 
   const regionChange = async (e: any) => {
     const region = regions?.find(region => region.regionName === e.target.value)
@@ -110,12 +124,16 @@ const Configuration = () => {
                   <p className='text-sm mb-2'>Correo de la tienda</p>
                   <input type='text' name='email' value={storeData.email} onChange={inputChange} placeholder='Correo de la tienda' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                 </div>
-                <div>
+                <div className='mb-4'>
                   <p className='text-sm mb-2'>Telefono de la tienda</p>
                   <div className='flex gap-2'>
                     <p className='text-sm mt-auto mb-auto'>+56</p>
                     <input type='text' name='phone' value={storeData.phone} onChange={inputChange} placeholder='Telefono de la tienda' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                   </div>
+                </div>
+                <div>
+                  <p className='text-sm mb-2'>Logo de la tienda</p>
+                  <input onChange={imageChange} type='file' className='text-sm' />
                 </div>
               </div>
               <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
