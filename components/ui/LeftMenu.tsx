@@ -5,6 +5,7 @@ import { AiOutlineHome, AiOutlineDollarCircle, AiOutlineFund, AiOutlineNotificat
 import { MdOutlineLocalOffer } from 'react-icons/md'
 import { HiOutlineUsers } from 'react-icons/hi'
 import { useRouter } from 'next/router'
+import { BsShop } from 'react-icons/bs'
 
 export const LeftMenu: React.FC<PropsWithChildren> = ({ children }) => {
 
@@ -49,6 +50,8 @@ export const LeftMenu: React.FC<PropsWithChildren> = ({ children }) => {
               : ''
           }
           <Link href='/mensajes' className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><AiOutlineMessage className='mt-auto mb-auto text-xl text-main' />Mensajes</Link>
+          <Link href='/diseno' className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BsShop className='mt-auto mb-auto text-xl text-main' />Diseño</Link>
+          
         </div>
         <div className='border-t pt-4 dark:border-neutral-800'>
           <Link href='/configuracion' className='font-light flex gap-2 rounded pt-1 pb-1 pl-2 pr-2 hover:bg-neutral-100 dark:hover:bg-neutral-800'><IoSettingsOutline className='mt-auto mb-auto text-xl text-main' />Configuración</Link>
