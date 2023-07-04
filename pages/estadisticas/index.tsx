@@ -75,19 +75,19 @@ const StadisticsPage = () => {
                       </div>
                       <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md dark:bg-neutral-800 dark:border-neutral-700'>
                         <p>Ventas</p>
-                        <p className='text-xl'>{stadistics.sells}</p>
+                        <p className='text-xl'>{stadistics.sells ? stadistics.sells : 0}</p>
                       </div>
                       <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md dark:bg-neutral-800 dark:border-neutral-700'>
                         <p>Visitantes web</p>
-                        <p className='text-xl'>{stadistics.viewContents}</p>
+                        <p className='text-xl'>{stadistics.viewContents ? stadistics.viewContents : 0}</p>
                       </div>
                       <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md dark:bg-neutral-800 dark:border-neutral-700'>
                         <p>Añadidos al carrito</p>
-                        <p className='text-xl'>{stadistics.addCarts}</p>
+                        <p className='text-xl'>{stadistics.addCarts ? stadistics.addCarts : 0}</p>
                       </div>
                       <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md dark:bg-neutral-800 dark:border-neutral-700'>
                         <p>Añadir información</p>
-                        <p className='text-xl'>{stadistics.informations}</p>
+                        <p className='text-xl'>{stadistics.informations ? stadistics.informations : 0}</p>
                       </div>
                     </>
                   )
