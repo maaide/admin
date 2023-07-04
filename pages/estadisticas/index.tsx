@@ -6,12 +6,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 
 const StadisticsPage = () => {
 
-  const [stadistics, setStadistics] = useState<IStadistics>({
-    addCarts: [],
-    informations: [],
-    sells: [],
-    viewContents: []
-  })
+  const [stadistics, setStadistics] = useState<IStadistics>()
   const [filter, setFilter] = useState({
     dateInitial: undefined,
     dateLast: undefined
@@ -71,28 +66,28 @@ const StadisticsPage = () => {
                     </div>
                   </div>
                 )
-                : stadistics.addCarts.length || stadistics.informations.length || stadistics.sells.length || stadistics.viewContents.length
+                : stadistics?.addCarts || stadistics?.informations || stadistics?.sells || stadistics?.viewContents
                   ? (
                     <>
-                      <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md'>
+                      <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md dark:bg-neutral-800 dark:border-neutral-700'>
                         <p>Total vendido</p>
                         <p className='text-xl'>$0</p>
                       </div>
-                      <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md'>
+                      <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md dark:bg-neutral-800 dark:border-neutral-700'>
                         <p>Ventas</p>
-                        <p className='text-xl'>{stadistics.sells?.length}</p>
+                        <p className='text-xl'>{stadistics.sells}</p>
                       </div>
-                      <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md'>
+                      <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md dark:bg-neutral-800 dark:border-neutral-700'>
                         <p>Visitantes web</p>
-                        <p className='text-xl'>{stadistics.viewContents?.length}</p>
+                        <p className='text-xl'>{stadistics.viewContents}</p>
                       </div>
-                      <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md'>
+                      <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md dark:bg-neutral-800 dark:border-neutral-700'>
                         <p>Añadidos al carrito</p>
-                        <p className='text-xl'>{stadistics.addCarts?.length}</p>
+                        <p className='text-xl'>{stadistics.addCarts}</p>
                       </div>
-                      <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md'>
+                      <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md dark:bg-neutral-800 dark:border-neutral-700'>
                         <p>Añadir información</p>
-                        <p className='text-xl'>{stadistics.informations?.length}</p>
+                        <p className='text-xl'>{stadistics.informations}</p>
                       </div>
                     </>
                   )

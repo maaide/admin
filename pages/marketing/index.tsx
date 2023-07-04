@@ -20,8 +20,8 @@ const MarketingPage = () => {
               </div>
             </div>
             <div className='flex gap-4 w-full max-w-1280 m-auto'>
-              <Link className='p-6 bg-white rounded-md shadow' href='/marketing/campanas'>Campañas</Link>
-              <Link className='p-6 bg-white rounded-md shadow' href='/marketing/automatizaciones'>Automatizaciones</Link>
+              <Link className='p-6 bg-white rounded-md shadow dark:bg-neutral-800' href='/marketing/campanas'>Campañas</Link>
+              <Link className='p-6 bg-white rounded-md shadow dark:bg-neutral-800' href='/marketing/automatizaciones'>Automatizaciones</Link>
             </div>
           </div>
         </div>

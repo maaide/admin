@@ -2,14 +2,15 @@ import Link from 'next/link'
 import React from 'react'
 import { LeftMenu, Spinner } from '../../../components/ui/'
 import Head from 'next/head'
-import { useCategories } from '@/hooks'
+import { useCategories, useProducts } from '@/hooks'
 import { useRouter } from 'next/router'
 import { AiOutlineClose } from 'react-icons/ai'
-import axios from 'axios';
+import axios from 'axios'
 
 const Categories = () => {
 
   const {isLoadingCategories, categories} = useCategories('/categories')
+  const {products} = useProducts('/products')
   const router = useRouter()
 
   return (
@@ -57,7 +58,7 @@ const Categories = () => {
                               <p className='font-light'>{category.slug}</p>
                             </td>
                             <td className='p-2' onClick={() => router.push(`/productos/categorias/${category.slug}`)}>
-                              <p className='font-light'>8</p>
+                              <p className='font-light'>{products.length ? products.filter(product => product.category === category.category).length : ''}</p>
                             </td>
                             <td className='p-2'>
                               <button onClick={async(e: any) => {

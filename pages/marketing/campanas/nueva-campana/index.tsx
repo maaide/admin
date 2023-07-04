@@ -68,7 +68,7 @@ const NewCampaign = () => {
             <h1 className='text-xl'>Nueva campaña</h1>
           </div>
           <div className='flex flex-col gap-4 w-full max-w-1280 m-auto'>
-            <div className='bg-white p-4 w-full rounded-md shadow-md'>
+            <div className='bg-white p-4 w-full rounded-md shadow-md dark:bg-neutral-800'>
               <div className='flex gap-12 mb-2'>
                 <p className='text-sm mt-auto mb-auto'>Para:</p>
                 <select onChange={(e: ChangeEvent<HTMLSelectElement>) => setEmail({ ...email, address: e.target.value })} value={email.address} className='p-1.5 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
@@ -89,7 +89,7 @@ const NewCampaign = () => {
             </div>
             <div className='w-full flex'>
               <div className='flex flex-wrap gap-6 m-auto'>
-                <div className='w-[600px] flex flex-col gap-4 m-auto bg-white pt-6 pb-6'>
+                <div className='w-[600px] flex flex-col gap-4 m-auto bg-white pt-6 pb-6 dark:bg-neutral-800'>
                   <img className='w-64 m-auto' src='https://res.cloudinary.com/blasspod/image/upload/v1664841659/blaspod/ouxxwsmqodpemvffqs7b.png' />
                   <h1 className='m-auto text-3xl text-center'>{email.title}</h1>
                   <p className='m-auto text-center'>{email.paragraph}</p>
@@ -98,7 +98,7 @@ const NewCampaign = () => {
                       ? <Link href={email.url} className='py-2 px-7 bg-main w-fit m-auto text-white'>{email.buttonText}</Link>
                       : ''
                   }
-                  <div className='border-t pt-6 px-6 flex gap-4 justify-between'>
+                  <div className='border-t pt-6 px-6 flex gap-4 justify-between dark:border-neutral-700'>
                     {
                       storeData
                         ? (
@@ -118,7 +118,7 @@ const NewCampaign = () => {
                     }
                   </div>
                 </div>
-                <div className='p-4 m-auto bg-white w-96 rounded-md shadow-md'>
+                <div className='p-4 m-auto bg-white w-96 rounded-md shadow-md dark:bg-neutral-800'>
                   <h2 className='text-lg mb-4'>Contenido</h2>
                   <p className='mb-2 text-sm'>Titulo</p>
                   <input type='text' placeholder='Titulo' onChange={(e: any) => setEmail({...email, title: e.target.value})} value={email.title} className='font-light p-1.5 rounded mb-4 border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
