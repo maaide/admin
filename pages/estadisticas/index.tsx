@@ -1,5 +1,6 @@
 import { LeftMenu, Spinner } from '@/components/ui'
 import { IStadistics } from '@/interfaces/stadistics'
+import { NumberFormat } from '@/utils'
 import axios from 'axios'
 import Head from 'next/head'
 import React, { ChangeEvent, useEffect, useState } from 'react'
@@ -66,12 +67,12 @@ const StadisticsPage = () => {
                     </div>
                   </div>
                 )
-                : stadistics?.addCarts || stadistics?.informations || stadistics?.sells || stadistics?.viewContents
+                : stadistics?.totalSell || stadistics?.addCarts || stadistics?.informations || stadistics?.sells || stadistics?.viewContents
                   ? (
                     <>
                       <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md dark:bg-neutral-800 dark:border-neutral-700'>
                         <p>Total vendido</p>
-                        <p className='text-xl'>$0</p>
+                        <p className='text-xl'>${NumberFormat(Number(stadistics.totalSell))}</p>
                       </div>
                       <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md dark:bg-neutral-800 dark:border-neutral-700'>
                         <p>Ventas</p>

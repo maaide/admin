@@ -62,7 +62,7 @@ const ClientPage = () => {
                 {
                   clientSells.length
                     ? clientSells.map(sell => (
-                      <div className='flex gap-4 cursor-pointer justify-between hover:bg-neutral-200 pt-4 pb-4 rounded pl-2 pr-2 dark:hover:bg-neutral-700' key={sell._id}>
+                      <div onClick={() => router.push(`/ventas/${sell._id}`)} className='flex gap-4 cursor-pointer justify-between hover:bg-neutral-200 pt-4 pb-4 rounded pl-2 pr-2 dark:hover:bg-neutral-700' key={sell._id}>
                         <p className='mt-auto mb-auto text-sm'>{sell.pay}</p>
                         <p className='mt-auto mb-auto text-sm'>{sell.state}</p>
                         <p className='mt-auto mb-auto text-sm'>{sell.shippingMethod}</p>
