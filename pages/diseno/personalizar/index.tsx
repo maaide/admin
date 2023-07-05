@@ -1,11 +1,26 @@
+import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 
 const PersonalizePage = () => {
 
   const [part, setPart] = useState('')
+  const [bannerView, setBannerView] = useState(false)
+  const [categoryView, setCategoryView] = useState(false)
+  const [productsView, setProductsView] = useState(false)
+  const [home, setHome] = useState([
+    {
+      banner: [{
+        image: '',
+        title: '',
+        text: '',
+        textButton: '',
+        linkButton: ''
+      }]
+    }
+  ])
 
   return (
     <>
@@ -13,7 +28,7 @@ const PersonalizePage = () => {
         <title>Personalizar sitio web</title>
       </Head>
       <div className='fixed flex w-full' style={{ height: 'calc(100% - 56px)' }}>
-        <div className='w-[500px] border-r pt-6 pb-6 pl-4 pr-4 flex flex-col justify-between dark:border-neutral-800'>
+        <div className='w-[500px] border-r pt-6 pb-6 pl-4 pr-4 flex flex-col justify-between dark:border-neutral-800' style={{ overflow: 'overlay' }}>
           {
             part === ''
               ? (
@@ -33,7 +48,19 @@ const PersonalizePage = () => {
           }
           {
             part === 'Encabezado'
-              ? <p>Encabezado</p>
+              ? (
+                <div className='flex flex-col gap-4'>
+                  <button onClick={(e: any) => {
+                    e.preventDefault()
+                    setPart('')
+                  }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
+                  <p className='text-lg border-b pb-2'>Encabezado</p>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Franja superior</p>
+                    <input type='text' placeholder='Franja superior' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                </div>
+              )
               : ''
           }
           {
@@ -45,27 +72,193 @@ const PersonalizePage = () => {
                     setPart('')
                   }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
                   <p className='text-lg border-b pb-2'>Inicio</p>
-                  <div className='flex flex-col gap-2'>
-                    <p className='text-sm'>Banner</p>
-                    <input type='text' placeholder='Franja superior' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-                  </div>
+                  <button onClick={() => bannerView ? setBannerView(false) : setBannerView(true)} className='w-full flex gap-2 justify-between'>
+                    <h2>Banner</h2>
+                  </button>
+                  {
+                    bannerView
+                      ? (
+                        <div className='flex flex-col gap-4'>
+                          {
+                            home[0].banner.map((banner, index) => (
+                              <div key={index} className='flex flex-col gap-2'>
+                                <p>Banner {index + 1}</p>
+                                <p className='text-sm'>Imagen de fondo</p>
+                                <input type='file' onChange={async (e: ChangeEvent<HTMLInputElement>) => {
+                                  const response = await axios.post('https://server-production-e234.up.railway.app/product-image-upload', {image: e.target.files?.length ? e.target.files[0] : ''}, {
+                                    headers: {
+                                      accept: 'application/json',
+                                      'Accept-Language': 'en-US,en;q=0.8',
+                                      'Content-Type': 'multipart/form-data'
+                                    }
+                                  })
+                                  const updatedHome = [...home]
+                                  updatedHome[0].banner[index].image = response.data.image.url
+                                  setHome(updatedHome)
+                                }} className='text-sm' />
+                                <p className='text-sm'>Titulo</p>
+                                <input type='text' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                  const updatedHome = [...home]
+                                  updatedHome[0].banner[index].title = e.target.value
+                                  setHome(updatedHome)
+                                }} value={banner.title} placeholder='Titulo' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                                <p className='text-sm'>Texto</p>
+                                <textarea onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                                  const updatedHome = [...home]
+                                  updatedHome[0].banner[index].text = e.target.value
+                                  setHome(updatedHome)
+                                }} value={banner.text} placeholder='Texto' className='font-light h-20 p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                                <p className='text-sm'>Texto boton</p>
+                                <input type='text' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                  const updatedHome = [...home]
+                                  updatedHome[0].banner[index].textButton = e.target.value
+                                  setHome(updatedHome)
+                                }} value={banner.textButton} placeholder='Texto' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                                <p className='text-sm'>Link boton</p>
+                                <input type='text' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                  const updatedHome = [...home]
+                                  updatedHome[0].banner[index].linkButton = e.target.value
+                                  setHome(updatedHome)
+                                }} value={banner.linkButton} placeholder='Link' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                              </div>
+                            ))
+                          }
+                          <button onClick={(e: any) => {
+                            e.preventDefault()
+                            const updatedHome = [...home]
+                            updatedHome[0].banner.push({
+                              image: '',
+                              title: '',
+                              text: '',
+                              textButton: '',
+                              linkButton: ''
+                            })
+                            setHome(updatedHome)
+                          }} className='bg-main text-white text-sm rounded-md w-36 h-8'>Agregar Banner</button>
+                        </div>
+                      )
+                      : ''
+                  }
+                  <button onClick={() => categoryView ? setCategoryView(false) : setCategoryView(true)} className='w-full flex gap-2 justify-between'>
+                    <h2>Categorias</h2>
+                  </button>
+                  {
+                    categoryView
+                      ? (
+                        <div className='flex flex-col gap-2'>
+                          <div className='flex gap-2'>
+                            <input type='checkbox' />
+                            <p className='text-sm'>Mostrar titulo categorias</p>
+                          </div>
+                          <div className='flex gap-2'>
+                            <input type='checkbox' />
+                            <p className='text-sm'>Mostrar descripción de la categoria</p>
+                          </div>
+                        </div>
+                      )
+                      : ''
+                  }
+                  <button onClick={() => productsView ? setProductsView(false) : setProductsView(true)} className='w-full flex gap-2 justify-between'>
+                    <h2>Productos</h2>
+                  </button>
+                  {
+                    productsView
+                      ? (
+                        <div className='flex flex-col gap-4'>
+                          <div className='flex flex-col gap-2'>
+                            <p className='text-sm'>Titulo</p>
+                            <input type='text' placeholder='Titulo' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                          </div>
+                          <div className='flex flex-col gap-2'>
+                            <p className='text-sm'>Sección de productos</p>
+                            <select className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                              <option>Todos los productos</option>
+                              <option>Productos en oferta</option>
+                              <option>Productos de una categoria</option>
+                            </select>
+                          </div>
+                        </div>
+                      )
+                      : ''
+                  }
                 </div>
               )
               : ''
           }
           {
             part === 'Producto'
-              ? <p>Producto</p>
+              ? (
+                <div className='flex flex-col gap-4'>
+                  <button onClick={(e: any) => {
+                    e.preventDefault()
+                    setPart('')
+                  }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
+                  <p className='text-lg border-b pb-2'>Pagina de producto</p>
+                </div>
+              )
               : ''
           }
           {
             part === 'Contacto'
-              ? <p>Contacto</p>
+              ? (
+                <div className='flex flex-col gap-4'>
+                  <button onClick={(e: any) => {
+                    e.preventDefault()
+                    setPart('')
+                  }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
+                  <p className='text-lg border-b pb-2'>Pagina de contacto</p>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Titulo</p>
+                    <input type='text' placeholder='Titulo' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Texto</p>
+                    <input type='text' placeholder='Texto' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Titulo formulario</p>
+                    <input type='text' placeholder='Titulo formulario' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                </div>
+              )
               : ''
           }
           {
             part === 'Tienda'
-              ? <p>Tienda</p>
+              ? (
+                <div className='flex flex-col gap-4'>
+                  <button onClick={(e: any) => {
+                    e.preventDefault()
+                    setPart('')
+                  }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
+                  <p className='text-lg border-b pb-2'>Tienda</p>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Titulo</p>
+                    <input type='text' placeholder='Titulo' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Descripción</p>
+                    <input type='text' placeholder='Descripción' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                </div>
+              )
+              : ''
+          }
+          {
+            part === 'Suscripcion'
+              ? (
+                <div className='flex flex-col gap-4'>
+                  <button onClick={(e: any) => {
+                    e.preventDefault()
+                    setPart('')
+                  }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
+                  <p className='text-lg border-b pb-2'>Zona de suscripción</p>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Titulo</p>
+                    <input type='text' placeholder='Titulo' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                </div>
+              )
               : ''
           }
         </div>
