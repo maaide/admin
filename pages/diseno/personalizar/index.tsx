@@ -53,7 +53,9 @@ const PersonalizePage = () => {
 
   const getDesign = async () => {
     const response = await axios.get('https://server-production-e234.up.railway.app/design')
-    setDesign(response.data)
+    if (response.data) {
+      setDesign(response.data)
+    }
   }
 
   useEffect(() => {
