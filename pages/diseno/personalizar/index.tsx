@@ -105,7 +105,7 @@ const PersonalizePage = () => {
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Franja superior</p>
                     <input type='text' onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      const updatedDesign = design
+                      const updatedDesign = {...design}
                       updatedDesign.header.topStrip = e.target.value
                       setDesign(updatedDesign)
                     }} value={design.header.topStrip} placeholder='Franja superior' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
@@ -143,31 +143,31 @@ const PersonalizePage = () => {
                                       'Content-Type': 'multipart/form-data'
                                     }
                                   })
-                                  const updatedHome = design
+                                  const updatedHome = {...design}
                                   updatedHome.home.banner[index].image = response.data.image.url
                                   setDesign(updatedHome)
                                 }} className='text-sm' />
                                 <p className='text-sm'>Titulo</p>
                                 <input type='text' onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                  const updatedHome = design
+                                  const updatedHome = {...design}
                                   updatedHome.home.banner[index].title = e.target.value
                                   setDesign(updatedHome)
                                 }} value={banner.title} placeholder='Titulo' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                                 <p className='text-sm'>Texto</p>
                                 <textarea onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-                                  const updatedHome = design
+                                  const updatedHome = {...design}
                                   updatedHome.home.banner[index].text = e.target.value
                                   setDesign(updatedHome)
                                 }} value={banner.text} placeholder='Texto' className='font-light h-20 p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                                 <p className='text-sm'>Texto boton</p>
                                 <input type='text' onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                  const updatedHome = design
+                                  const updatedHome = {...design}
                                   updatedHome.home.banner[index].textButton = e.target.value
                                   setDesign(updatedHome)
                                 }} value={banner.textButton} placeholder='Texto' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                                 <p className='text-sm'>Link boton</p>
                                 <input type='text' onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                  const updatedHome = design
+                                  const updatedHome = {...design}
                                   updatedHome.home.banner[index].linkButton = e.target.value
                                   setDesign(updatedHome)
                                 }} value={banner.linkButton} placeholder='Link' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
@@ -176,7 +176,7 @@ const PersonalizePage = () => {
                           }
                           <button onClick={(e: any) => {
                             e.preventDefault()
-                            const updatedHome = design
+                            const updatedHome = {...design}
                             updatedHome.home.banner.push({
                               image: '',
                               title: '',
@@ -199,7 +199,7 @@ const PersonalizePage = () => {
                         <div className='flex flex-col gap-2'>
                           <div className='flex gap-2'>
                             <input type='checkbox' onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                              const updatedDesign = design
+                              const updatedDesign = {...design}
                               updatedDesign.home.category.titleCategory = e.target.checked ? true : false
                               setDesign(updatedDesign)
                             }} />
@@ -207,7 +207,7 @@ const PersonalizePage = () => {
                           </div>
                           <div className='flex gap-2'>
                             <input type='checkbox' onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                              const updatedDesign = design
+                              const updatedDesign = {...design}
                               updatedDesign.home.category.descriptionCategory = e.target.checked ? true : false
                               setDesign(updatedDesign)
                             }} />
@@ -227,7 +227,7 @@ const PersonalizePage = () => {
                           <div className='flex flex-col gap-2'>
                             <p className='text-sm'>Titulo</p>
                             <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                              const updatedDesign = design
+                              const updatedDesign = {...design}
                               updatedDesign.home.products.title = e.target.value
                               setDesign(updatedDesign)
                             }} value={design.home.products.title} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
@@ -235,7 +235,7 @@ const PersonalizePage = () => {
                           <div className='flex flex-col gap-2'>
                             <p className='text-sm'>Sección de productos</p>
                             <select onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                              const updatedDesign = design
+                              const updatedDesign = {...design}
                               updatedDesign.home.products.sectionProducts = e.target.value
                               setDesign(updatedDesign)
                             }} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
@@ -264,7 +264,7 @@ const PersonalizePage = () => {
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Sección de productos</p>
                     <select onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                      const updatedDesign = design
+                      const updatedDesign = {...design}
                       updatedDesign.product.sectionProducts = e.target.value
                       setDesign(updatedDesign)
                     }} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
@@ -289,7 +289,7 @@ const PersonalizePage = () => {
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Titulo</p>
                     <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      const updatedDesign = design
+                      const updatedDesign = {...design}
                       updatedDesign.contact.title = e.target.value
                       setDesign(updatedDesign)
                     }} value={design.contact.title} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
@@ -297,7 +297,7 @@ const PersonalizePage = () => {
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Texto</p>
                     <input type='text' placeholder='Texto' onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      const updatedDesign = design
+                      const updatedDesign = {...design}
                       updatedDesign.contact.text = e.target.value
                       setDesign(updatedDesign)
                     }} value={design.contact.text} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
@@ -305,7 +305,7 @@ const PersonalizePage = () => {
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Titulo formulario</p>
                     <input type='text' placeholder='Titulo formulario' onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      const updatedDesign = design
+                      const updatedDesign = {...design}
                       updatedDesign.contact.titleForm = e.target.value
                       setDesign(updatedDesign)
                     }} value={design.contact.titleForm} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
@@ -326,7 +326,7 @@ const PersonalizePage = () => {
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Titulo</p>
                     <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      const updatedDesign = design
+                      const updatedDesign = {...design}
                       updatedDesign.shop.title = e.target.value
                       setDesign(updatedDesign)
                     }} value={design.shop.title} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
@@ -334,7 +334,7 @@ const PersonalizePage = () => {
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Descripción</p>
                     <input type='text' placeholder='Descripción' onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      const updatedDesign = design
+                      const updatedDesign = {...design}
                       updatedDesign.shop.description = e.target.value
                       setDesign(updatedDesign)
                     }} value={design.shop.description}  className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
@@ -355,7 +355,7 @@ const PersonalizePage = () => {
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Titulo</p>
                     <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      const updatedDesign = design
+                      const updatedDesign = {...design}
                       updatedDesign.subscription.title = e.target.value
                       setDesign(updatedDesign)
                     }} value={design.subscription.title} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
