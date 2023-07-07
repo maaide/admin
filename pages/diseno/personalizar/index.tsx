@@ -78,7 +78,6 @@ const PersonalizePage = () => {
   
   const handleSubmit = async () => {
     setLoading(true)
-    console.log(design)
     await axios.post('https://server-production-e234.up.railway.app/design', design)
     setLoading(false)
     window.location.reload()
