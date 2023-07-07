@@ -24,8 +24,8 @@ const PersonalizePage = () => {
         linkButton: ''
       }],
       category: {
-        titleCategory: true,
-        descriptionCategory: true
+        titleCategory: false,
+        descriptionCategory: false
       },
       products: {
         title: '',
@@ -36,9 +36,9 @@ const PersonalizePage = () => {
       sectionProducts: 'Todos los productos'
     },
     contact: {
-      title: 'CONTACTO',
-      text: 'Para cualquier pregunta o consulta que tengas, no dudes en ponerte en contacto con nosotros a traves del siguiente formulario, desde el chat del sitio web o desde nuestras redes sociales.',
-      titleForm: 'LLENA EL SIGUIENTE FORMULARIO'
+      title: '',
+      text: '',
+      titleForm: ''
     },
     shop: {
       title: '',
