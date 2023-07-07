@@ -17,22 +17,38 @@ export const Media: React.FC<Props> = ({ setCategoryInfo, categoryInfo }) => {
         'Content-Type': 'multipart/form-data'
       }
     })
-    setCategoryInfo({...categoryInfo, image: data.image.url})
+    setCategoryInfo({...categoryInfo, [e.target.name]: data.image.url})
   }
 
   return (
     <div className='bg-white p-4 rounded-md shadow border border-white dark:bg-neutral-800 dark:border-neutral-700'>
       <h2 className='mb-4'>Elementos muntimedia</h2>
-      <input type='file' onChange={imageChange} className='font-light text-sm block w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-main/10 file:text-main hover:file:bg-main/20' />
-      {
-        categoryInfo.image
-          ? (
-            <div className='mt-3'>
-              <img src={categoryInfo.image} alt={categoryInfo.category} />
-            </div>
-          )
-          : ''
-      }
+      <div className='mb-4'>
+        <p className='mb-2 text-sm'>Imagen categoria</p>
+        <input type='file' onChange={imageChange} name='image' className='font-light text-sm block w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-main/10 file:text-main hover:file:bg-main/20' />
+        {
+          categoryInfo.image
+            ? (
+              <div className='mt-3'>
+                <img src={categoryInfo.image} alt={categoryInfo.category} />
+              </div>
+            )
+            : ''
+        }
+      </div>
+      <div>
+        <p className='mb-2 text-sm'>Banner categoria</p>
+        <input type='file' onChange={imageChange} name='banner' className='font-light text-sm block w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-main/10 file:text-main hover:file:bg-main/20' />
+        {
+          categoryInfo.banner
+            ? (
+              <div className='mt-3'>
+                <img src={categoryInfo.banner} alt={categoryInfo.category} />
+              </div>
+            )
+            : ''
+        }
+      </div>
     </div>
   )
 }

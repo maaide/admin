@@ -33,7 +33,7 @@ const DesignPage = () => {
           </div>
           <div className='w-full max-w-1280 m-auto flex flex-col gap-2'>
             <h2 className='text-lg'>Tema</h2>
-            <div className='p-4 rounded-md flex gap-2 justify-between shadow-md bg-white'>
+            <div className='p-4 rounded-md flex gap-2 justify-between shadow-md bg-white dark:bg-neutral-800'>
               <div className='flex gap-3'>
                 <img className='w-36 rounded-md shadow-md' src='https://res.cloudinary.com/df7nchfnh/image/upload/v1687984812/Maaide%20Ecommerce/Tienda_1_lch7lu.jpg' />
                 <p className='my-auto'>Default</p>

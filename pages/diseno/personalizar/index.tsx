@@ -42,7 +42,8 @@ const PersonalizePage = () => {
     },
     shop: {
       title: '',
-      description: ''
+      description: '',
+      banner: ''
     },
     subscription: {
       title: ''
@@ -61,6 +62,19 @@ const PersonalizePage = () => {
   useEffect(() => {
     getDesign()
   }, [])
+
+  const imageChange = async (e: any) => {
+    const { data } = await axios.post('https://server-production-e234.up.railway.app/product-image-upload', { image: e.target.files[0] }, {
+      headers: {
+        accept: 'application/json',
+        'Accept-Language': 'en-US,en;q=0.8',
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    const updatedDesign = {...design}
+    updatedDesign.shop.banner = data.image.url
+    setDesign(updatedDesign)
+  }
   
   const handleSubmit = async () => {
     setLoading(true)
@@ -80,7 +94,7 @@ const PersonalizePage = () => {
             part === ''
               ? (
                 <div className='flex flex-col gap-2'>
-                  <div className='border-b pb-4'>
+                  <div className='border-b pb-4 dark:border-neutral-700'>
                     <Link href='/diseno' className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></Link>
                   </div>
                   <button onClick={() => setPart('Encabezado')} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><p className='my-auto'>Encabezado</p></button>
@@ -101,7 +115,7 @@ const PersonalizePage = () => {
                     e.preventDefault()
                     setPart('')
                   }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
-                  <p className='text-lg border-b pb-2'>Encabezado</p>
+                  <p className='text-lg border-b pb-2 dark:border-neutral-700'>Encabezado</p>
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Franja superior</p>
                     <input type='text' onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -122,7 +136,7 @@ const PersonalizePage = () => {
                     e.preventDefault()
                     setPart('')
                   }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
-                  <p className='text-lg border-b pb-2'>Inicio</p>
+                  <p className='text-lg border-b pb-2 dark:border-neutral-700'>Inicio</p>
                   <button onClick={() => bannerView ? setBannerView(false) : setBannerView(true)} className='w-full flex gap-2 justify-between'>
                     <h2>Banner</h2>
                   </button>
@@ -260,7 +274,7 @@ const PersonalizePage = () => {
                     e.preventDefault()
                     setPart('')
                   }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
-                  <p className='text-lg border-b pb-2'>Pagina de producto</p>
+                  <p className='text-lg border-b pb-2 dark:border-neutral-700'>Pagina de producto</p>
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Sección de productos</p>
                     <select onChange={(e: ChangeEvent<HTMLSelectElement>) => {
@@ -285,7 +299,7 @@ const PersonalizePage = () => {
                     e.preventDefault()
                     setPart('')
                   }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
-                  <p className='text-lg border-b pb-2'>Pagina de contacto</p>
+                  <p className='text-lg border-b pb-2 dark:border-neutral-700'>Pagina de contacto</p>
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Titulo</p>
                     <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -322,7 +336,7 @@ const PersonalizePage = () => {
                     e.preventDefault()
                     setPart('')
                   }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
-                  <p className='text-lg border-b pb-2'>Tienda</p>
+                  <p className='text-lg border-b pb-2 dark:border-neutral-700'>Tienda</p>
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Titulo</p>
                     <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -339,6 +353,10 @@ const PersonalizePage = () => {
                       setDesign(updatedDesign)
                     }} value={design.shop.description}  className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                   </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Banner</p>
+                    <input type='file' onChange={imageChange} className='font-light text-sm block w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-main/10 file:text-main hover:file:bg-main/20' />
+                  </div>
                 </div>
               )
               : ''
@@ -351,7 +369,7 @@ const PersonalizePage = () => {
                     e.preventDefault()
                     setPart('')
                   }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
-                  <p className='text-lg border-b pb-2'>Zona de suscripción</p>
+                  <p className='text-lg border-b pb-2 dark:border-neutral-700'>Zona de suscripción</p>
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Titulo</p>
                     <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -370,7 +388,7 @@ const PersonalizePage = () => {
           </div>
         </div>
         {
-          part === 'Inicio' || part === 'Encabezado' || part === 'Suscripcion' || part === ''
+          part === 'Inicio' || part === 'Encabezado' || part === 'Suscripcion' || part === '' || part === 'Footer'
             ? <iframe className='m-auto bg-white' src="https://tienda-1.vercel.app" width="100%" height="100%" />
             : ''
         }
