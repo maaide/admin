@@ -53,7 +53,6 @@ const PersonalizePage = () => {
       title: ''
     }
   })
-  const [categories, setCategories] = useState<ICategory[]>([])
   const [loading, setLoading] = useState(false)
 
   const getDesign = async () => {
@@ -65,15 +64,6 @@ const PersonalizePage = () => {
 
   useEffect(() => {
     getDesign()
-  }, [])
-
-  const getCategories = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/categories')
-    setCategories(response.data)
-  }
-
-  useEffect(() => {
-    getCategories()
   }, [])
 
   const imageChange = async (e: any) => {
@@ -268,32 +258,8 @@ const PersonalizePage = () => {
                             }} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
                               <option>Todos los productos</option>
                               <option>Productos en oferta</option>
-                              <option>Productos de una categoria</option>
                             </select>
                           </div>
-                          {
-                            design.home.products.sectionProducts === 'Productos de una categoria'
-                              ?  (
-                                <div className='flex flex-col gap-2'>
-                                  <p className='text-sm'>Categorias</p>
-                                    <select onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                                      const updatedDesign = {...design}
-                                      updatedDesign.home.products.category = e.target.value
-                                      setDesign(updatedDesign)
-                                    }} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
-                                      <option>Seleccionar categoria</option>
-                                      {
-                                        categories?.length
-                                          ? categories.map(category => (
-                                            <option key={category._id}>{category.category}</option>
-                                          ))
-                                          : ''
-                                      }
-                                    </select>
-                                </div>
-                              )
-                              : ''
-                          }
                         </div>
                       )
                       : ''
@@ -328,32 +294,8 @@ const PersonalizePage = () => {
                     }} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
                       <option>Todos los productos</option>
                       <option>Productos en oferta</option>
-                      <option>Productos de una categoria</option>
                     </select>
                   </div>
-                  {
-                    design.product.sectionProducts === 'Productos de una categoria'
-                      ?  (
-                        <div className='flex flex-col gap-2'>
-                          <p className='text-sm'>Categorias</p>
-                            <select onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                              const updatedDesign = {...design}
-                              updatedDesign.product.category = e.target.value
-                              setDesign(updatedDesign)
-                            }} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
-                              <option>Seleccionar categoria</option>
-                              {
-                                categories?.length
-                                  ? categories.map(category => (
-                                    <option key={category._id}>{category.category}</option>
-                                  ))
-                                  : ''
-                              }
-                            </select>
-                        </div>
-                      )
-                      : ''
-                  }
                 </div>
               )
               : ''
