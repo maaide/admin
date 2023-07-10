@@ -51,6 +51,11 @@ const PersonalizePage = () => {
     },
     subscription: {
       title: ''
+    },
+    cart: {
+      title: '',
+      sectionProducts: 'Todos los productos',
+      category: ''
     }
   })
   const [loading, setLoading] = useState(false)
@@ -106,6 +111,7 @@ const PersonalizePage = () => {
                   <button onClick={() => setPart('Contacto')} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><p className='my-auto'>Pagina de contacto</p></button>
                   <button onClick={() => setPart('Tienda')} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><p className='my-auto'>Tienda</p></button>
                   <button onClick={() => setPart('Suscripcion')} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><p className='my-auto'>Zona de suscripción</p></button>
+                  <button onClick={() => setPart('Carrito')} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><p className='my-auto'>Pagina de carrito</p></button>
                 </div>
               )
               : ''
@@ -391,6 +397,38 @@ const PersonalizePage = () => {
               )
               : ''
           }
+          {
+            part === 'Carrito'
+              ? (
+                <div className='flex flex-col gap-4'>
+                  <button onClick={(e: any) => {
+                    e.preventDefault()
+                    setPart('')
+                  }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
+                  <p className='text-lg border-b pb-2 dark:border-neutral-700'>Pagina de carrito</p>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Titulo</p>
+                    <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.cart.title = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.cart.title} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Sección de productos</p>
+                    <select onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.cart.sectionProducts = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.cart.title} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                      <option>Todos los productos</option>
+                      <option>Productos en oferta</option>
+                    </select>
+                  </div>
+                </div>
+              )
+              : ''
+          }
           <div className='flex flex-col gap-2'>
             <button onClick={handleSubmit} className='w-full bg-main text-white h-10 rounded-md'>{loading ? <Spinner2 /> : 'Guardar'}</button>
             <Link className='w-full flex' href='/diseno'><p className='m-auto'>Descartar</p></Link>
@@ -414,6 +452,11 @@ const PersonalizePage = () => {
         {
           part === 'Tienda'
             ? <iframe className='m-auto bg-white' src="https://tienda-1.vercel.app/tienda" width="100%" height="100%" />
+            : ''
+        }
+        {
+          part === 'Carrito'
+            ? <iframe className='m-auto bg-white' src="https://tienda-1.vercel.app/carrito" width="100%" height="100%" />
             : ''
         }
       </div>
