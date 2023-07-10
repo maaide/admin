@@ -420,7 +420,7 @@ const PersonalizePage = () => {
                       const updatedDesign = {...design}
                       updatedDesign.cart.sectionProducts = e.target.value
                       setDesign(updatedDesign)
-                    }} value={design.cart.title} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                    }} value={design.cart.sectionProducts} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
                       <option>Todos los productos</option>
                       <option>Productos en oferta</option>
                     </select>
