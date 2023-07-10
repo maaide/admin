@@ -1,4 +1,5 @@
 import { Spinner2 } from '@/components/ui'
+import { ICategory } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -29,11 +30,14 @@ const PersonalizePage = () => {
       },
       products: {
         title: '',
-        sectionProducts: 'Todos los productos'
+        sectionProducts: 'Todos los productos',
+        category: ''
       }
     },
     product: {
-      sectionProducts: 'Todos los productos'
+      title: '',
+      sectionProducts: 'Todos los productos',
+      category: ''
     },
     contact: {
       title: '',
@@ -49,7 +53,7 @@ const PersonalizePage = () => {
       title: ''
     }
   })
-
+  const [categories, setCategories] = useState<ICategory[]>([])
   const [loading, setLoading] = useState(false)
 
   const getDesign = async () => {
@@ -61,6 +65,15 @@ const PersonalizePage = () => {
 
   useEffect(() => {
     getDesign()
+  }, [])
+
+  const getCategories = async () => {
+    const response = await axios.get('https://server-production-e234.up.railway.app/categories')
+    setCategories(response.data)
+  }
+
+  useEffect(() => {
+    getCategories()
   }, [])
 
   const imageChange = async (e: any) => {
@@ -258,6 +271,29 @@ const PersonalizePage = () => {
                               <option>Productos de una categoria</option>
                             </select>
                           </div>
+                          {
+                            design.home.products.sectionProducts === 'Productos de una categoria'
+                              ?  (
+                                <div className='flex flex-col gap-2'>
+                                  <p className='text-sm'>Categorias</p>
+                                    <select onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                                      const updatedDesign = {...design}
+                                      updatedDesign.home.products.category = e.target.value
+                                      setDesign(updatedDesign)
+                                    }} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                                      <option>Seleccionar categoria</option>
+                                      {
+                                        categories?.length
+                                          ? categories.map(category => (
+                                            <option key={category._id}>{category.category}</option>
+                                          ))
+                                          : ''
+                                      }
+                                    </select>
+                                </div>
+                              )
+                              : ''
+                          }
                         </div>
                       )
                       : ''
@@ -276,6 +312,14 @@ const PersonalizePage = () => {
                   }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
                   <p className='text-lg border-b pb-2 dark:border-neutral-700'>Pagina de producto</p>
                   <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Titulo</p>
+                    <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.product.title = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.product.title} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Sección de productos</p>
                     <select onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                       const updatedDesign = {...design}
@@ -287,6 +331,29 @@ const PersonalizePage = () => {
                       <option>Productos de una categoria</option>
                     </select>
                   </div>
+                  {
+                    design.product.sectionProducts === 'Productos de una categoria'
+                      ?  (
+                        <div className='flex flex-col gap-2'>
+                          <p className='text-sm'>Categorias</p>
+                            <select onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                              const updatedDesign = {...design}
+                              updatedDesign.product.category = e.target.value
+                              setDesign(updatedDesign)
+                            }} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                              <option>Seleccionar categoria</option>
+                              {
+                                categories?.length
+                                  ? categories.map(category => (
+                                    <option key={category._id}>{category.category}</option>
+                                  ))
+                                  : ''
+                              }
+                            </select>
+                        </div>
+                      )
+                      : ''
+                  }
                 </div>
               )
               : ''
