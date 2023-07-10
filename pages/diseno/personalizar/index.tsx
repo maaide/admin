@@ -1,5 +1,5 @@
 import { Spinner2 } from '@/components/ui'
-import { ICategory } from '@/interfaces'
+import { IStoreData } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -50,7 +50,12 @@ const PersonalizePage = () => {
       banner: ''
     },
     subscription: {
-      title: ''
+      title: '',
+      affair: '',
+      titleEmail: '',
+      textEmail: '',
+      textButton: '',
+      linkButton: ''
     },
     cart: {
       title: '',
@@ -59,6 +64,7 @@ const PersonalizePage = () => {
     }
   })
   const [loading, setLoading] = useState(false)
+  const [storeData, setStoreData] = useState<IStoreData>()
 
   const getDesign = async () => {
     const response = await axios.get('https://server-production-e234.up.railway.app/design')
@@ -69,6 +75,15 @@ const PersonalizePage = () => {
 
   useEffect(() => {
     getDesign()
+  }, [])
+
+  const getStoreData = async () => {
+    const response = await axios.get('https://server-production-e234.up.railway.app/store-data')
+    setStoreData(response.data)
+  }
+
+  useEffect(() => {
+    getStoreData()
   }, [])
 
   const imageChange = async (e: any) => {
@@ -393,6 +408,46 @@ const PersonalizePage = () => {
                       setDesign(updatedDesign)
                     }} value={design.subscription.title} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                   </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Asunto correo</p>
+                    <input type='text' placeholder='Asunto correo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.subscription.affair = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.subscription.affair} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Titulo correo</p>
+                    <input type='text' placeholder='Titulo correo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.subscription.titleEmail = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.subscription.titleEmail} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Texto correo</p>
+                    <textarea onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                      const updatedHome = {...design}
+                      updatedHome.subscription.textEmail = e.target.value
+                      setDesign(updatedHome)
+                    }} value={design.subscription.textEmail} placeholder='Texto' className='font-light h-20 p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Texto boton</p>
+                    <input type='text' placeholder='Texto boton' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.subscription.textButton = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.subscription.textButton} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Link boton</p>
+                    <input type='text' placeholder='Link boton' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.subscription.linkButton = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.subscription.linkButton} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
                 </div>
               )
               : ''
@@ -435,7 +490,7 @@ const PersonalizePage = () => {
           </div>
         </div>
         {
-          part === 'Inicio' || part === 'Encabezado' || part === 'Suscripcion' || part === '' || part === 'Footer'
+          part === 'Inicio' || part === 'Encabezado' || part === '' || part === 'Footer'
             ? <iframe className='m-auto bg-white' src="https://tienda-1.vercel.app" width="100%" height="100%" />
             : ''
         }
@@ -457,6 +512,52 @@ const PersonalizePage = () => {
         {
           part === 'Carrito'
             ? <iframe className='m-auto bg-white' src="https://tienda-1.vercel.app/carrito" width="100%" height="100%" />
+            : ''
+        }{
+          part === 'Suscripcion'
+            ? (
+              <div className='w-full flex flex-col gap-8 justify-around'>
+                <div className='w-full bg-neutral-100 pl-4 pr-4 flex dark:bg-neutral-900'>
+                  <form className='m-auto w-1280 mt-16 mb-16'>
+                    <h4 className='mb-4 text-[16px] font-semibold tracking-widest text-black text-center md:text-[20px] dark:text-white'>{design.subscription.title !== '' ? design.subscription.title.toUpperCase() : 'SUSCRIBETE EN NUESTRA LISTA PARA RECIBIR OFERTAS EXCLUSIVAS, SORTEOS Y MUCHO MÁS'}</h4>
+                    <div className='flex'>
+                      <input type='email' placeholder='Email' className='p-2 w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:bg-neutral-800' />
+                      <button className='transition-colors duration-200 w-32 tracking-widest font-medium bg-[#1c1b1b] text-white hover:bg-white hover:text-[#1c1b1b] dark:bg-neutral-700 dark:hover:bg-white' onClick={handleSubmit}>{loading ? <Spinner2 /> : 'ENVÍAR'}</button>
+                    </div>
+                  </form>
+                </div>
+                <div className='max-w-[600px] flex flex-col gap-4 mx-auto shadow-lg border p-4 dark:bg-neutral-900 dark:border-neutral-800'>
+                  <div className='flex'>
+                    <a target="_blank" className='w-fit m-auto' href="https://tienda-1.vercel.app/"><img className='w-80' src="https://res.cloudinary.com/blasspod/image/upload/v1664841659/blaspod/ouxxwsmqodpemvffqs7b.png" /></a>
+                  </div>
+                  <h1 className='text-2xl m-auto text-center'>{design.subscription.titleEmail}</h1>
+                  <p className='m-auto text-center'>{design.subscription.textEmail}</p>
+                  {
+                    design.subscription.textButton
+                      ? (
+                        <div className='flex'>
+                          <a className='m-auto py-2 px-7 bg-main text-white' href={design.subscription.linkButton} target="_blank">{design.subscription.textButton}</a>
+                        </div>
+                      )
+                      : ''
+                  }
+                  
+                  <div className='flex gap-4'>
+                    <div className='w-1/2 flex flex-col gap-1'>
+                      <a target="_blank" href="https://tienda-1.vercel.app/">{storeData?.name}</a>
+                      <a target="_blank" href="https://tienda-1.vercel.app/">{storeData?.email}</a>
+                      <a target="_blank" href="https://tienda-1.vercel.app/">{storeData?.phone}</a>
+                    </div>
+                    <div className='w-1/2 flex flex-col gap-1'>
+                      <div>
+                        <a>{storeData?.address}</a>
+                      </div>
+                      <a>{storeData?.city}, {storeData?.region}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
             : ''
         }
       </div>
