@@ -5,7 +5,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 
-const Configuration = () => {
+const ShippingPage = () => {
 
   const [storeData, setStoreData] = useState<IStoreData>({
     name: '',
@@ -99,7 +99,7 @@ const Configuration = () => {
   return (
     <>
       <Head>
-        <title>Configuración</title>
+        <title>Envíos</title>
       </Head>
       <LeftMenu>
         <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 256px)' }}>
@@ -127,58 +127,7 @@ const Configuration = () => {
               </div>
             </div>
             <div className='w-3/4'>
-              <h2 className='text-lg mt-3 pb-3 mb-4 border-b dark:border-neutral-700'>Información de la tienda</h2>
-              <div className='bg-white border mb-4 border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
-                <h3 className='mb-4'>Información general</h3>
-                <div className='mb-4'>
-                  <p className='text-sm mb-2'>Nombre de la tienda</p>
-                  <input type='text' name='name' value={storeData.name} onChange={inputChange} placeholder='Nombre de la tienda' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-                </div>
-                <div className='mb-4'>
-                  <p className='text-sm mb-2'>Correo de la tienda</p>
-                  <input type='text' name='email' value={storeData.email} onChange={inputChange} placeholder='Correo de la tienda' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-                </div>
-                <div className='mb-4'>
-                  <p className='text-sm mb-2'>Telefono de la tienda</p>
-                  <div className='flex gap-2'>
-                    <p className='text-sm mt-auto mb-auto'>+56</p>
-                    <input type='text' name='phone' value={storeData.phone} onChange={inputChange} placeholder='Telefono de la tienda' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-                  </div>
-                </div>
-                <div className='mb-4'>
-                  <p className='text-sm mb-2'>Logo de la tienda</p>
-                  <input onChange={imageChange} type='file' className='text-sm' />
-                </div>
-                <div>
-                  <p className='text-sm mb-2'>Logo blanco de la tienda</p>
-                  <input onChange={imageChange2} type='file' className='text-sm' />
-                </div>
-              </div>
-              <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
-                <h3 className='mb-4'>Ubicación de la tienda</h3>
-                <div className='mb-4'>
-                  <p className='text-sm mb-2'>Dirección</p>
-                  <input type='text' name='address' value={storeData.address} onChange={inputChange} placeholder='Dirección' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-                </div>
-                <div className='mb-4'>
-                  <p className='text-sm mb-2'>Departamento, local, etc. (opcional)</p>
-                  <input type='text' name='departament' value={storeData.departament} onChange={inputChange} placeholder='Dirección' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-                </div>
-                <div className='flex gap-2'>
-                  <select className='font-light p-1.5 rounded border text-sm w-1/2 focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' onChange={regionChange}>
-                    <option>Seleccionar Región</option>
-                    {
-                    regions !== undefined
-                      ? regions.map(region => <option key={region.regionId}>{region.regionName}</option>)
-                      : ''
-                    }
-                  </select>
-                  <select className='font-light p-1.5 w-1/2 rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' onChange={cityChange}>
-                    <option>Seleccionar Ciudad</option>
-                    {citys?.map(city => <option key={city.countyCode}>{city.countyName}</option>)}
-                  </select>
-                </div>
-              </div>
+              <h2 className='text-lg mt-3 pb-3 mb-4 border-b dark:border-neutral-700'>Envíos</h2>
             </div>
           </div>
         </div>
@@ -187,4 +136,4 @@ const Configuration = () => {
   )
 }
 
-export default Configuration
+export default ShippingPage

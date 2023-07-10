@@ -52,6 +52,8 @@ const PaymentGatewayPage = () => {
                 <Link href='/configuracion/plan'>Plan</Link>
                 <Link href='/configuracion/politicas'>Politicas</Link>
                 <Link href='/configuracion/dominio'>Dominio</Link>
+                <Link href='/configuracion/envios'>Envíos</Link>
+                <Link href='/configuracion/mensajes'>Mensajes</Link>
               </div>
             </div>
             <div className='w-3/4'>
