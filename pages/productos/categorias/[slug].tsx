@@ -1,4 +1,4 @@
-import { LeftMenu, Spinner2 } from '@/components/ui'
+import { LeftMenu, Spinner, Spinner2 } from '@/components/ui'
 import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
 import { ICategory } from '../../../interfaces/categories'
@@ -10,11 +10,7 @@ import { NameDescription, CategorySeo, Media } from '@/components/categories'
 
 const CategoryPage = () => {
 
-  const [categoryInfo, setCategoryInfo] = useState<ICategory>({
-    category: '',
-    description: '',
-    slug: ''
-  })
+  const [categoryInfo, setCategoryInfo] = useState<ICategory>()
   const [deleteLoading, setDeleteLoading] = useState(false)
   const [updatingLoading, setUpdatingLoading] = useState(false)
 
@@ -32,14 +28,14 @@ const CategoryPage = () => {
 
   const handleSubmit = async () => {
     setUpdatingLoading(true)
-    await axios.put(`https://server-production-e234.up.railway.app/categories/${categoryInfo._id}`, categoryInfo)
+    await axios.put(`https://server-production-e234.up.railway.app/categories/${categoryInfo?._id}`, categoryInfo)
     router.push('/productos/categorias')
   }
 
   return (
     <>
       <Head>
-        <title>{categoryInfo.category}</title>
+        <title>{categoryInfo?.category}</title>
       </Head>
       <LeftMenu>
         <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 256px)' }}>
@@ -51,28 +47,42 @@ const CategoryPage = () => {
           </div>
         </div>
         <div className='p-6 bg-[#f6f6f7] mb-16 overflow-y-scroll dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)' }}>
-          <div className='flex gap-3 mb-4 max-w-1280 m-auto'>
-            <Link href='/productos/categorias' className='border rounded p-2 bg-white hover:bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-600'><BiArrowBack className='text-xl' /></Link>
-            <h1 className='text-xl mt-auto mb-auto'>{ categoryInfo.category }</h1>
-          </div>
-          <form className='flex gap-4 max-w-1280 m-auto'>
-            <div className='flex gap-4 flex-col w-2/3'>
-              <NameDescription categoryInfo={categoryInfo} setCategoryInfo={setCategoryInfo} />
-              <CategorySeo categoryInfo={categoryInfo} setCategoryInfo={setCategoryInfo} />
-            </div>
-            <div className='flex gap-4 flex-col w-1/3'>
-              <Media categoryInfo={categoryInfo} setCategoryInfo={setCategoryInfo} />
-              <div className='bg-white p-4 rounded-md shadow border border-white dark:bg-neutral-800 dark:border-neutral-700'>
-                <h2 className='mb-4'>Eliminar categoria</h2>
-                <button onClick={async (e: any) => {
-                  e.preventDefault()
-                  setDeleteLoading(true)
-                  await axios.delete(`https://server-production-e234.up.railway.app/categories/${categoryInfo._id}`)
-                  router.push('/categorias')
-                }} className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md w-20'>{deleteLoading ? <Spinner2 /> : 'Eliminar'}</button>
-              </div>
-            </div>
-          </form>
+          {
+            categoryInfo
+              ? (
+                <>
+                  <div className='flex gap-3 mb-4 max-w-1280 m-auto'>
+                    <Link href='/productos/categorias' className='border rounded p-2 bg-white hover:bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-600'><BiArrowBack className='text-xl' /></Link>
+                    <h1 className='text-xl mt-auto mb-auto'>{ categoryInfo.category }</h1>
+                  </div>
+                  <form className='flex gap-4 max-w-1280 m-auto'>
+                    <div className='flex gap-4 flex-col w-2/3'>
+                      <NameDescription categoryInfo={categoryInfo} setCategoryInfo={setCategoryInfo} />
+                      <CategorySeo categoryInfo={categoryInfo} setCategoryInfo={setCategoryInfo} />
+                    </div>
+                    <div className='flex gap-4 flex-col w-1/3'>
+                      <Media categoryInfo={categoryInfo} setCategoryInfo={setCategoryInfo} />
+                      <div className='bg-white p-4 rounded-md shadow border border-white dark:bg-neutral-800 dark:border-neutral-700'>
+                        <h2 className='mb-4'>Eliminar categoria</h2>
+                        <button onClick={async (e: any) => {
+                          e.preventDefault()
+                          setDeleteLoading(true)
+                          await axios.delete(`https://server-production-e234.up.railway.app/categories/${categoryInfo._id}`)
+                          router.push('/categorias')
+                        }} className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md w-20'>{deleteLoading ? <Spinner2 /> : 'Eliminar'}</button>
+                      </div>
+                    </div>
+                  </form>
+                </>
+              )
+              : (
+                <div className="flex w-full mt-32">
+                  <div className="m-auto mt-16 mb-16">
+                    <Spinner />
+                  </div>
+                </div>
+              )
+          }
         </div>
       </LeftMenu>
     </>

@@ -32,48 +32,50 @@ const Sells = () => {
                   </div>
                 </div>
               )
-              : (
-                <table className='shadow-md w-full border dark:border-neutral-600'>
-                  <thead className='bg-white border-b w-full dark:bg-neutral-800 dark:border-neutral-600'>
-                    <th className='text-left p-2 font-normal'>Nombre</th>
-                    <th className='text-left p-2 font-normal'>Email</th>
-                    <th className='text-left p-2 font-normal'>Teléfono</th>
-                    <th className='text-left p-2 font-normal'>Región</th>
-                    <th className='text-left p-2 font-normal'>Envío</th>
-                    <th className='text-left p-2 font-normal'>Estado</th>
-                    <th className='text-left p-2 font-normal'>Fecha</th>
-                  </thead>
-                  <tbody className='bg-white w-full dark:bg-neutral-800 dark:border-neutral-600'>
-                    {
-                      sells.map(sell => (
-                        <tr key={sell._id} onClick={() => router.push(`/ventas/${sell._id}`)} className='border-b cursor-pointer w-full dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700'>
-                          <td className='p-2'>
-                            <p className='font-light'>{sell.firstName} {sell.lastName}</p>
-                          </td>
-                          <td className='p-2'>
-                            <p className='font-light'>{sell.email}</p>
-                          </td>
-                          <td className='p-2'>
-                            <p className='font-light'>+{sell.phone}</p>
-                          </td>
-                          <td className='p-2'>
-                            <p className='font-light'>{sell.region}</p>
-                          </td>
-                          <td className='p-2'>
-                            <p className='font-light'>${NumberFormat(sell.shipping)}</p>
-                          </td>
-                          <td className='p-2'>
-                            <p className='font-light'>{sell.state}</p>
-                          </td>
-                          <td className='p-2'>
-                            <p className='font-light'>{new Date(sell.createdAt!).toLocaleDateString()}</p>
-                          </td>
-                        </tr>
-                      ))
-                    }
-                  </tbody>
-                </table>
-              )
+              : sells.length
+                ? (
+                  <table className='shadow-md w-full border dark:border-neutral-600'>
+                    <thead className='bg-white border-b w-full dark:bg-neutral-800 dark:border-neutral-600'>
+                      <th className='text-left p-2 font-normal'>Nombre</th>
+                      <th className='text-left p-2 font-normal'>Email</th>
+                      <th className='text-left p-2 font-normal'>Teléfono</th>
+                      <th className='text-left p-2 font-normal'>Región</th>
+                      <th className='text-left p-2 font-normal'>Envío</th>
+                      <th className='text-left p-2 font-normal'>Estado</th>
+                      <th className='text-left p-2 font-normal'>Fecha</th>
+                    </thead>
+                    <tbody className='bg-white w-full dark:bg-neutral-800 dark:border-neutral-600'>
+                      {
+                        sells.map(sell => (
+                          <tr key={sell._id} onClick={() => router.push(`/ventas/${sell._id}`)} className='border-b cursor-pointer w-full dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700'>
+                            <td className='p-2'>
+                              <p className='font-light'>{sell.firstName} {sell.lastName}</p>
+                            </td>
+                            <td className='p-2'>
+                              <p className='font-light'>{sell.email}</p>
+                            </td>
+                            <td className='p-2'>
+                              <p className='font-light'>+{sell.phone}</p>
+                            </td>
+                            <td className='p-2'>
+                              <p className='font-light'>{sell.region}</p>
+                            </td>
+                            <td className='p-2'>
+                              <p className='font-light'>${NumberFormat(sell.shipping)}</p>
+                            </td>
+                            <td className='p-2'>
+                              <p className='font-light'>{sell.state}</p>
+                            </td>
+                            <td className='p-2'>
+                              <p className='font-light'>{new Date(sell.createdAt!).toLocaleDateString()}</p>
+                            </td>
+                          </tr>
+                        ))
+                      }
+                    </tbody>
+                  </table>
+                )
+                : <p>No hay ventas</p>
           }
         </div>
       </div>
