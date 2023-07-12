@@ -108,7 +108,7 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <div className={`${loading} fixed h-full w-full z-50 bg-white`} />
-      <div className='fixed w-full pl-2 pr-2 border-b z-50 dark:border-neutral-800'>
+      <div className='fixed w-full pl-2 pr-2 bg-white border-b z-50 dark:border-neutral-800'>
         <div className='w-full m-auto flex justify-between'>
           <div className='flex gap-2'>
             {
