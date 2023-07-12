@@ -3,12 +3,15 @@ import { IAutomatization } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 const AutomatizationsPage = () => {
 
   const [loading, setLoading] = useState(false)
   const [automatizations, setAutomatizations] = useState<IAutomatization[]>([])
+
+  const router = useRouter()
 
   const getAutomatizations = async () => {
     setLoading(true)
@@ -57,7 +60,7 @@ const AutomatizationsPage = () => {
                           {
                             automatizations.map(automatization => {
                               return (
-                                <tr key={automatization.name}>
+                                <tr className='cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-700' onClick={() => router.push(`/marketing/automatizaciones/${automatization._id}`)} key={automatization.name}>
                                   <td className='p-2 border-t dark:border-neutral-700'>{automatization.name}</td>
                                   <td className='p-2 border-t dark:border-neutral-700'>{automatization.address}</td>
                                   <td className='p-2 border-t dark:border-neutral-700'>{automatization.automatization.length}</td>
@@ -69,7 +72,7 @@ const AutomatizationsPage = () => {
                       </table>
                     </div>
                   )
-                  : ''
+                  : <p>No hay automatizaciones creadas</p>
             }
           </div>
         </div>

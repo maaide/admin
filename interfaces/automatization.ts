@@ -1,4 +1,5 @@
 export interface IAutomatization {
+    _id?: string
     address: string
     name: string
     automatization: IEmailAutomatization[]

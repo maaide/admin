@@ -3,12 +3,15 @@ import { IEmail } from '@/interfaces'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 const CampaignPage = () => {
 
   const [campaigns, setCampaigns] = useState<IEmail[]>([])
   const [loading, setLoading] = useState(false)
+
+  const router = useRouter()
 
   const getCampaigns = async () => {
     setLoading(true)
@@ -64,7 +67,7 @@ const CampaignPage = () => {
                                 const month = String(campaignDate.getUTCMonth() + 1).padStart(2, '0')
                                 const year = String(campaignDate.getUTCFullYear())
                                 return (
-                                  <tr key={campaign._id} className='border-t border-neutral-300 dark:border-neutral-600'>
+                                  <tr onClick={() => router.push(`/marketing/campanas/${campaign._id}`)} key={campaign._id} className='border-t border-neutral-300 cursor-pointer hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700'>
                                     <td className='p-2'>{campaign.address}</td>
                                     <td className='p-2'>{campaign.affair}</td>
                                     <td className='p-2'>{`${day}/${month}/${year}`}</td>

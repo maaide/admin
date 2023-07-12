@@ -50,7 +50,7 @@ const PromotionalCodePage = () => {
           <div className='flex m-auto w-1280'>
             <div className='flex gap-2 ml-auto w-fit'>
               <button onClick={handleSubmit} className='bg-main text-white text-sm rounded-md w-36 h-8'>{submitLoading ? <Spinner2 /> : 'Modificar codigo'}</button>
-              <Link className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4' href='/productos'>Descartar</Link>
+              <Link className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4' href='/productos/codigos-promocionales'>Descartar</Link>
             </div>
           </div>
         </div>
