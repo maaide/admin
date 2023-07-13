@@ -15,7 +15,7 @@ const AutomatizationsPage = () => {
 
   const getAutomatizations = async () => {
     setLoading(true)
-    const response = await axios.get(`${process.env.API_URL}/automatizations`)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/automatizations`)
     setAutomatizations(response.data)
     setLoading(false)
   }

@@ -35,7 +35,7 @@ const NewSell = () => {
   const initialEmail = ''
 
   const getProducts = async () => {
-    const products = await axios.get(`${process.env.API_URL}/products`)
+    const products = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`)
     setProducts(products.data)
   }
 
@@ -66,7 +66,7 @@ const NewSell = () => {
 
   const sellSubmit = async () => {
     setSubmitLoading(true)
-    await axios.post(`${process.env.API_URL}/sells`, sell)
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/sells`, sell)
     setSubmitLoading(false)
     router.push('/ventas')
   }

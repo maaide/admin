@@ -22,7 +22,7 @@ const PaymentGatewayPage = () => {
 
   const handleSubmit = async () => {
     setLoading(true)
-    await axios.post(`${process.env.API_URL}/payment-gateway`, payment)
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payment-gateway`, payment)
     setLoading(false)
   }
 

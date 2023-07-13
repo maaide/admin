@@ -12,7 +12,7 @@ const Configuration = () => {
 
   const handleSubmit = async () => {
     setLoading(true)
-    await axios.post(`${process.env.API_URL}/plan`, plan)
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/plan`, plan)
     setLoading(false)
   }
 

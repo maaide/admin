@@ -33,7 +33,7 @@ const ProductPage = () => {
 
   const getProduct = async () => {
     const slug = router.asPath.replace('/productos/', '')
-    const {data} = await axios.get(`${process.env.API_URL}/products/${slug}`)
+    const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${slug}`)
     setInformation({
       _id: data._id,
       name: data.name,
@@ -61,7 +61,7 @@ const ProductPage = () => {
   }
 
   const getCategories = async () => {
-    const {data} = await axios.get(`${process.env.API_URL}/categories`)
+    const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories`)
     setCategories(data)
   }
 
@@ -72,7 +72,7 @@ const ProductPage = () => {
 
   const handleSubmit = async () => {
     setSubmitLoading(true)
-    await axios.put(`${process.env.API_URL}/products/${information?._id}`, { name: information?.name, description: information?.description, category: information?.category, price: information?.price, beforePrice: information?.beforePrice, images: information?.images, stock: information?.stock, slug: information?.slug, state: information?.state, tags: information?.tags, titleSeo: information?.titleSeo, descriptionSeo: information?.descriptionSeo, variations: information?.variations, nameVariations: information?.nameVariations, productsOffer: productsOffer, cost: information?.cost, quantityOffers: quantityOffers })
+    await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/products/${information?._id}`, { name: information?.name, description: information?.description, category: information?.category, price: information?.price, beforePrice: information?.beforePrice, images: information?.images, stock: information?.stock, slug: information?.slug, state: information?.state, tags: information?.tags, titleSeo: information?.titleSeo, descriptionSeo: information?.descriptionSeo, variations: information?.variations, nameVariations: information?.nameVariations, productsOffer: productsOffer, cost: information?.cost, quantityOffers: quantityOffers })
     router.push('/productos')
   }
 
@@ -157,7 +157,7 @@ const ProductPage = () => {
                         <button onClick={async (e: any) => {
                           e.preventDefault()
                           setDeleteLoading(true)
-                          await axios.delete(`${process.env.API_URL}/categories/${information._id}`)
+                          await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/categories/${information._id}`)
                           router.push('/productos')
                         }} className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md w-20'>{deleteLoading ? <Spinner2 /> : 'Eliminar'}</button>
                       </div>

@@ -5,7 +5,7 @@ import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
 import io from 'socket.io-client'
 
-const socket = io(`${process.env.API_URL}`)
+const socket = io(`${process.env.NEXT_PUBLIC_API_URL}`)
 
 const InstagramMessages = () => {
   
@@ -19,7 +19,7 @@ const InstagramMessages = () => {
   const selectedInstagramIdRef = useRef(selectedInstagramId)
 
   const getMessages = async () => {
-    const response = await axios.get(`${process.env.API_URL}/instagram`)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/instagram`)
     setInstagramIds(response.data)
   }
 
@@ -90,10 +90,10 @@ const InstagramMessages = () => {
                       const createdAt = new Date(instagram.createdAt!)
                       return (
                         <button onClick={async () => {
-                          const response = await axios.get(`${process.env.API_URL}/instagram/${instagram.instagramId}`)
+                          const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/instagram/${instagram.instagramId}`)
                           setMessages(response.data)
                           setSelectedInstagramId(instagram.instagramId)
-                          await axios.put(`${process.env.API_URL}/instagram/${instagram.instagramId}`)
+                          await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/instagram/${instagram.instagramId}`)
                           getMessages()
                         }} key={instagram.instagramId} className='bg-white w-full text-left flex gap-2 justify-between h-20 p-2 rounded-xl dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
                           <div className='mt-auto mb-auto'>
@@ -149,7 +149,7 @@ const InstagramMessages = () => {
                   setMessages(messages.concat({instagramId: selectedInstagramId, response: newMessage, agent: true, view: false, createdAt: new Date()}))
                   const newMe = newMessage
                   setNewMessage('')
-                  await axios.post(`${process.env.API_URL}/instagram`, {instagramId: selectedInstagramId, response: newMe, agent: true, view: true})
+                  await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/instagram`, {instagramId: selectedInstagramId, response: newMe, agent: true, view: true})
                   getMessages()
                 }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />

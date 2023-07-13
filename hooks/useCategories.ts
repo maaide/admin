@@ -3,7 +3,7 @@ import { ICategory } from '../interfaces'
 
 export const useCategories = ( url: string, config: SWRConfiguration = {} ) => {
 
-  const { data, error } = useSWR<ICategory[]>(`${process.env.API_URL}${ url }`, config )
+  const { data, error } = useSWR<ICategory[]>(`${process.env.NEXT_PUBLIC_API_URL}${ url }`, config )
 
   return {
     categories: data || [],

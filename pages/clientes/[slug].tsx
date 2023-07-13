@@ -20,9 +20,9 @@ const ClientPage = () => {
 
   const getClientData = async () => {
     const slug = router.asPath.replace('/clientes/', '')
-    const response = await axios.get(`${process.env.API_URL}/clients/${slug}`)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/clients/${slug}`)
     setClientData(response.data)
-    const sells = await axios.get(`${process.env.API_URL}/sells-client/${response.data.email}`)
+    const sells = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/sells-client/${response.data.email}`)
     setClientSells(sells.data)
   }
 
@@ -31,7 +31,7 @@ const ClientPage = () => {
   }, [])
 
   const getClientTags = async () => {
-    const {data} = await axios.get(`${process.env.API_URL}/client-tag`)
+    const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/client-tag`)
     setTags(data)
   }
 
@@ -124,17 +124,17 @@ const ClientPage = () => {
                                             const tags = clientData.tags.concat(e.target.value)
                                             setClientData({...clientData, tags: tags})
                                             const updated = {...clientData, tags: tags}
-                                            await axios.put(`${process.env.API_URL}/clients/${clientData._id}`, updated)
+                                            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/clients/${clientData._id}`, updated)
                                           } else {
                                             const filter = clientData.tags.filter(tag => tag !== e.target.value)
                                             setClientData({...clientData, tags: filter})
                                             const updated = {...clientData, tags: filter}
-                                            await axios.put(`${process.env.API_URL}/clients/${clientData._id}`, updated)
+                                            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/clients/${clientData._id}`, updated)
                                           }
                                         } else {
                                           setClientData({...clientData, tags: [e.target.value]})
                                           const updated = {...clientData, tags: [e.target.value]}
-                                          await axios.put(`${process.env.API_URL}/clients/${clientData._id}`, updated)
+                                          await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/clients/${clientData._id}`, updated)
                                         }
                                       }} value={tag.tag} type='checkbox' checked={clientData.tags?.find(e => e === tag.tag) ? true : false} />
                                       <p className='text-sm'>{tag.tag}</p>
@@ -152,7 +152,7 @@ const ClientPage = () => {
                             <button onClick={async (e: any) => {
                               e.preventDefault()
                               setLoadingClientTag(true)
-                              await axios.post(`${process.env.API_URL}/client-tag`, { tag: newClientTag })
+                              await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/client-tag`, { tag: newClientTag })
                               setNewClientTag('')
                               setLoadingClientTag(false)
                               getClientTags()

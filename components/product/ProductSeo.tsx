@@ -26,7 +26,7 @@ export const ProductSeo: React.FC<Props> = ({information, setInformation}) => {
   const generateSeo = async (e: any) => {
     e.preventDefault()
     setAiLoading(true)
-    const response = await axios.post(`${process.env.API_URL}/ai-product-seo`, { description: description, type: type === 'Personalizado' ? newType : type })
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/ai-product-seo`, { description: description, type: type === 'Personalizado' ? newType : type })
     const filterTitleSeo = response.data.title
     const filterDescriptionSeo = response.data.description
     setTitleSeo(filterTitleSeo)

@@ -19,7 +19,7 @@ export const StockVariations: React.FC<Props> = ({information, setInformation}) 
   let indexImage: any
 
   const onDrop = async (e: any) => {
-    const uploadImage = await axios.post(`${process.env.API_URL}/product-image-upload`, {image: e[0]}, {
+    const uploadImage = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product-image-upload`, {image: e[0]}, {
       headers: {
         accept: 'application/json',
         'Accept-Language': 'en-US,en;q=0.8',

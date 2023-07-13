@@ -23,7 +23,7 @@ const NewClient = () => {
   const initialEmail = ''
 
   const getClientTags = async () => {
-    const tags = await axios.get(`${process.env.API_URL}/client-tag`)
+    const tags = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/client-tag`)
     setClientTags(tags.data)
   }
 
@@ -37,7 +37,7 @@ const NewClient = () => {
 
   const submitForm = async () => {
     setSubmitLoading(true)
-    await axios.post(`${process.env.API_URL}/clients`, clientData)
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/clients`, clientData)
     setSubmitLoading(false)
     router.push('/clientes')
   }
@@ -142,7 +142,7 @@ const NewClient = () => {
                     <button onClick={async (e: any) => {
                       e.preventDefault()
                       setLoadingClientTag(true)
-                      await axios.post(`${process.env.API_URL}/client-tag`, { tag: newClientTag })
+                      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/client-tag`, { tag: newClientTag })
                       setNewClientTag('')
                       setLoadingClientTag(false)
                       getClientTags()

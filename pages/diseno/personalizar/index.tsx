@@ -67,7 +67,7 @@ const PersonalizePage = () => {
   const [storeData, setStoreData] = useState<IStoreData>()
 
   const getDesign = async () => {
-    const response = await axios.get(`${process.env.API_URL}/design`)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/design`)
     if (response.data) {
       setDesign(response.data)
     }
@@ -78,7 +78,7 @@ const PersonalizePage = () => {
   }, [])
 
   const getStoreData = async () => {
-    const response = await axios.get(`${process.env.API_URL}/store-data`)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/store-data`)
     setStoreData(response.data)
   }
 
@@ -87,7 +87,7 @@ const PersonalizePage = () => {
   }, [])
 
   const imageChange = async (e: any) => {
-    const { data } = await axios.post(`${process.env.API_URL}/product-image-upload`, { image: e.target.files[0] }, {
+    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product-image-upload`, { image: e.target.files[0] }, {
       headers: {
         accept: 'application/json',
         'Accept-Language': 'en-US,en;q=0.8',
@@ -101,7 +101,7 @@ const PersonalizePage = () => {
   
   const handleSubmit = async () => {
     setLoading(true)
-    await axios.post(`${process.env.API_URL}/design`, design)
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/design`, design)
     setLoading(false)
     window.location.reload()
   }
@@ -174,7 +174,7 @@ const PersonalizePage = () => {
                                 <p>Banner {index + 1}</p>
                                 <p className='text-sm'>Imagen de fondo</p>
                                 <input type='file' onChange={async (e: ChangeEvent<HTMLInputElement>) => {
-                                  const response = await axios.post(`${process.env.API_URL}/product-image-upload`, {image: e.target.files?.length ? e.target.files[0] : ''}, {
+                                  const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product-image-upload`, {image: e.target.files?.length ? e.target.files[0] : ''}, {
                                     headers: {
                                       accept: 'application/json',
                                       'Accept-Language': 'en-US,en;q=0.8',

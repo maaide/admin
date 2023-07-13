@@ -25,7 +25,7 @@ export const NameDescription: React.FC<Props> = ({information, setInformation}) 
   const generateDescription = async (e: any) => {
     e.preventDefault()
     setDescriptionAiLoading(true)
-    const response = await axios.post(`${process.env.API_URL}/ai-description-product`, { description: information.description, type: type === 'Personalizado' ? newType : type })
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/ai-description-product`, { description: information.description, type: type === 'Personalizado' ? newType : type })
     setDescriptionAi(response.data)
     setDescriptionAiLoading(false)
   }

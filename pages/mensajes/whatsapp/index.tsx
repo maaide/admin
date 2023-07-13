@@ -5,7 +5,7 @@ import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
 import io from 'socket.io-client'
 
-const socket = io(`${process.env.API_URL}`)
+const socket = io(`${process.env.NEXT_PUBLIC_API_URL}`)
 
 const WhatsappMessages = () => {
 
@@ -19,7 +19,7 @@ const WhatsappMessages = () => {
   const selectedPhoneRef = useRef(selectedPhone)
 
   const getMessages = async () => {
-    const response = await axios.get(`${process.env.API_URL}/whatsapp`)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/whatsapp`)
     setPhones(response.data)
   }
   
@@ -90,10 +90,10 @@ const WhatsappMessages = () => {
                       const createdAt = new Date(phone.createdAt!)
                       return (
                         <button onClick={async () => {
-                          const response = await axios.get(`${process.env.API_URL}/whatsapp/${phone.phone}`)
+                          const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/whatsapp/${phone.phone}`)
                           setMessages(response.data)
                           setSelectedPhone(phone.phone)
-                          await axios.put(`${process.env.API_URL}/whatsapp/${phone.phone}`)
+                          await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/whatsapp/${phone.phone}`)
                           getMessages()
                         }} key={phone.phone} className='bg-white w-full flex gap-2 justify-between text-left h-20 p-2 rounded-xl dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
                           <div className='mt-auto mb-auto'>
@@ -149,7 +149,7 @@ const WhatsappMessages = () => {
                   setMessages(messages.concat({phone: selectedPhone, response: newMessage, agent: true, view: false, createdAt: new Date()}))
                   const newMe = newMessage
                   setNewMessage('')
-                  axios.post(`${process.env.API_URL}/whatsapp`, {phone: selectedPhone, response: newMe, agent: true, view: false})
+                  axios.post(`${process.env.NEXT_PUBLIC_API_URL}/whatsapp`, {phone: selectedPhone, response: newMe, agent: true, view: false})
                   getMessages()
                 }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />

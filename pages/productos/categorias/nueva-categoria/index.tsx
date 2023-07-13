@@ -22,7 +22,7 @@ const NewCategory = () => {
 
   const handleSubmit = async () => {
     setLoading(true)
-    await axios.post(`${process.env.API_URL}/categories`, categoryInfo)
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/categories`, categoryInfo)
     router.push('/productos/categorias')
   }
 

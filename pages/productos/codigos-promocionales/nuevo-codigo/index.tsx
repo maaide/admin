@@ -28,7 +28,7 @@ const NewPromotionalCode = () => {
 
   const handleSubmit = async () => {
     setSubmitLoading(true)
-    await axios.post(`${process.env.API_URL}/promotional-code`, codeInfo)
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/promotional-code`, codeInfo)
     router.push('/productos/codigos-promocionales')
     setSubmitLoading(false)
   }

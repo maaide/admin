@@ -25,7 +25,7 @@ const NewCampaign = () => {
   const router = useRouter()
 
   const getStoreData = async () => {
-    const response = await axios.get(`${process.env.API_URL}/store-data`)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/store-data`)
     setStoreData(response.data[0])
   }
 
@@ -34,7 +34,7 @@ const NewCampaign = () => {
   }, [])
 
   const getClientTags = async () => {
-    const response = await axios.get(`${process.env.API_URL}/client-tag`)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/client-tag`)
     setClientTags(response.data)
   }
 
@@ -44,7 +44,7 @@ const NewCampaign = () => {
 
   const submit = async () => {
     setLoading(true)
-    await axios.post(`${process.env.API_URL}/new-campaign`, email)
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/new-campaign`, email)
     router.push('/marketing/campanas')
     setLoading(false)
   }

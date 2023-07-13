@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
 import io from 'socket.io-client'
 
-const socket = io(`${process.env.API_URL}`)
+const socket = io(`${process.env.NEXT_PUBLIC_API_URL}`)
 
 const MessagePage = () => {
 
@@ -20,7 +20,7 @@ const MessagePage = () => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   const getChats = async () => {
-    const response = await axios.get(`${process.env.API_URL}/chat`)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/chat`)
     setChatIds(response.data)
   }
 
@@ -91,10 +91,10 @@ const MessagePage = () => {
                       const createdAt = new Date(chat.createdAt!)
                       return (
                         <button onClick={async () => {
-                          const response = await axios.get(`${process.env.API_URL}/chat/${chat.senderId}`)
+                          const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/chat/${chat.senderId}`)
                           setMessages(response.data)
                           setChatId(chat.senderId)
-                          await axios.put(`${process.env.API_URL}/chat/${chat.senderId}`)
+                          await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/chat/${chat.senderId}`)
                           getChats()
                         }} key={i} className='bg-white w-full text-left h-20 p-2 rounded-xl flex gap-4 justify-between dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
                           <div className='mt-auto mb-auto'>
@@ -151,7 +151,7 @@ const MessagePage = () => {
                   const newMe = newMessage
                   setNewMessage('')
                   socket.emit('messageAdmin', { senderId: chatId, response: newMe, adminView: true })
-                  axios.post(`${process.env.API_URL}/chat/create`, {senderId: chatId, response: newMe, agent: true, adminView: true})
+                  axios.post(`${process.env.NEXT_PUBLIC_API_URL}/chat/create`, {senderId: chatId, response: newMe, agent: true, adminView: true})
                   getChats()
                 }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />

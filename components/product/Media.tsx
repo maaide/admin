@@ -14,7 +14,7 @@ export const Media: React.FC<Props> = ({ information, setInformation }) => {
   const onDrop = (acceptedFiles: any) => {
     let images = information.images
     acceptedFiles.map(async (acceptedFile: any) => {
-      const response = await axios.post(`${process.env.API_URL}/product-image-upload`, {image: acceptedFile}, {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product-image-upload`, {image: acceptedFile}, {
         headers: {
           accept: 'application/json',
           'Accept-Language': 'en-US,en;q=0.8',
