@@ -491,27 +491,27 @@ const PersonalizePage = () => {
         </div>
         {
           part === 'Inicio' || part === 'Encabezado' || part === '' || part === 'Footer'
-            ? <iframe className='m-auto bg-white' src={`${process.env.WEB_URL}`} width="100%" height="100%" />
+            ? <iframe className='m-auto bg-white' src={`${process.env.NEXT_PUBLIC_WEB_URL}`} width="100%" height="100%" />
             : ''
         }
         {
           part === 'Producto'
-            ? <iframe className='m-auto bg-white' src={`${process.env.WEB_URL}/productos/airpods-pro`} width="100%" height="100%" />
+            ? <iframe className='m-auto bg-white' src={`${process.env.NEXT_PUBLIC_WEB_URL}/productos/airpods-pro`} width="100%" height="100%" />
             : ''
         }
         {
           part === 'Contacto'
-            ? <iframe className='m-auto bg-white' src={`${process.env.WEB_URL}/contacto`} width="100%" height="100%" />
+            ? <iframe className='m-auto bg-white' src={`${process.env.NEXT_PUBLIC_WEB_URL}/contacto`} width="100%" height="100%" />
             : ''
         }
         {
           part === 'Tienda'
-            ? <iframe className='m-auto bg-white' src={`${process.env.WEB_URL}/tienda`} width="100%" height="100%" />
+            ? <iframe className='m-auto bg-white' src={`${process.env.NEXT_PUBLIC_WEB_URL}/tienda`} width="100%" height="100%" />
             : ''
         }
         {
           part === 'Carrito'
-            ? <iframe className='m-auto bg-white' src={`${process.env.WEB_URL}/carrito`} width="100%" height="100%" />
+            ? <iframe className='m-auto bg-white' src={`${process.env.NEXT_PUBLIC_WEB_URL}/carrito`} width="100%" height="100%" />
             : ''
         }{
           part === 'Suscripcion'

@@ -28,8 +28,8 @@ const DesignPage = () => {
             <Link className='flex gap-2' href='https://tienda-1.vercel.app' target='_blank'><AiOutlineEye className='m-auto text-xl' /><p className='m-auto'>Ver sitio web</p></Link>
           </div>
           <div className='flex justify-between gap-4 w-full max-w-1280 m-auto'>
-            <iframe className='shadow-xl m-auto bg-white' src="https://tienda-1.vercel.app" width="70%" height="500px" />
-            <iframe className='shadow-xl m-auto bg-white' src="https://tienda-1.vercel.app" width="30%" height="600px" />
+            <iframe className='shadow-xl m-auto bg-white' src={process.env.NEXT_PUBLIC_WEB_URL} width="70%" height="500px" />
+            <iframe className='shadow-xl m-auto bg-white' src={process.env.NEXT_PUBLIC_WEB_URL} width="30%" height="600px" />
           </div>
           <div className='w-full max-w-1280 m-auto flex flex-col gap-2'>
             <h2 className='text-lg'>Tema</h2>
