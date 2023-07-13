@@ -23,7 +23,7 @@ const EditClientPage = () => {
   const initialEmail = ''
 
   const getClientData = async () => {
-    const response = await axios.get(`https://server-production-e234.up.railway.app/clients/${router.asPath.replace('/clientes/editar/', '')}`)
+    const response = await axios.get(`${process.env.API_URL}/clients/${router.asPath.replace('/clientes/editar/', '')}`)
     setClientData(response.data)
   }
 
@@ -32,7 +32,7 @@ const EditClientPage = () => {
   }, [])
 
   const getClientTags = async () => {
-    const tags = await axios.get('https://server-production-e234.up.railway.app/client-tag')
+    const tags = await axios.get(`${process.env.API_URL}/client-tag`)
     setClientTags(tags.data)
   }
 
@@ -46,7 +46,7 @@ const EditClientPage = () => {
 
   const submitForm = async () => {
     setSubmitLoading(true)
-    await axios.put(`https://server-production-e234.up.railway.app/clients/${router.asPath.replace('/clientes/editar/', '')}`, clientData)
+    await axios.put(`${process.env.API_URL}/clients/${router.asPath.replace('/clientes/editar/', '')}`, clientData)
     setSubmitLoading(false)
     router.push('/clientes')
   }
@@ -151,7 +151,7 @@ const EditClientPage = () => {
                     <button onClick={async (e: any) => {
                       e.preventDefault()
                       setLoadingClientTag(true)
-                      await axios.post('https://server-production-e234.up.railway.app/client-tag', { tag: newClientTag })
+                      await axios.post(`${process.env.API_URL}/client-tag`, { tag: newClientTag })
                       setNewClientTag('')
                       setLoadingClientTag(false)
                       getClientTags()

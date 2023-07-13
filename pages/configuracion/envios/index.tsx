@@ -22,7 +22,7 @@ const ShippingPage = () => {
   const [loading, setLoading] = useState(false)
 
   const getStoreData = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/store-data')
+    const response = await axios.get(`${process.env.API_URL}/store-data`)
     setStoreData(response.data)
   }
 
@@ -63,7 +63,7 @@ const ShippingPage = () => {
 
   const imageChange2 = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
-      const response = await axios.post('https://server-production-e234.up.railway.app/product-image-upload', {image: e.target.files[0]}, {
+      const response = await axios.post(`${process.env.API_URL}/product-image-upload`, {image: e.target.files[0]}, {
         headers: {
           accept: 'application/json',
           'Accept-Language': 'en-US,en;q=0.8',
@@ -92,7 +92,7 @@ const ShippingPage = () => {
 
   const handleSubmit = async () => {
     setLoading(true)
-    await axios.post('https://server-production-e234.up.railway.app/store-data', storeData)
+    await axios.post(`${process.env.API_URL}/store-data`, storeData)
     setLoading(false)
   }
 

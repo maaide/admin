@@ -24,14 +24,14 @@ export const NewCategoryModal: React.FC<Props> = ({ newCategory, setNewCategory,
 
   const generateDescription = async () => {
     setDecriptionLoading(true)
-    const response = await axios.post('https://server-production-e234.up.railway.app/ai-description-category', { description: newCategoryData.category, type: type === 'Personalizado' ? newType : type })
+    const response = await axios.post(`${process.env.API_URL}/ai-description-category`, { description: newCategoryData.category, type: type === 'Personalizado' ? newType : type })
     const filterSeo = response.data[0].text.split('\n').filter((item: any) => item !== '')
     setNewCategoryData({ ...newCategoryData, description: filterSeo })
     setDecriptionLoading(false)
   }
 
   const imageChange = async (e: any) => {
-    const { data } = await axios.post('https://server-production-e234.up.railway.app/product-image-upload', { image: e.target.files[0] }, {
+    const { data } = await axios.post(`${process.env.API_URL}/product-image-upload`, { image: e.target.files[0] }, {
       headers: {
         accept: 'application/json',
         'Accept-Language': 'en-US,en;q=0.8',
@@ -43,7 +43,7 @@ export const NewCategoryModal: React.FC<Props> = ({ newCategory, setNewCategory,
 
   const handleSubmit = async () => {
     setLoading(true)
-    await axios.post('http://localhost:4000/categories', newCategoryData)
+    await axios.post(`${process.env.API_URL}/categories`, newCategoryData)
     setNewCategory('hidden')
     setLoading(false)
   }

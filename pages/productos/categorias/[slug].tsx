@@ -18,7 +18,7 @@ const CategoryPage = () => {
 
   const getCategory = async () => {
     const slug = router.asPath.replace('/productos/categorias/', '')
-    const { data } = await axios.get(`https://server-production-e234.up.railway.app/categories/${slug}`)
+    const { data } = await axios.get(`${process.env.API_URL}/categories/${slug}`)
     setCategoryInfo(data)
   }
 
@@ -28,7 +28,7 @@ const CategoryPage = () => {
 
   const handleSubmit = async () => {
     setUpdatingLoading(true)
-    await axios.put(`https://server-production-e234.up.railway.app/categories/${categoryInfo?._id}`, categoryInfo)
+    await axios.put(`${process.env.API_URL}/categories/${categoryInfo?._id}`, categoryInfo)
     router.push('/productos/categorias')
   }
 
@@ -67,7 +67,7 @@ const CategoryPage = () => {
                         <button onClick={async (e: any) => {
                           e.preventDefault()
                           setDeleteLoading(true)
-                          await axios.delete(`https://server-production-e234.up.railway.app/categories/${categoryInfo._id}`)
+                          await axios.delete(`${process.env.API_URL}/categories/${categoryInfo._id}`)
                           router.push('/categorias')
                         }} className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md w-20'>{deleteLoading ? <Spinner2 /> : 'Eliminar'}</button>
                       </div>

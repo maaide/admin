@@ -22,7 +22,7 @@ const NewCategory = () => {
 
   const handleSubmit = async () => {
     setLoading(true)
-    await axios.post('https://server-production-e234.up.railway.app/categories', categoryInfo)
+    await axios.post(`${process.env.API_URL}/categories`, categoryInfo)
     router.push('/productos/categorias')
   }
 

@@ -14,7 +14,7 @@ const PoliticsPage = () => {
   const [loading, setLoading] = useState(false)
 
   const getPolitics = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/politics')
+    const response = await axios.get(`${process.env.API_URL}/politics`)
     setPolitics(response.data)
   }
 
@@ -28,7 +28,7 @@ const PoliticsPage = () => {
 
   const handleSubmit = async () => {
     setLoading(true)
-    await axios.post('https://server-production-e234.up.railway.app/politics', politics)
+    await axios.post(`${process.env.API_URL}/politics`, politics)
     setLoading(false)
   }
 

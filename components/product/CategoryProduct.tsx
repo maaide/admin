@@ -17,7 +17,7 @@ export const CategoryProduct: React.FC<Props> = ({information, setInformation, c
   const [tagLoading, setTagLoading] = useState(false)
 
   const getTags = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/tags')
+    const response = await axios.get(`${process.env.API_URL}/tags`)
     setTags(response.data)
   }
 
@@ -45,7 +45,7 @@ export const CategoryProduct: React.FC<Props> = ({information, setInformation, c
   const newTagSubmit = async (e: any) => {
     e.preventDefault()
     setTagLoading(true)
-    await axios.post('https://server-production-e234.up.railway.app/tags', {tag: tag})
+    await axios.post(`${process.env.API_URL}/tags`, {tag: tag})
     getTags()
     setTag('')
     setTagLoading(false)

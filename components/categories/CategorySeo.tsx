@@ -18,7 +18,7 @@ export const CategorySeo: React.FC<Props> = ({setCategoryInfo, categoryInfo}) =>
 
   const generateTitleSeo = async () => {
     setMetaTitleAiLoading(true)
-    const response = await axios.post('https://server-production-e234.up.railway.app/ai-title-category-seo', { description: categoryInfo.category })
+    const response = await axios.post(`${process.env.API_URL}/ai-title-category-seo`, { description: categoryInfo.category })
     const filterSeo = response.data[0].text.split('\n').filter((item: any) => item !== '')
     setCategoryInfo({ ...categoryInfo, titleSeo: filterSeo })
     setMetaTitleAiLoading(false)
@@ -26,7 +26,7 @@ export const CategorySeo: React.FC<Props> = ({setCategoryInfo, categoryInfo}) =>
 
   const generateDescriptionSeo = async () => {
     setMetaDescriptionAiLoading(true)
-    const response = await axios.post('https://server-production-e234.up.railway.app/ai-description-category-seo', { description: categoryInfo.category })
+    const response = await axios.post(`${process.env.API_URL}/ai-description-category-seo`, { description: categoryInfo.category })
     const filterSeo = response.data[0].text.split('\n').filter((item: any) => item !== '')
     setCategoryInfo({ ...categoryInfo, descriptionSeo: filterSeo })
     setMetaDescriptionAiLoading(false)

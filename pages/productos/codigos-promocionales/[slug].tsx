@@ -17,7 +17,7 @@ const PromotionalCodePage = () => {
 
   const getPromotionalCode = async () => {
     const slug = router.asPath.replace('/productos/codigos-promocionales/', '')
-    const {data} = await axios.get(`https://server-production-e234.up.railway.app/promotional-code/${slug}`)
+    const {data} = await axios.get(`${process.env.API_URL}/promotional-code/${slug}`)
     setCodeInfo(data)
     if (data.minimumAmount !== 0) {
       setMinimunPrice(true)
@@ -35,7 +35,7 @@ const PromotionalCodePage = () => {
   const handleSubmit = async () => {
     setSubmitLoading(true)
     const slug = router.asPath.replace('/productos/codigos-promocionales/', '')
-    await axios.put(`https://server-production-e234.up.railway.app/promotional-code/${slug}`, codeInfo)
+    await axios.put(`${process.env.API_URL}/promotional-code/${slug}`, codeInfo)
     router.push('/productos/codigos-promocionales')
     setSubmitLoading(false)
   }

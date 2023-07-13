@@ -5,7 +5,7 @@ import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
 import io from 'socket.io-client'
 
-const socket = io('https://server-production-e234.up.railway.app')
+const socket = io(`${process.env.API_URL}`)
 
 const MessengerMessages = () => {
 
@@ -19,7 +19,7 @@ const MessengerMessages = () => {
   const selectedMessengerIdRef = useRef(selectedMessengerId)
 
   const getMessages = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/messenger')
+    const response = await axios.get(`${process.env.API_URL}/messenger`)
     setMessengerIds(response.data)
   }
 
@@ -90,10 +90,10 @@ const MessengerMessages = () => {
                       const createdAt = new Date(messenger.createdAt!)
                       return (
                         <button onClick={async () => {
-                          const response = await axios.get(`https://server-production-e234.up.railway.app/messenger/${messenger.messengerId}`)
+                          const response = await axios.get(`${process.env.API_URL}/messenger/${messenger.messengerId}`)
                           setMessages(response.data)
                           setSelectedMessengerId(messenger.messengerId)
-                          await axios.put(`https://server-production-e234.up.railway.app/messenger/${messenger.messengerId}`)
+                          await axios.put(`${process.env.API_URL}/messenger/${messenger.messengerId}`)
                           getMessages()
                         }} key={messenger.messengerId} className='bg-white w-full text-left h-20 p-2 flex gap-2 justify-between rounded-xl dark:bg-neutral-700/60 hover:bg-neutral-200/40 dark:hover:bg-neutral-700'>
                           <div className='mt-auto mb-auto'>
@@ -149,7 +149,7 @@ const MessengerMessages = () => {
                   setMessages(messages.concat({messengerId: selectedMessengerId, response: newMessage, agent: true, view: false, createdAt: new Date()}))
                   const newMe = newMessage
                   setNewMessage('')
-                  await axios.post('https://server-production-e234.up.railway.app/messenger', {messengerId: selectedMessengerId, response: newMe, agent: true, view: true})
+                  await axios.post(`${process.env.API_URL}/messenger`, {messengerId: selectedMessengerId, response: newMe, agent: true, view: true})
                   getMessages()
                 }} className='flex gap-2 pr-4'>
                   <input onChange={(e: any) => setNewMessage(e.target.value)} value={newMessage} type='text' placeholder='Escribe tu mensaje' className='border p-1.5 w-full rounded-lg dark:border-neutral-600' />

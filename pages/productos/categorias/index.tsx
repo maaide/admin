@@ -63,7 +63,7 @@ const Categories = () => {
                             <td className='p-2'>
                               <button onClick={async(e: any) => {
                                 e.preventDefault()
-                                await axios.delete(`https://server-production-e234.up.railway.app/categories/${category._id}`)
+                                await axios.delete(`${process.env.API_URL}/categories/${category._id}`)
                               }}><AiOutlineClose /></button>
                             </td>
                           </tr>

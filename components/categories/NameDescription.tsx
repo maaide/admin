@@ -18,7 +18,7 @@ export const NameDescription: React.FC<Props> = ({setCategoryInfo, categoryInfo}
 
   const generateDescription = async () => {
     setDecriptionLoading(true)
-    const response = await axios.post('https://server-production-e234.up.railway.app/ai-description-category', { description: categoryInfo.category })
+    const response = await axios.post(`${process.env.API_URL}/ai-description-category`, { description: categoryInfo.category })
     const filterSeo = response.data[0].text.split('\n').filter((item: any) => item !== '')
     setDesacriptionAi(filterSeo)
     setDecriptionLoading(false)

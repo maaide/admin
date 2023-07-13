@@ -79,7 +79,7 @@ const Products = () => {
                           <td className='p-2'>
                             <button onClick={async(e: any) => {
                               e.preventDefault()
-                              await axios.delete(`https://server-production-e234.up.railway.app/products/${product._id}`)
+                              await axios.delete(`${process.env.API_URL}/products/${product._id}`)
                             }}><AiOutlineClose /></button>
                           </td>
                         </tr>

@@ -15,7 +15,7 @@ const AutomatizationsPage = () => {
 
   const getAutomatizations = async () => {
     setLoading(true)
-    const response = await axios.get('https://server-production-e234.up.railway.app/automatizations')
+    const response = await axios.get(`${process.env.API_URL}/automatizations`)
     setAutomatizations(response.data)
     setLoading(false)
   }

@@ -19,7 +19,7 @@ const SellPage = () => {
 
   const getSell = async () => {
     const slug = router.asPath.replace('/ventas/', '')
-    const response = await axios.get(`https://server-production-e234.up.railway.app/sells/${slug}`)
+    const response = await axios.get(`${process.env.API_URL}/sells/${slug}`)
     setSell(response.data)
   }
 
@@ -89,7 +89,7 @@ const SellPage = () => {
                                   e.preventDefault()
                                   setLoadingEditPay(true)
                                   const updatedSell = {...sell, state: 'Pago realizado'}
-                                  await axios.put(`https://server-production-e234.up.railway.app/sells/${sell._id}`, {sell: updatedSell})
+                                  await axios.put(`${process.env.API_URL}/sells/${sell._id}`, {sell: updatedSell})
                                   await getSell()
                                   setLoadingEditPay(false)
                                 }} className='bg-main mt-2 h-9 text-white text-sm rounded-md w-48'>{loadingEditPay ? <Spinner2 /> : 'Marcar pago realizado'}</button>
@@ -109,7 +109,7 @@ const SellPage = () => {
                                 e.preventDefault()
                                 setLoadingEdit(true)
                                 const updatedSell = {...sell, shippingState: 'Productos empaquetados'}
-                                await axios.put(`https://server-production-e234.up.railway.app/sells/${sell._id}`, {sell: updatedSell})
+                                await axios.put(`${process.env.API_URL}/sells/${sell._id}`, {sell: updatedSell})
                                 await getSell()
                                 setLoadingEdit(false)
                               }} className='bg-main mt-2 h-9 text-white text-sm rounded-md w-60'>{loadingEdit ? <Spinner2 /> : 'Marcar como empaquetado'}</button>
@@ -124,7 +124,7 @@ const SellPage = () => {
                                   e.preventDefault()
                                   setLoadingEdit(true)
                                   const updatedSell = {...sell, shippingState: 'Envío realizado'}
-                                  await axios.put(`https://server-production-e234.up.railway.app/sells/${sell._id}`, {sell: updatedSell})
+                                  await axios.put(`${process.env.API_URL}/sells/${sell._id}`, {sell: updatedSell})
                                   await getSell()
                                   setLoadingEdit(false)
                                 }} className='bg-main mt-2 h-9 text-white text-sm rounded-md w-52'>{loadingEdit ? <Spinner2 /> : 'Marcar como enviado'}</button>
@@ -140,7 +140,7 @@ const SellPage = () => {
                                           e.preventDefault()
                                           setLoadingEdit(true)
                                           const updatedSell = {...sell, shippingState: 'Envío realizado'}
-                                          await axios.put(`https://server-production-e234.up.railway.app/sells/${sell._id}`, {sell: updatedSell, shippingCode: shippingCode})
+                                          await axios.put(`${process.env.API_URL}/sells/${sell._id}`, {sell: updatedSell, shippingCode: shippingCode})
                                           await getSell()
                                           setLoadingEdit(false)
                                         }} className='bg-main mt-2 h-9 text-white text-sm rounded-md w-52'>{loadingEdit ? <Spinner2 /> : 'Marcar como enviado'}</button>
@@ -171,7 +171,7 @@ const SellPage = () => {
                         <h2 className='mb-4'>Cancelar venta</h2>
                         <button onClick={async () => {
                           const sellUpdate = {...sell, state: 'Cancelado'}
-                          await axios.put(`https://server-production-e234.up.railway.app/sells/${sell?._id}`, {sell: sellUpdate})
+                          await axios.put(`${process.env.API_URL}/sells/${sell?._id}`, {sell: sellUpdate})
                           router.push('/ventas')
                         }} className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md w-24'>Cancelar</button>
                       </div>

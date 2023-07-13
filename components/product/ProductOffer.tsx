@@ -15,7 +15,7 @@ export const ProductOffer: React.FC<Props> = ({productsOffer, setProductsOffer})
   const [products, setProducts] = useState<IProduct[]>([])
 
   const getProducts = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/products')
+    const response = await axios.get(`${process.env.API_URL}/products`)
     setProducts(response.data)
   }
 

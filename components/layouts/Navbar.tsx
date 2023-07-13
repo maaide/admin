@@ -9,7 +9,7 @@ import { IoIosNotificationsOutline } from 'react-icons/io'
 import { IoMdClose } from 'react-icons/io'
 import { io } from 'socket.io-client'
 
-const socket = io('https://server-production-e234.up.railway.app')
+const socket = io(`${process.env.API_URL}`)
 
 export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
 
@@ -27,7 +27,7 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
   }, [])
 
   const getNotifications = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/notifications/ultimate')
+    const response = await axios.get(`${process.env.API_URL}/notifications/ultimate`)
     setNotifications(response.data)
   }
 
@@ -42,7 +42,7 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     socket.on('message', async (message) => {
       if (message.message) {
-        await axios.post('https://server-production-e234.up.railway.app/notification', {title: 'Nuevo mensaje: Chat web', description: message.message, url: '/mensajes', view: false})
+        await axios.post(`${process.env.API_URL}/notification`, {title: 'Nuevo mensaje: Chat web', description: message.message, url: '/mensajes', view: false})
         getNotifications()
       }
     })
@@ -54,7 +54,7 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     socket.on('whatsapp', async (message) => {
-      await axios.post('https://server-production-e234.up.railway.app/notification', {title: 'Nuevo mensaje: WhatsApp', description: message.message, url: '/mensajes/whatsapp', view: false})
+      await axios.post(`${process.env.API_URL}/notification`, {title: 'Nuevo mensaje: WhatsApp', description: message.message, url: '/mensajes/whatsapp', view: false})
       getNotifications()
     })
 
@@ -65,7 +65,7 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     socket.on('messenger', async (message) => {
-      await axios.post('https://server-production-e234.up.railway.app/notification', {title: 'Nuevo mensaje: Messenger', description: message.message, url: '/mensajes/messenger', view: false})
+      await axios.post(`${process.env.API_URL}/notification`, {title: 'Nuevo mensaje: Messenger', description: message.message, url: '/mensajes/messenger', view: false})
       getNotifications()
     })
 
@@ -76,7 +76,7 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     socket.on('instagram', async (message) => {
-      await axios.post('https://server-production-e234.up.railway.app/notification', {title: 'Nuevo mensaje: Instagram', description: message.message, url: '/mensajes/instagram', view: false})
+      await axios.post(`${process.env.API_URL}/notification`, {title: 'Nuevo mensaje: Instagram', description: message.message, url: '/mensajes/instagram', view: false})
       getNotifications()
     })
 
@@ -156,7 +156,7 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
                             const createdAt = new Date(notification.createdAt!)
                             return (
                               <Link className='hover:bg-neutral-100 p-2 rounded-md flex gap-4 justify-between dark:hover:bg-neutral-700' href={notification.url} key={notification.description} onClick={async () => {
-                                await axios.put(`https://server-production-e234.up.railway.app/notifications/${notification._id}`)
+                                await axios.put(`${process.env.API_URL}/notifications/${notification._id}`)
                                 getNotifications()
                               }}>
                                 <div className='mt-auto mb-auto'>

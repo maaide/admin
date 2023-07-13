@@ -12,7 +12,7 @@ const Configuration = () => {
 
   const handleSubmit = async () => {
     setLoading(true)
-    await axios.post('https://server-production-e234.up.railway.app/plan', plan)
+    await axios.post(`${process.env.API_URL}/plan`, plan)
     setLoading(false)
   }
 

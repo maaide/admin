@@ -67,7 +67,7 @@ const PersonalizePage = () => {
   const [storeData, setStoreData] = useState<IStoreData>()
 
   const getDesign = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/design')
+    const response = await axios.get(`${process.env.API_URL}/design`)
     if (response.data) {
       setDesign(response.data)
     }
@@ -78,7 +78,7 @@ const PersonalizePage = () => {
   }, [])
 
   const getStoreData = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/store-data')
+    const response = await axios.get(`${process.env.API_URL}/store-data`)
     setStoreData(response.data)
   }
 
@@ -87,7 +87,7 @@ const PersonalizePage = () => {
   }, [])
 
   const imageChange = async (e: any) => {
-    const { data } = await axios.post('https://server-production-e234.up.railway.app/product-image-upload', { image: e.target.files[0] }, {
+    const { data } = await axios.post(`${process.env.API_URL}/product-image-upload`, { image: e.target.files[0] }, {
       headers: {
         accept: 'application/json',
         'Accept-Language': 'en-US,en;q=0.8',
@@ -101,7 +101,7 @@ const PersonalizePage = () => {
   
   const handleSubmit = async () => {
     setLoading(true)
-    await axios.post('https://server-production-e234.up.railway.app/design', design)
+    await axios.post(`${process.env.API_URL}/design`, design)
     setLoading(false)
     window.location.reload()
   }
@@ -174,7 +174,7 @@ const PersonalizePage = () => {
                                 <p>Banner {index + 1}</p>
                                 <p className='text-sm'>Imagen de fondo</p>
                                 <input type='file' onChange={async (e: ChangeEvent<HTMLInputElement>) => {
-                                  const response = await axios.post('https://server-production-e234.up.railway.app/product-image-upload', {image: e.target.files?.length ? e.target.files[0] : ''}, {
+                                  const response = await axios.post(`${process.env.API_URL}/product-image-upload`, {image: e.target.files?.length ? e.target.files[0] : ''}, {
                                     headers: {
                                       accept: 'application/json',
                                       'Accept-Language': 'en-US,en;q=0.8',
@@ -491,27 +491,27 @@ const PersonalizePage = () => {
         </div>
         {
           part === 'Inicio' || part === 'Encabezado' || part === '' || part === 'Footer'
-            ? <iframe className='m-auto bg-white' src="https://tienda-1.vercel.app" width="100%" height="100%" />
+            ? <iframe className='m-auto bg-white' src={`${process.env.WEB_URL}`} width="100%" height="100%" />
             : ''
         }
         {
           part === 'Producto'
-            ? <iframe className='m-auto bg-white' src="https://tienda-1.vercel.app/productos/airpods-pro" width="100%" height="100%" />
+            ? <iframe className='m-auto bg-white' src={`${process.env.WEB_URL}/productos/airpods-pro`} width="100%" height="100%" />
             : ''
         }
         {
           part === 'Contacto'
-            ? <iframe className='m-auto bg-white' src="https://tienda-1.vercel.app/contacto" width="100%" height="100%" />
+            ? <iframe className='m-auto bg-white' src={`${process.env.WEB_URL}/contacto`} width="100%" height="100%" />
             : ''
         }
         {
           part === 'Tienda'
-            ? <iframe className='m-auto bg-white' src="https://tienda-1.vercel.app/tienda" width="100%" height="100%" />
+            ? <iframe className='m-auto bg-white' src={`${process.env.WEB_URL}/tienda`} width="100%" height="100%" />
             : ''
         }
         {
           part === 'Carrito'
-            ? <iframe className='m-auto bg-white' src="https://tienda-1.vercel.app/carrito" width="100%" height="100%" />
+            ? <iframe className='m-auto bg-white' src={`${process.env.WEB_URL}/carrito`} width="100%" height="100%" />
             : ''
         }{
           part === 'Suscripcion'
@@ -541,7 +541,6 @@ const PersonalizePage = () => {
                       )
                       : ''
                   }
-                  
                   <div className='flex gap-4'>
                     <div className='w-1/2 flex flex-col gap-1'>
                       <a target="_blank" href="https://tienda-1.vercel.app/">{storeData?.name}</a>

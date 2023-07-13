@@ -15,7 +15,7 @@ const StadisticsPage = () => {
   const [loading, setLoading] = useState(true)
 
   const getStadistics = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/stadistics')
+    const response = await axios.get(`${process.env.API_URL}/stadistics`)
     setStadistics(response.data)
     setLoading(false)
   }
@@ -30,7 +30,7 @@ const StadisticsPage = () => {
 
   const handleFilter = async () => {
     setLoading(true)
-    const response = await axios.post('https://server-production-e234.up.railway.app/stadistics', filter)
+    const response = await axios.post(`${process.env.API_URL}/stadistics`, filter)
     setStadistics(response.data)
     setLoading(false)
   }

@@ -3,7 +3,7 @@ import { IClient } from '../interfaces'
 
 export const useClients = ( url: string, config: SWRConfiguration = {} ) => {
 
-  const { data, error } = useSWR<IClient[]>(`https://server-production-e234.up.railway.app${ url }`, config )
+  const { data, error } = useSWR<IClient[]>(`${process.env.API_URL}${ url }`, config )
 
   return {
     clients: data || [],

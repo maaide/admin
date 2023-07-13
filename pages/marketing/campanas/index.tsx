@@ -15,7 +15,7 @@ const CampaignPage = () => {
 
   const getCampaigns = async () => {
     setLoading(true)
-    const response = await axios.get('https://server-production-e234.up.railway.app/campaigns')
+    const response = await axios.get(`${process.env.API_URL}/campaigns`)
     setCampaigns(response.data)
     setLoading(false)
   }

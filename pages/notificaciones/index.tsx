@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import io from 'socket.io-client'
 
-const socket = io('https://server-production-e234.up.railway.app')
+const socket = io(`${process.env.API_URL}`)
 
 const NotificationsPage = () => {
 
@@ -16,7 +16,7 @@ const NotificationsPage = () => {
   const router = useRouter()
 
   const getNotifications = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/notifications')
+    const response = await axios.get(`${process.env.API_URL}/notifications`)
     setNotifications(response.data)
   }
 
@@ -52,7 +52,7 @@ const NotificationsPage = () => {
                       const createdAt = new Date(notification.createdAt!)
                       return (
                         <Link href={notification.url} key={notification._id} className='flex gap-4 justify-between hover:bg-neutral-100 p-2 rounded-md' onClick={async () => {
-                          await axios.put(`https://server-production-e234.up.railway.app/notifications/${notification._id}`)
+                          await axios.put(`${process.env.API_URL}/notifications/${notification._id}`)
                           socket.emit('newNotification', true)
                           getNotifications()
                         }}>

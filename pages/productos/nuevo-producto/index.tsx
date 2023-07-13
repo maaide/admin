@@ -49,7 +49,7 @@ const NewProduct: React.FC<Props> = ({ categories }) => {
 
   const handleSubmit = async () => {
     setSubmitLoading(true)
-    await axios.post('https://server-production-e234.up.railway.app/products', { name: information.name, description: information.description, category: information.category, price: information.price, beforePrice: information.beforePrice, images: information.images, stock: information.stock, slug: information.slug, state: information.state, tags: information.tags, titleSeo: information.titleSeo, descriptionSeo: information.descriptionSeo, variations: information.variations, nameVariations: information.nameVariations, productsOffer: productsOffer, cost: information.cost })
+    await axios.post(`${process.env.API_URL}/products`, { name: information.name, description: information.description, category: information.category, price: information.price, beforePrice: information.beforePrice, images: information.images, stock: information.stock, slug: information.slug, state: information.state, tags: information.tags, titleSeo: information.titleSeo, descriptionSeo: information.descriptionSeo, variations: information.variations, nameVariations: information.nameVariations, productsOffer: productsOffer, cost: information.cost })
     router.push('/productos')
   }
 

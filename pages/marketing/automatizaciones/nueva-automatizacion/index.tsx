@@ -36,7 +36,7 @@ const NewAutomatization = () => {
   const router = useRouter()
 
   const getClientTags = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/client-tag')
+    const response = await axios.get(`${process.env.API_URL}/client-tag`)
     setClientTags(response.data)
   }
 
@@ -45,7 +45,7 @@ const NewAutomatization = () => {
   }, [])
 
   const getStoreData = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/store-data')
+    const response = await axios.get(`${process.env.API_URL}/store-data`)
     setStoreData(response.data[0])
   }
 
@@ -61,7 +61,7 @@ const NewAutomatization = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     setLoading(true)
-    await axios.post('https://server-production-e234.up.railway.app/automatization', { address: automatization.address, name: automatization.name, date: new Date(), automatization: automatization.automatization })
+    await axios.post(`${process.env.API_URL}/automatization`, { address: automatization.address, name: automatization.name, date: new Date(), automatization: automatization.automatization })
     router.push('/marketing/automatizaciones')
     setLoading(false)
   }

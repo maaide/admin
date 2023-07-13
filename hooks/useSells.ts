@@ -3,7 +3,7 @@ import { ISell } from '../interfaces'
 
 export const useSells = ( url: string, config: SWRConfiguration = {} ) => {
 
-  const { data, error } = useSWR<ISell[]>(`https://server-production-e234.up.railway.app${ url }`, config )
+  const { data, error } = useSWR<ISell[]>(`${process.env.API_URL}${ url }`, config )
 
   return {
     sells: data || [],

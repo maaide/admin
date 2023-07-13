@@ -35,7 +35,7 @@ const NewSell = () => {
   const initialEmail = ''
 
   const getProducts = async () => {
-    const products = await axios.get('https://server-production-e234.up.railway.app/products')
+    const products = await axios.get(`${process.env.API_URL}/products`)
     setProducts(products.data)
   }
 
@@ -66,7 +66,7 @@ const NewSell = () => {
 
   const sellSubmit = async () => {
     setSubmitLoading(true)
-    await axios.post('https://server-production-e234.up.railway.app/sells', sell)
+    await axios.post(`${process.env.API_URL}/sells`, sell)
     setSubmitLoading(false)
     router.push('/ventas')
   }

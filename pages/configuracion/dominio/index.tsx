@@ -10,7 +10,7 @@ const Configuration = () => {
   const [domain, setDomain] = useState('')
 
   const getDomain = async () => {
-    const response = await axios.get('https://server-production-e234.up.railway.app/domain')
+    const response = await axios.get(`${process.env.API_URL}/domain`)
     setDomain(response.data.domain)
   }
 
@@ -20,7 +20,7 @@ const Configuration = () => {
 
   const handleSubmit = async () => {
     setLoading(true)
-    await axios.post('https://server-production-e234.up.railway.app/domain', { domain: domain })
+    await axios.post(`${process.env.API_URL}/domain`, { domain: domain })
     setLoading(false)
   }
 
