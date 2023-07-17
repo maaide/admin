@@ -33,48 +33,50 @@ const PromotionalCodes = () => {
                       </div>
                     </div>
                   )
-                : (
-                  <table className='shadow-md w-full border dark:border-neutral-600'>
-                    <thead className='bg-white border-b w-full dark:bg-neutral-800 dark:border-neutral-600'>
-                      <tr>
-                        <th className='text-left p-2 font-normal'>Codigo promocional</th>
-                        <th className='text-left p-2 font-normal'>Tipo de descuento</th>
-                        <th className='text-left p-2 font-normal'>Valor del descuento</th>
-                        <th className='text-left p-2 font-normal'>Precio minimo</th>
-                        <th className='text-left p-2 font-normal'>Estado</th>
-                      </tr>
-                    </thead>
-                    <tbody className='bg-white w-full dark:bg-neutral-800 dark:border-neutral-600'>
-                      {
-                        promotionalCodes.map(promotionalCode => (
-                          <tr className='border-b cursor-pointer w-full dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700' key={promotionalCode._id}>
-                            <td className='p-2' onClick={() => router.push(`/productos/codigos-promocionales/${promotionalCode.promotionalCode}`)}>
-                              <p className='font-light'>{promotionalCode.promotionalCode}</p>
-                            </td>
-                            <td className='p-2' onClick={() => router.push(`/productos/codigos-promocionales/${promotionalCode.promotionalCode}`)}>
-                              <p className='font-light'>{promotionalCode.discountType}</p>
-                            </td>
-                            <td className='p-2' onClick={() => router.push(`/productos/codigos-promocionales/${promotionalCode.promotionalCode}`)}>
-                              <p className='font-light'>{promotionalCode.value}</p>
-                            </td>
-                            <td className='p-2' onClick={() => router.push(`/productos/codigos-promocionales/${promotionalCode.promotionalCode}`)}>
-                              <p className='font-light'>${NumberFormat(promotionalCode.minimumAmount)}</p>
-                            </td>
-                            <td className='p-2' onClick={() => router.push(`/productos/${promotionalCode.promotionalCode}`)}>
-                              <p className='font-light'>
-                                {
-                                  promotionalCode.state === true
-                                    ? <p className='font-light w-fit pt-1 pb-1 pl-2 pr-2 bg-green-500 rounded-md text-white'>Activo</p>
-                                    : <p className='font-light w-fit pt-1 pb-1 pl-2 pr-2 bg-red-500 rounded-md text-white'>Desactivado</p>
-                                }
-                              </p>
-                            </td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                )
+                : promotionalCodes.length
+                  ? (
+                    <table className='shadow-md w-full border dark:border-neutral-600'>
+                      <thead className='bg-white border-b w-full dark:bg-neutral-800 dark:border-neutral-600'>
+                        <tr>
+                          <th className='text-left p-2 font-normal'>Codigo promocional</th>
+                          <th className='text-left p-2 font-normal'>Tipo de descuento</th>
+                          <th className='text-left p-2 font-normal'>Valor del descuento</th>
+                          <th className='text-left p-2 font-normal'>Precio minimo</th>
+                          <th className='text-left p-2 font-normal'>Estado</th>
+                        </tr>
+                      </thead>
+                      <tbody className='bg-white w-full dark:bg-neutral-800 dark:border-neutral-600'>
+                        {
+                          promotionalCodes.map(promotionalCode => (
+                            <tr className='border-b cursor-pointer w-full dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700' key={promotionalCode._id}>
+                              <td className='p-2' onClick={() => router.push(`/productos/codigos-promocionales/${promotionalCode.promotionalCode}`)}>
+                                <p className='font-light'>{promotionalCode.promotionalCode}</p>
+                              </td>
+                              <td className='p-2' onClick={() => router.push(`/productos/codigos-promocionales/${promotionalCode.promotionalCode}`)}>
+                                <p className='font-light'>{promotionalCode.discountType}</p>
+                              </td>
+                              <td className='p-2' onClick={() => router.push(`/productos/codigos-promocionales/${promotionalCode.promotionalCode}`)}>
+                                <p className='font-light'>{promotionalCode.value}</p>
+                              </td>
+                              <td className='p-2' onClick={() => router.push(`/productos/codigos-promocionales/${promotionalCode.promotionalCode}`)}>
+                                <p className='font-light'>${NumberFormat(promotionalCode.minimumAmount)}</p>
+                              </td>
+                              <td className='p-2' onClick={() => router.push(`/productos/${promotionalCode.promotionalCode}`)}>
+                                <p className='font-light'>
+                                  {
+                                    promotionalCode.state === true
+                                      ? <p className='font-light w-fit pt-1 pb-1 pl-2 pr-2 bg-green-500 rounded-md text-white'>Activo</p>
+                                      : <p className='font-light w-fit pt-1 pb-1 pl-2 pr-2 bg-red-500 rounded-md text-white'>Desactivado</p>
+                                  }
+                                </p>
+                              </td>
+                            </tr>
+                          ))
+                        }
+                      </tbody>
+                    </table>
+                  )
+                  : 'No hay codigos promocionales'
             }
           </div>
         </div>

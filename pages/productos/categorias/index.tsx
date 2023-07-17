@@ -34,44 +34,46 @@ const Categories = () => {
                     </div>
                   </div>
                 )
-                : (
-                  <table className='shadow-md w-full border dark:border-neutral-600'>
-                    <thead className='bg-white border-b w-full dark:bg-neutral-800 dark:border-neutral-600'>
-                      <tr>
-                        <th className='text-left p-2 font-normal'>Categoría</th>
-                        <th className='text-left p-2 font-normal'>Slug</th>
-                        <th className='text-left p-2 font-normal'>Cantidad productos</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody className='bg-white w-full dark:bg-neutral-800 dark:border-neutral-600'>
-                      {
-                        categories.map(category => (
-                          <tr key={category._id} className='border-b cursor-pointer w-full dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700'>
-                            <td className='flex gap-2 p-2' onClick={() => router.push(`/productos/categorias/${category.slug}`)}>
-                              <img className='w-20' src={category.image} alt={category.category} />
-                              <div className='mt-auto mb-auto w-full'>
-                                <p className='font-light'>{category.category}</p>
-                              </div>
-                            </td>
-                            <td className='p-2' onClick={() => router.push(`/productos/categorias/${category.slug}`)}>
-                              <p className='font-light'>{category.slug}</p>
-                            </td>
-                            <td className='p-2' onClick={() => router.push(`/productos/categorias/${category.slug}`)}>
-                              <p className='font-light'>{products.length ? products.filter(product => product.category === category.category).length : ''}</p>
-                            </td>
-                            <td className='p-2'>
-                              <button onClick={async(e: any) => {
-                                e.preventDefault()
-                                await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/categories/${category._id}`)
-                              }}><AiOutlineClose /></button>
-                            </td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                )
+                : categories.length
+                  ? (
+                    <table className='shadow-md w-full border dark:border-neutral-600'>
+                      <thead className='bg-white border-b w-full dark:bg-neutral-800 dark:border-neutral-600'>
+                        <tr>
+                          <th className='text-left p-2 font-normal'>Categoría</th>
+                          <th className='text-left p-2 font-normal'>Slug</th>
+                          <th className='text-left p-2 font-normal'>Cantidad productos</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody className='bg-white w-full dark:bg-neutral-800 dark:border-neutral-600'>
+                        {
+                          categories.map(category => (
+                            <tr key={category._id} className='border-b cursor-pointer w-full dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700'>
+                              <td className='flex gap-2 p-2' onClick={() => router.push(`/productos/categorias/${category.slug}`)}>
+                                <img className='w-20' src={category.image} alt={category.category} />
+                                <div className='mt-auto mb-auto w-full'>
+                                  <p className='font-light'>{category.category}</p>
+                                </div>
+                              </td>
+                              <td className='p-2' onClick={() => router.push(`/productos/categorias/${category.slug}`)}>
+                                <p className='font-light'>{category.slug}</p>
+                              </td>
+                              <td className='p-2' onClick={() => router.push(`/productos/categorias/${category.slug}`)}>
+                                <p className='font-light'>{products.length ? products.filter(product => product.category === category.category).length : ''}</p>
+                              </td>
+                              <td className='p-2'>
+                                <button onClick={async(e: any) => {
+                                  e.preventDefault()
+                                  await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/categories/${category._id}`)
+                                }}><AiOutlineClose /></button>
+                              </td>
+                            </tr>
+                          ))
+                        }
+                      </tbody>
+                    </table>
+                  )
+                  : 'No hay categorias'
             }
           </div>
         </div>
