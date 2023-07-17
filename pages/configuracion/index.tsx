@@ -23,7 +23,9 @@ const Configuration = () => {
 
   const getStoreData = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/store-data`)
-    setStoreData(response.data)
+    if (response.data) {
+      setStoreData(response.data)
+    }
   }
 
   useEffect(() => {

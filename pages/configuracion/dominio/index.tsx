@@ -11,7 +11,9 @@ const Configuration = () => {
 
   const getDomain = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/domain`)
-    setDomain(response.data.domain)
+    if (response.data) {
+      setDomain(response.data.domain)
+    }
   }
 
   useEffect(() => {
