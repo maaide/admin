@@ -1,9 +1,8 @@
-import { LeftMenu, Spinner2 } from '@/components/ui'
-import { City, IStoreData, Region } from '@/interfaces'
+import { LeftMenu } from '@/components/ui'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 const Configuration = () => {
 
@@ -35,7 +34,6 @@ const Configuration = () => {
                 <Link href='/configuracion/politicas'>Politicas</Link>
                 <Link href='/configuracion/dominio'>Dominio</Link>
                 <Link href='/configuracion/envios'>Envíos</Link>
-                <Link href='/configuracion/mensajes'>Mensajes</Link>
               </div>
             </div>
             <div className='w-3/4 flex flex-col gap-4'>
