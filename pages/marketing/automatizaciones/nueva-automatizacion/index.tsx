@@ -80,7 +80,7 @@ const NewAutomatization = () => {
             </div>
             <div className='flex gap-2 w-fit'>
               <button onClick={handleSubmit} className='bg-main text-white m-auto text-sm rounded-md w-48 h-8'>{loading ? <Spinner2 /> : 'Crear automatización'}</button>
-              <Link className='bg-red-600 h-8 flex m-auto text-white text-sm rounded-md pl-4 pr-4' href='/productos'><p className='m-auto'>Descartar</p></Link>
+              <Link className='bg-red-600 h-8 flex m-auto text-white text-sm rounded-md pl-4 pr-4' href='/marketing/automatizaciones'><p className='m-auto'>Descartar</p></Link>
             </div>
           </div>
         </div>

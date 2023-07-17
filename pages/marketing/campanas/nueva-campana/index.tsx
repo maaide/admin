@@ -59,7 +59,7 @@ const NewCampaign = () => {
           <div className='flex m-auto w-1280'>
             <div className='flex gap-2 ml-auto w-fit'>
               <button onClick={submit} className='bg-main text-white text-sm rounded-md w-36 h-8'>{loading ? <Spinner2 /> : 'Crear campaña'}</button>
-              <Link className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4' href='/productos'>Descartar</Link>
+              <Link className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4' href='/marketing/campanas'>Descartar</Link>
             </div>
           </div>
         </div>
