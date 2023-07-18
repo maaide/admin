@@ -26,7 +26,9 @@ const NewCampaign = () => {
 
   const getStoreData = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/store-data`)
-    setStoreData(response.data[0])
+    if (response.data) {
+      setStoreData(response.data[0])
+    }
   }
 
   useEffect(() => {
@@ -35,7 +37,9 @@ const NewCampaign = () => {
 
   const getClientTags = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/client-tag`)
-    setClientTags(response.data)
+    if (response.data) {
+      setClientTags(response.data)
+    }
   }
 
   useEffect(() => {

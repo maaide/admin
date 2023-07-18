@@ -132,7 +132,7 @@ const NewClient = () => {
                           ))
                         }
                       </div>
-                      : <p>No hay tags creados</p>
+                      : <p className='text-sm'>No hay tags creados</p>
                   }
                 </div>
                 <div>

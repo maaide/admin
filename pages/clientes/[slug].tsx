@@ -14,7 +14,7 @@ const ClientPage = () => {
   const [tags, setTags] = useState([])
   const [loadingClientTag, setLoadingClientTag] = useState(false)
   const [newClientTag, setNewClientTag] = useState('')
-  const [clientSells, setClientSells] = useState<ISell[]>([])
+  const [clientSells, setClientSells] = useState<ISell[]>()
 
   const router = useRouter()
 
@@ -62,16 +62,18 @@ const ClientPage = () => {
                       <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
                         <h2 className='mb-4'>Pedidos</h2>
                         {
-                          clientSells.length
-                            ? clientSells.map(sell => (
-                              <div onClick={() => router.push(`/ventas/${sell._id}`)} className='flex gap-4 cursor-pointer justify-between hover:bg-neutral-200 pt-4 pb-4 rounded pl-2 pr-2 dark:hover:bg-neutral-700' key={sell._id}>
-                                <p className='mt-auto mb-auto text-sm'>{sell.pay}</p>
-                                <p className='mt-auto mb-auto text-sm'>{sell.state}</p>
-                                <p className='mt-auto mb-auto text-sm'>{sell.shippingMethod}</p>
-                                <p className='mt-auto mb-auto text-sm'>{sell.shippingState}</p>
-                                <p className='mt-auto mb-auto text-sm'>${NumberFormat(sell.total)}</p>
-                              </div>
-                            ))
+                          clientSells
+                            ? clientSells.length
+                              ? clientSells.map(sell => (
+                                <div onClick={() => router.push(`/ventas/${sell._id}`)} className='flex gap-4 cursor-pointer justify-between hover:bg-neutral-200 pt-4 pb-4 rounded pl-2 pr-2 dark:hover:bg-neutral-700' key={sell._id}>
+                                  <p className='mt-auto mb-auto text-sm'>{sell.pay}</p>
+                                  <p className='mt-auto mb-auto text-sm'>{sell.state}</p>
+                                  <p className='mt-auto mb-auto text-sm'>{sell.shippingMethod}</p>
+                                  <p className='mt-auto mb-auto text-sm'>{sell.shippingState}</p>
+                                  <p className='mt-auto mb-auto text-sm'>${NumberFormat(sell.total)}</p>
+                                </div>
+                              ))
+                              : <p className='text-sm'>No hay ventas</p>
                             : (
                               <div className="flex w-full">
                                 <div className="m-auto mt-16 mb-16">
@@ -142,7 +144,7 @@ const ClientPage = () => {
                                   ))
                                 }
                               </div>
-                              : <p>No hay tags creados</p>
+                              : <p className='text-sm'>No hay tags creados</p>
                           }
                         </div>
                         <div>

@@ -63,7 +63,9 @@ export const ShippingCost: React.FC<Props> = ({setClientData, clientData, setChi
             'Ocp-Apim-Subscription-Key': '512b6b0ff709426d82968a33be83b4a1'
           }
         })
-        setChilexpress(request.data.data.courierServiceOptions)
+        if (setChilexpress) {
+          setChilexpress(request.data.data.courierServiceOptions)
+        }
         setCity(e.target.value)
         setClientData({...clientData, city: e.target.value})
       }
