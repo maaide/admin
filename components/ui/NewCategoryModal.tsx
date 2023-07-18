@@ -8,9 +8,10 @@ interface Props {
   setNewCategory: any,
   setNewCategoryData: any,
   newCategoryData: ICategory
+  setCategories: any
 }
 
-export const NewCategoryModal: React.FC<Props> = ({ newCategory, setNewCategory, setNewCategoryData, newCategoryData }) => {
+export const NewCategoryModal: React.FC<Props> = ({ newCategory, setNewCategory, setNewCategoryData, newCategoryData, setCategories }) => {
 
   const [descriptionLoading, setDecriptionLoading] = useState(false)
   const [onModal, setOnModal] = useState(false)
@@ -44,6 +45,10 @@ export const NewCategoryModal: React.FC<Props> = ({ newCategory, setNewCategory,
   const handleSubmit = async () => {
     setLoading(true)
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/categories`, newCategoryData)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories`)
+    if (response.data) {
+      setCategories(response.data)
+    }
     setNewCategory('hidden')
     setLoading(false)
   }

@@ -7,14 +7,14 @@ import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 
 interface Props {
   categories: ICategory[]
 }
 
-const NewProduct: React.FC<Props> = ({ categories }) => {
+const NewProduct: React.FC<Props> = () => {
 
   const [information, setInformation] = useState<IProduct>({
     name: '',
@@ -31,6 +31,7 @@ const NewProduct: React.FC<Props> = ({ categories }) => {
     variations: [{ variation: '', stock: 0, sku: '', image: '' }],
     nameVariations: ''
   })
+  const [categories, setCategories] = useState<ICategory[]>()
 
   const initial = {
     name: ''
@@ -46,6 +47,17 @@ const NewProduct: React.FC<Props> = ({ categories }) => {
   const [submitLoading, setSubmitLoading] = useState(false)
 
   const router = useRouter()
+
+  const getCategories = async () => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories`)
+    if (response.data) {
+      setCategories(response.data)
+    }
+  }
+
+  useEffect(() => {
+    getCategories()
+  }, [])
 
   const handleSubmit = async () => {
     setSubmitLoading(true)
@@ -71,7 +83,7 @@ const NewProduct: React.FC<Props> = ({ categories }) => {
             </div>
           </div>
         </div>
-        <NewCategoryModal newCategory={newCategory} newCategoryData={newCategoryData} setNewCategory={setNewCategory} setNewCategoryData={setNewCategoryData} />
+        <NewCategoryModal setCategories={setCategories} newCategory={newCategory} newCategoryData={newCategoryData} setNewCategory={setNewCategory} setNewCategoryData={setNewCategoryData} />
         <div className='p-6 bg-[#f6f6f7] mb-16 overflow-y-scroll dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)' }}>
           <div className='flex gap-3 mb-4 max-w-1280 m-auto'>
             <Link href='/productos' className='border rounded p-2 bg-white hover:bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-600'><BiArrowBack className='text-xl' /></Link>
@@ -95,15 +107,6 @@ const NewProduct: React.FC<Props> = ({ categories }) => {
       </LeftMenu>
     </>
   )
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  const categories = await dbCategories.getAllCategoriesForProducts()
-  return {
-    props: {
-      categories
-    }
-  }
 }
 
 export default NewProduct

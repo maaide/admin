@@ -6,7 +6,7 @@ import { Spinner2 } from '../ui'
 interface Props {
   information: IProduct
   setInformation: any
-  categories: ICategory[]
+  categories: ICategory[] | undefined
   setNewCategory: any
 }
 
