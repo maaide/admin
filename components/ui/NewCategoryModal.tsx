@@ -26,7 +26,7 @@ export const NewCategoryModal: React.FC<Props> = ({ newCategory, setNewCategory,
     setDecriptionLoading(true)
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/ai-description-category`, { description: newCategoryData.category, type: type === 'Personalizado' ? newType : type })
     const filterSeo = response.data[0].text.split('\n').filter((item: any) => item !== '')
-    setNewCategoryData({ ...newCategoryData, description: filterSeo })
+    setNewCategoryData({ ...newCategoryData, description: filterSeo[0] })
     setDecriptionLoading(false)
   }
 
