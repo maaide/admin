@@ -14,8 +14,8 @@ const ShippingPage = () => {
     address: '',
     region: '',
     city: '',
-    logo: '',
-    logoWhite: ''
+    logo: { public_id: '', url: '' },
+    logoWhite: { public_id: '', url: '' }
   })
   const [regions, setRegions] = useState<Region[]>()
   const [citys, setCitys] = useState<City[]>()

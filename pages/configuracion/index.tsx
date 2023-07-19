@@ -14,8 +14,8 @@ const Configuration = () => {
     address: '',
     region: '',
     city: '',
-    logo: '',
-    logoWhite: ''
+    logo: { public_id: '', url: '' },
+    logoWhite: { public_id: '', url: '' }
   })
   const [regions, setRegions] = useState<Region[]>()
   const [citys, setCitys] = useState<City[]>()
@@ -59,7 +59,7 @@ const Configuration = () => {
           'Content-Type': 'multipart/form-data'
         }
       })
-      setStoreData({...storeData, logo: response.data.image.url})
+      setStoreData({...storeData, logo: { public_id: response.data.image.public_id, url: response.data.image.url}})
     }
   }
 
@@ -72,7 +72,7 @@ const Configuration = () => {
           'Content-Type': 'multipart/form-data'
         }
       })
-      setStoreData({...storeData, logoWhite: response.data.image.url})
+      setStoreData({...storeData, logoWhite: { public_id: response.data.image.public_id, url: response.data.image.url}})
     }
   }
 

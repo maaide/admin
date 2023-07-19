@@ -39,7 +39,7 @@ export const NewCategoryModal: React.FC<Props> = ({ newCategory, setNewCategory,
         'Content-Type': 'multipart/form-data'
       }
     })
-    setNewCategoryData({...newCategoryData, image: data.image.url})
+    setNewCategoryData({...newCategoryData, image: { public_id: data.image.public_id, url: data.image.url }})
   }
 
   const handleSubmit = async () => {

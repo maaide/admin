@@ -18,7 +18,7 @@ const PersonalizePage = () => {
     },
     home: {
       banner: [{
-        image: '',
+        image: { public_id: '', url: '' },
         title: '',
         text: '',
         textButton: '',
@@ -47,7 +47,7 @@ const PersonalizePage = () => {
     shop: {
       title: '',
       description: '',
-      banner: ''
+      banner: { public_id: '', url: '' }
     },
     subscription: {
       title: '',
@@ -95,7 +95,7 @@ const PersonalizePage = () => {
       }
     })
     const updatedDesign = {...design}
-    updatedDesign.shop.banner = data.image.url
+    updatedDesign.shop.banner = { public_id: data.image.public_id, url: data.image.url}
     setDesign(updatedDesign)
   }
   
@@ -216,7 +216,7 @@ const PersonalizePage = () => {
                             e.preventDefault()
                             const updatedHome = {...design}
                             updatedHome.home.banner.push({
-                              image: '',
+                              image: { public_id: '', url: '' },
                               title: '',
                               text: '',
                               textButton: '',

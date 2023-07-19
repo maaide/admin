@@ -28,7 +28,7 @@ const NewProduct: React.FC<Props> = () => {
     tags: [],
     titleSeo: '',
     descriptionSeo: '',
-    variations: [{ variation: '', stock: 0, sku: '', image: '' }],
+    variations: [{ variation: '', stock: 0, sku: '', image: { public_id: '', url: '' } }],
     nameVariations: ''
   })
   const [categories, setCategories] = useState<ICategory[]>()

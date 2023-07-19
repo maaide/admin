@@ -52,7 +52,7 @@ const NewSell = () => {
     if (product) {
       setSell({...sell, cart: sell.cart.concat({
         category: product.category,
-        image: product.images[0],
+        image: product.images[0].url,
         name: product.name,
         price: product.price,
         quantity: 1,

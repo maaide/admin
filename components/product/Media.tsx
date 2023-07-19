@@ -21,7 +21,7 @@ export const Media: React.FC<Props> = ({ information, setInformation }) => {
           'Content-Type': 'multipart/form-data'
         }
       })
-      images = images.concat(response.data.image.url)
+      images = images.concat({ public_id: response.data.image.public_id, url: response.data.image.url })
       setInformation({...information, images: images})
     })
   }
@@ -41,7 +41,7 @@ export const Media: React.FC<Props> = ({ information, setInformation }) => {
         {
           information.images
             ? information.images.map(image => (
-              <img className='w-28 h-28 shadow-md rounded-md' key={image} src={image} />
+              <img className='w-28 h-28 shadow-md rounded-md' key={image.public_id} src={image.url} />
             ))
             : ''            
         }

@@ -30,7 +30,7 @@ export const Media: React.FC<Props> = ({ setCategoryInfo, categoryInfo }) => {
           categoryInfo.image
             ? (
               <div className='mt-3'>
-                <img src={categoryInfo.image} alt={categoryInfo.category} />
+                <img src={categoryInfo.image.url} alt={categoryInfo.category} />
               </div>
             )
             : ''
@@ -43,7 +43,7 @@ export const Media: React.FC<Props> = ({ setCategoryInfo, categoryInfo }) => {
           categoryInfo.banner
             ? (
               <div className='mt-3'>
-                <img src={categoryInfo.banner} alt={categoryInfo.category} />
+                <img src={categoryInfo.banner.url} alt={categoryInfo.category} />
               </div>
             )
             : ''

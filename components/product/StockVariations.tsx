@@ -26,7 +26,7 @@ export const StockVariations: React.FC<Props> = ({information, setInformation}) 
         'Content-Type': 'multipart/form-data'
       }
     })
-    const img = uploadImage.data.image.url
+    const img = { public_id: uploadImage.data.image.public_id, url: uploadImage.data.image.url }
     setInformation((prev: any) => {
       const newVariation = [...prev.variations]
       newVariation[indexImage].image = img
@@ -83,7 +83,7 @@ export const StockVariations: React.FC<Props> = ({information, setInformation}) 
                               <input {...getInputProps()} />
                                 {
                                   variation.image
-                                    ? <img src={variation.image} alt={variation.image} className='w-16 h-16 m-auto' />
+                                    ? <img src={variation.image.url} alt={variation.image.url} className='w-16 h-16 m-auto' />
                                     : <CiImageOn className='text-3xl m-auto text-neutral-400' />
                                 }
                             </div>
@@ -103,7 +103,7 @@ export const StockVariations: React.FC<Props> = ({information, setInformation}) 
                 </div>
                 <button onClick={(e: any) => {
                   e.preventDefault()
-                  setInformation({...information, variations: information.variations?.concat([{image: '', variation: '', stock: 0}])})
+                  setInformation({...information, variations: information.variations?.concat([{image: { public_id: '', url: '' }, variation: '', stock: 0}])})
                 }} className='w-fit bg-main pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4'>Crear nueva variación</button>
               </div>
             )

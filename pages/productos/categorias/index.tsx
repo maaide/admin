@@ -50,7 +50,7 @@ const Categories = () => {
                           categories.map(category => (
                             <tr key={category._id} className='border-b cursor-pointer w-full dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700'>
                               <td className='flex gap-2 p-2' onClick={() => router.push(`/productos/categorias/${category.slug}`)}>
-                                <img className='w-20' src={category.image} alt={category.category} />
+                                <img className='w-20' src={category.image?.url} alt={category.category} />
                                 <div className='mt-auto mb-auto w-full'>
                                   <p className='font-light'>{category.category}</p>
                                 </div>

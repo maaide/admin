@@ -52,7 +52,7 @@ const Products = () => {
                           products.map(product => (
                             <tr className='border-b cursor-pointer w-full dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700' key={product._id}>
                               <td className='flex gap-2 p-2' style={{width: '100%'}} onClick={() => router.push(`/productos/${product.slug}`)}>
-                                <img className='w-20' src={product.images[0]} />
+                                <img className='w-20' src={product.images[0].url} />
                                 <div className='mt-auto mb-auto w-full'>
                                   <p className='font-light'>{product.name}</p>
                                 </div>
