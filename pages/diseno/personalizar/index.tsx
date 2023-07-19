@@ -182,7 +182,7 @@ const PersonalizePage = () => {
                                     }
                                   })
                                   const updatedHome = {...design}
-                                  updatedHome.home.banner[index].image = response.data.image.url
+                                  updatedHome.home.banner[index].image = { public_id: response.data.image.public_id, url: response.data.image.url }
                                   setDesign(updatedHome)
                                 }} className='text-sm' />
                                 <p className='text-sm'>Titulo</p>
