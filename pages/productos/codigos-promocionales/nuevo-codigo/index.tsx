@@ -10,7 +10,7 @@ const NewPromotionalCode = () => {
 
   const [codeInfo, setCodeInfo] = useState({
     promotionalCode: '',
-    discountType: '',
+    discountType: 'Porcentaje',
     value: '',
     minimumAmount: '',
     state: false

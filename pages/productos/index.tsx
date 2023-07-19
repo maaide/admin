@@ -82,6 +82,7 @@ const Products = () => {
                                 <button onClick={async(e: any) => {
                                   e.preventDefault()
                                   await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/products/${product._id}`)
+                                  router.reload()
                                 }}><AiOutlineClose /></button>
                               </td>
                             </tr>

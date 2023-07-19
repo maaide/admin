@@ -17,7 +17,7 @@ export const Media: React.FC<Props> = ({ setCategoryInfo, categoryInfo }) => {
         'Content-Type': 'multipart/form-data'
       }
     })
-    setCategoryInfo({...categoryInfo, [e.target.name]: data.image.url})
+    setCategoryInfo({...categoryInfo, [e.target.name]: { public_id: data.image.public_id, url: data.image.url }})
   }
 
   return (

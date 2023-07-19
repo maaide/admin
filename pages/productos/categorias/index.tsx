@@ -65,6 +65,7 @@ const Categories = () => {
                                 <button onClick={async(e: any) => {
                                   e.preventDefault()
                                   await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/categories/${category._id}`)
+                                  router.reload()
                                 }}><AiOutlineClose /></button>
                               </td>
                             </tr>
