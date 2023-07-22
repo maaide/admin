@@ -7,14 +7,14 @@ interface CategorySlug {
 }
 
 export const getAllcategoriesSlug = async (): Promise<CategorySlug[]> => {
-  await db.dbConnect()
+  await db.connectDB()
   const slugs = await Category.find().select('slug -_id').lean()
 
   return slugs
 }
 
 export const getCategoriesBySlug = async (slug: string): Promise<ICategory | null> => {
-  await db.dbConnect()
+  await db.connectDB()
   const category = await Category.findOne({ slug }).lean()
 
   if ( !category ) {
@@ -25,7 +25,7 @@ export const getCategoriesBySlug = async (slug: string): Promise<ICategory | nul
 }
 
 export const getAllCategoriesForProducts = async (): Promise<ICategory[]> => {
-  await db.dbConnect()
+  await db.connectDB()
   const categories = await Category.find().select('category').lean()
 
   return JSON.parse( JSON.stringify( categories ) )

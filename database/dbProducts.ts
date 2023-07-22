@@ -3,7 +3,7 @@ import { IProduct } from "../interfaces"
 import { Product } from '../models'
 
 export const getProductBySlug = async ( slug: string ): Promise<IProduct | null> => {
-  await db.dbConnect()
+  await db.connectDB()
   const product = await Product.findOne({ slug }).lean()
 
   if ( !product ) {
@@ -18,7 +18,7 @@ interface ProductSlug {
 }
 
 export const getAllProductSlugs = async (): Promise<ProductSlug[]> => {
-  await db.dbConnect()
+  await db.connectDB()
   const slugs = await Product.find().select('slug -_id').lean()
 
   return slugs
@@ -27,7 +27,7 @@ export const getAllProductSlugs = async (): Promise<ProductSlug[]> => {
 export const getProductsByTerm = async ( term: string ): Promise<IProduct[]> => {
   term = term.toString().toLowerCase()
 
-  await db.dbConnect()
+  await db.connectDB()
   const products = await Product.find({
     $text: { $search: term }
   })
@@ -38,7 +38,7 @@ export const getProductsByTerm = async ( term: string ): Promise<IProduct[]> => 
 }
 
 export const getAllProducts = async (): Promise<IProduct[]> => {
-  await db.dbConnect()
+  await db.connectDB()
   const products = await Product.find().lean()
 
   return JSON.parse( JSON.stringify( products ) )

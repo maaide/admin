@@ -14,6 +14,43 @@ const Configuration = () => {
     address: '',
     region: '',
     city: '',
+    schedule: {
+      monday: {
+        state: true,
+        open: '',
+        close: ''
+      },
+      tuesday: {
+        state: true,
+        open: '',
+        close: ''
+      },
+      wednesday: {
+        state: true,
+        open: '',
+        close: ''
+      },
+      thursday: {
+        state: true,
+        open: '',
+        close: ''
+      },
+      friday: {
+        state: true,
+        open: '',
+        close: ''
+      },
+      saturday: {
+        state: false,
+        open: '',
+        close: ''
+      },
+      sunday: {
+        state: false,
+        open: '',
+        close: ''
+      }
+    },
     logo: { public_id: '', url: '' },
     logoWhite: { public_id: '', url: '' }
   })
@@ -112,7 +149,7 @@ const Configuration = () => {
             </div>
           </div>
         </div>
-        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
+        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900 mb-16' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
           <div className='flex w-full max-w-1280 m-auto gap-8 mb-4'>
             <div className='bg-white w-1/4 h-fit shadow-md p-4 rounded-md dark:bg-neutral-800'>
               <div className='mb-4'>
@@ -165,19 +202,212 @@ const Configuration = () => {
                   <p className='text-sm mb-2'>Departamento, local, etc. (opcional)</p>
                   <input type='text' name='departament' value={storeData.departament} onChange={inputChange} placeholder='Dirección' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                 </div>
-                <div className='flex gap-2'>
-                  <select className='font-light p-1.5 rounded border text-sm w-1/2 focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' onChange={regionChange}>
-                    <option>Seleccionar Región</option>
-                    {
-                    regions !== undefined
-                      ? regions.map(region => <option key={region.regionId}>{region.regionName}</option>)
-                      : ''
-                    }
-                  </select>
-                  <select className='font-light p-1.5 w-1/2 rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' onChange={cityChange}>
-                    <option>Seleccionar Ciudad</option>
-                    {citys?.map(city => <option key={city.countyCode}>{city.countyName}</option>)}
-                  </select>
+                <div className='flex gap-4 mb-4'>
+                  <div className='flex flex-col gap-2 w-1/2'>
+                    <p className='text-sm'>Región</p>
+                    <select className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' onChange={regionChange}>
+                      <option>Seleccionar Región</option>
+                      {
+                      regions !== undefined
+                        ? regions.map(region => <option key={region.regionId}>{region.regionName}</option>)
+                        : ''
+                      }
+                    </select>
+                  </div>
+                  <div className='flex flex-col gap-2 w-1/2'>
+                    <p className='text-sm'>Ciudad</p>
+                    <select className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' onChange={cityChange}>
+                      <option>Seleccionar Ciudad</option>
+                      {citys?.map(city => <option key={city.countyCode}>{city.countyName}</option>)}
+                    </select>
+                  </div>
+                </div>
+                <div className=''>
+                  <p className='text-sm mb-2'>Horario de atención</p>
+                  <div className='flex flex-col gap-2'>
+                    <div className='flex gap-2 justify-between'>
+                      <div className='flex gap-2'>
+                        <input type='checkbox' checked={storeData.schedule?.monday.state} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.monday.state = e.target.checked
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} />
+                        <p className='text-sm my-auto'>Lunes</p>
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Apertura:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.monday.open} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.monday.open = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Cierre:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.monday.close} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.monday.close = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                    </div>
+                    <div className='flex gap-2 justify-between'>
+                      <div className='flex gap-2'>
+                        <input type='checkbox' checked={storeData.schedule?.tuesday.state} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.tuesday.state = e.target.checked
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} />
+                        <p className='text-sm my-auto'>Martes</p>
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Apertura:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.tuesday.open} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.tuesday.open = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Cierre:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.tuesday.close} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.tuesday.close = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                    </div>
+                    <div className='flex gap-2 justify-between'>
+                      <div className='flex gap-2'>
+                        <input type='checkbox' checked={storeData.schedule?.wednesday.state} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.wednesday.state = e.target.checked
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} />
+                        <p className='text-sm my-auto'>Miercoles</p>
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Apertura:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.wednesday.open} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.wednesday.open = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Cierre:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.wednesday.close} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.wednesday.close = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                    </div>
+                    <div className='flex gap-2 justify-between'>
+                      <div className='flex gap-2'>
+                        <input type='checkbox' checked={storeData.schedule?.thursday.state} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.thursday.state = e.target.checked
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} />
+                        <p className='text-sm my-auto'>Jueves</p>
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Apertura:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.thursday.open} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.thursday.open = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Cierre:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.thursday.close} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.thursday.close = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                    </div>
+                    <div className='flex gap-2 justify-between'>
+                      <div className='flex gap-2'>
+                        <input type='checkbox' checked={storeData.schedule?.friday.state} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.friday.state = e.target.checked
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} />
+                        <p className='text-sm my-auto'>Viernes</p>
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Apertura:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.friday.open} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.friday.open = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Cierre:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.friday.close} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.friday.close = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                    </div>
+                    <div className='flex gap-2 justify-between'>
+                      <div className='flex gap-2'>
+                        <input type='checkbox' checked={storeData.schedule?.saturday.state} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.saturday.state = e.target.checked
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} />
+                        <p className='text-sm my-auto'>Sabado</p>
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Apertura:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.saturday.open} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.saturday.open = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Cierre:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.saturday.close} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.saturday.close = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                    </div>
+                    <div className='flex gap-2 justify-between'>
+                      <div className='flex gap-2'>
+                        <input type='checkbox' checked={storeData.schedule?.sunday.state} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.sunday.state = e.target.checked
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} />
+                        <p className='text-sm my-auto'>Domingo</p>
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Apertura:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.sunday.open} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.sunday.open = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                      <div className='flex gap-2'>
+                        <p className='text-sm my-auto'>Cierre:</p>
+                        <input type='text' placeholder='00:00' value={storeData.schedule?.sunday.close} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const schedule = storeData.schedule!
+                          schedule.sunday.close = e.target.value
+                          setStoreData({ ...storeData, schedule: schedule })
+                        }} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
