@@ -12,7 +12,7 @@ export const authOptions = {
         email: { label: 'Email', type: 'email', placeholder: 'Email' },
         password: { label: 'Contraseña', type: 'password', placeholder: '******' }
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         connectDB()
 
         const shopFound = await ShopLogin.findOne({ email: credentials.email }).select('+password')
