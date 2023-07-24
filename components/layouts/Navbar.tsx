@@ -20,7 +20,7 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
   const [loading, setLoading] = useState('block')
   const [notificationsView, setNotificationsView] = useState(false)
   const [notifications, setNotifications] = useState<INotification[]>([])
-  const [accountView, setAccountView] = useState('flex')
+  const [accountView, setAccountView] = useState('hidden')
   const [accountMouse, setAccountMouse] = useState(false)
 
   const notificationsRef = useRef(notifications)
