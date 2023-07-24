@@ -1,8 +1,8 @@
 import { INotification } from '@/interfaces'
 import axios from 'axios'
+import { signOut, useSession } from 'next-auth/react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs'
 import { IoIosNotificationsOutline } from 'react-icons/io'
@@ -19,8 +19,12 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
   const [loading, setLoading] = useState('block')
   const [notificationsView, setNotificationsView] = useState(false)
   const [notifications, setNotifications] = useState<INotification[]>([])
+  const [accountView, setAccountView] = useState('flex')
+  const [accountMouse, setAccountMouse] = useState(false)
 
   const notificationsRef = useRef(notifications)
+
+  const { data: session } = useSession()
 
   useEffect(() => {
     setMounted(true)
@@ -132,12 +136,21 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
               } else {
                 setNotificationsView(true)
               }
-            }}>{notificationsView ? <IoMdClose className='m-auto text-2xl' /> : <IoIosNotificationsOutline className='m-auto text-2xl' />}</button>
-            <button className='font-light'>Jorge Tapia</button>
+            }}><IoIosNotificationsOutline className='m-auto text-2xl' /></button>
+            <button onClick={() => accountView === 'hidden' ? setAccountView('flex') : setAccountView('hidden')} className='font-light'>{session?.user?.email}</button>
           </div>
         </div>
       </div>
       <div className='w-full h-14' />
+      <div onClick={() => accountMouse ? setAccountView('flex') : setAccountView('hidden')} className={`${accountView} fixed z-50 w-full h-full mt-[1px]`}>
+        <div onMouseEnter={() => setAccountMouse(true)} onMouseLeave={() => setAccountMouse(false)} className='p-6 w-64 bg-white rounded-md h-fit shadow-md ml-auto'>
+        <button onClick={async (e: any) => {
+          e.preventDefault()
+          setAccountView('hidden')
+          await signOut()
+        }}>Cerrar sesión</button>
+        </div>
+      </div>
       {
         notificationsView
           ? (
