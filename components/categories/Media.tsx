@@ -10,7 +10,7 @@ interface Props {
 export const Media: React.FC<Props> = ({ setCategoryInfo, categoryInfo }) => {
 
   const imageChange = async (e: any) => {
-    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product-image-upload`, { image: e.target.files[0] }, {
+    const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product-image-upload`, { image: e.target.files[0] }, {
       headers: {
         accept: 'application/json',
         'Accept-Language': 'en-US,en;q=0.8',
