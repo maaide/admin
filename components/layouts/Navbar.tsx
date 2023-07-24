@@ -13,6 +13,7 @@ const socket = io(`${process.env.NEXT_PUBLIC_API_URL}`)
 export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
 
   const { systemTheme, theme, setTheme } = useTheme()
+  
   const { data: session } = useSession()
 
   const [mounted, setMounted] = useState(false)
