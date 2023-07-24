@@ -14,6 +14,7 @@ const socket = io(`${process.env.NEXT_PUBLIC_API_URL}`)
 export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
 
   const { systemTheme, theme, setTheme } = useTheme()
+  const { data: session } = useSession()
 
   const [mounted, setMounted] = useState(false)
   const [loading, setLoading] = useState('block')
@@ -23,8 +24,6 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
   const [accountMouse, setAccountMouse] = useState(false)
 
   const notificationsRef = useRef(notifications)
-
-  const { data: session } = useSession()
 
   useEffect(() => {
     setMounted(true)
