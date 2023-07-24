@@ -6,7 +6,6 @@ import Link from 'next/link'
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs'
 import { IoIosNotificationsOutline } from 'react-icons/io'
-import { IoMdClose } from 'react-icons/io'
 import { io } from 'socket.io-client'
 
 const socket = io(`${process.env.NEXT_PUBLIC_API_URL}`)
