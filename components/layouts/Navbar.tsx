@@ -141,7 +141,7 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
       </div>
       <div className='w-full h-14' />
       <div onClick={() => accountMouse ? setAccountView('flex') : setAccountView('hidden')} className={`${accountView} fixed z-50 w-full h-full mt-[1px]`}>
-        <div onMouseEnter={() => setAccountMouse(true)} onMouseLeave={() => setAccountMouse(false)} className='p-6 w-64 bg-white rounded-md h-fit shadow-md ml-auto'>
+        <div onMouseEnter={() => setAccountMouse(true)} onMouseLeave={() => setAccountMouse(false)} className='p-6 w-64 bg-white rounded-md h-fit shadow-md ml-auto dark:bg-neutral-800'>
         <button onClick={async (e: any) => {
           e.preventDefault()
           setAccountView('hidden')

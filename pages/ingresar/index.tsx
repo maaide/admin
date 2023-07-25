@@ -34,7 +34,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className='bg-white w-full h-full flex border-t-4 fixed top-0 z-50 border-main'>
+    <div className='bg-white w-full h-full flex border-t-4 fixed top-0 z-50 border-main dark:bg-neutral-900'>
       <form onSubmit={handleSubmit} className='m-auto flex flex-col gap-4'>
         {
           error !== ''
