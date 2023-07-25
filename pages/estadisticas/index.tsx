@@ -79,7 +79,7 @@ const StadisticsPage = () => {
                         <p className='text-xl'>{stadistics.sells}</p>
                       </div>
                       <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md dark:bg-neutral-800 dark:border-neutral-700'>
-                        <p>Visitantes web</p>
+                        <p>Productos visitados</p>
                         <p className='text-xl'>{stadistics.viewContents}</p>
                       </div>
                       <div className='p-6 w-1/4 flex flex-col gap-2 border bg-white rounded-md dark:bg-neutral-800 dark:border-neutral-700'>
