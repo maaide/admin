@@ -30,7 +30,7 @@ const LoginPage = () => {
     })
     setLoading(false)
     if (res?.error) return setError(res.error)
-    if (res?.ok) return router.push('/')
+    if (res?.ok) return router.replace('/')
   }
 
   return (
