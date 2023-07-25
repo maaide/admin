@@ -15,6 +15,9 @@ const ClientPage = () => {
   const [loadingClientTag, setLoadingClientTag] = useState(false)
   const [newClientTag, setNewClientTag] = useState('')
   const [clientSells, setClientSells] = useState<ISell[]>()
+  const [popupView, setPopupView] = useState('hidden')
+  const [popupMouse, setPopupMouse] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter()
 
@@ -39,12 +42,35 @@ const ClientPage = () => {
     getClientTags()
   }, [])
 
+  const deleteClient = async () => {
+    setLoading(true)
+    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/clients/${clientData?._id}`)
+    router.push('/clientes')
+    setLoading(false)
+  }
+
   return (
     <>
       <Head>
         <title>Cliente: {clientData?._id}</title>
       </Head>
       <LeftMenu>
+        {
+          clientData?.email
+            ? (
+              <div onClick={() => !popupMouse ? setPopupView('hidden') : ''} className={`${popupView} right-0 fixed flex bg-black/20 dark:bg-black/40`} style={{ width: 'calc(100% - 256px)', height: 'calc(100vh - 56px)' }}>
+                <div onMouseEnter={() => setPopupMouse(true)} onMouseLeave={() => setPopupMouse(false)} className='w-[500px] p-6 flex flex-col gap-2 rounded-md shadow-md bg-white m-auto'>
+                  <p>Estas seguro que deseas eliminar el codigo <strong>{clientData!.email}</strong></p>
+                  <div className='flex gap-6'>
+                    <button onClick={deleteClient} className='bg-red-500 h-10 w-36 rounded-md text-white'>{loading ? <Spinner2 /> : 'Eliminar'}</button>
+                    <button onClick={() => setPopupView('hidden')}>Cancelar</button>
+                  </div>
+                </div>
+              </div>
+            )
+            : ''
+        }
+        
         <div className='p-6 bg-[#f6f6f7] overflow-y-scroll dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)' }}>
           {
             clientData
@@ -161,6 +187,13 @@ const ClientPage = () => {
                             }} className='bg-main text-white text-sm rounded-md h-8 w-20'>{loadingClientTag ? <Spinner2 /> : 'Crear'}</button>
                           </div>
                         </div>
+                      </div>
+                      <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
+                        <h2 className='mb-4'>Eliminar cliente</h2>
+                        <button onClick={(e: any) => {
+                          e.preventDefault()
+                          setPopupView('flex')
+                        }} className='h-10 w-28 bg-red-600 rounded-md text-white'>Eliminar</button>
                       </div>
                     </div>
                   </form>

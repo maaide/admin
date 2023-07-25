@@ -1,10 +1,12 @@
-import { LeftMenu, Spinner } from '@/components/ui'
+import { LeftMenu, Spinner, Spinner2 } from '@/components/ui'
 import { usePromotionalCodes } from '@/hooks'
 import { NumberFormat } from '@/utils'
+import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useState } from 'react'
+import { AiOutlineClose } from 'react-icons/ai'
 
 const PromotionalCodes = () => {
 
@@ -12,12 +14,37 @@ const PromotionalCodes = () => {
 
   const router = useRouter()
 
+  const [popupView, setPopupView] = useState('hidden')
+  const [popupMouse, setPopupMouse] = useState(false)
+  const [codeSelect, setCodeSelect] = useState({
+    _id: '',
+    name: ''
+  })
+  const [loading, setLoading] = useState(false)
+
+  const deleteCode = async (e: any) => {
+    e.preventDefault()
+    setLoading(true)
+    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/products/${codeSelect._id}`)
+    router.reload()
+    setLoading(false)
+  }
+
   return (
     <>
       <Head>
         <title>Codigos Promocionales</title>
       </Head>
       <LeftMenu>
+        <div onClick={() => !popupMouse ? setPopupView('hidden') : ''} className={`${popupView} right-0 fixed flex bg-black/20 dark:bg-black/40`} style={{ width: 'calc(100% - 256px)', height: 'calc(100vh - 56px)' }}>
+          <div onMouseEnter={() => setPopupMouse(true)} onMouseLeave={() => setPopupMouse(false)} className='w-[500px] p-6 flex flex-col gap-2 rounded-md shadow-md bg-white m-auto'>
+            <p>Estas seguro que deseas eliminar el codigo <strong>{codeSelect.name}</strong></p>
+            <div className='flex gap-6'>
+              <button onClick={deleteCode} className='bg-red-500 h-10 w-36 rounded-md text-white'>{loading ? <Spinner2 /> : 'Eliminar'}</button>
+              <button onClick={() => setPopupView('hidden')}>Cancelar</button>
+            </div>
+          </div>
+        </div>
         <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
           <div className='flex justify-between w-full max-w-1280 m-auto mb-4'>
             <h1 className='text-xl'>Codigos promocionales</h1>
@@ -43,6 +70,7 @@ const PromotionalCodes = () => {
                           <th className='text-left p-2 font-normal'>Valor del descuento</th>
                           <th className='text-left p-2 font-normal'>Precio minimo</th>
                           <th className='text-left p-2 font-normal'>Estado</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody className='bg-white w-full dark:bg-neutral-800 dark:border-neutral-600'>
@@ -69,6 +97,13 @@ const PromotionalCodes = () => {
                                       : <p className='font-light w-fit pt-1 pb-1 pl-2 pr-2 bg-red-500 rounded-md text-white'>Desactivado</p>
                                   }
                                 </p>
+                              </td>
+                              <td className='p-2'>
+                                <button onClick={(e: any) => {
+                                  e.preventDefault()
+                                  setPopupView('flex')
+                                  setCodeSelect({ _id: promotionalCode._id!, name: promotionalCode.promotionalCode })
+                                }}><AiOutlineClose /></button>
                               </td>
                             </tr>
                           ))
