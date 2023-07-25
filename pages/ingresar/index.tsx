@@ -36,7 +36,11 @@ const LoginPage = () => {
   return (
     <div className='bg-white w-full h-full flex border-t-4 fixed top-0 z-50 border-main'>
       <form onSubmit={handleSubmit} className='m-auto flex flex-col gap-4'>
-        <p>{error}</p>
+        {
+          error !== ''
+            ? <p className='w-full p-2 bg-red-600 text-white text-center'>{error}</p>
+            : ''
+        }
         <h1 className='text-3xl w-[500px]'>INGRESAR</h1>
         <div className='flex flex-col gap-2'>
           <p>Email</p>
