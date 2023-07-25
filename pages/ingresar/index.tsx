@@ -30,7 +30,7 @@ const LoginPage = () => {
     })
     setLoading(false)
     if (res?.error) return setError(res.error)
-    if (res?.ok) return router.replace('/')
+    if (res?.ok) return router.push('/inicio')
   }
 
   return (
