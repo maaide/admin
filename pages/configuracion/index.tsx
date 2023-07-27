@@ -16,27 +16,27 @@ const Configuration = () => {
     city: '',
     schedule: {
       monday: {
-        state: true,
+        state: false,
         open: '',
         close: ''
       },
       tuesday: {
-        state: true,
+        state: false,
         open: '',
         close: ''
       },
       wednesday: {
-        state: true,
+        state: false,
         open: '',
         close: ''
       },
       thursday: {
-        state: true,
+        state: false,
         open: '',
         close: ''
       },
       friday: {
-        state: true,
+        state: false,
         open: '',
         close: ''
       },
