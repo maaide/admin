@@ -15,7 +15,7 @@ export const authOptions = {
       async authorize(credentials) {
         connectDB()
 
-        const shopFound = await ShopLogin.findOne({ email: credentials.email }).select('+password')
+        const shopFound = await ShopLogin.findOne({ email: credentials.email.toLowerCase() }).select('+password')
         if (!shopFound) throw new Error('Credenciales invalidas')
 
         const passwordMatch = await bcrypt.compare(credentials.password, shopFound.password)
