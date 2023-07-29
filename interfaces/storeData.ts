@@ -10,6 +10,10 @@ export interface IStoreData {
     schedule?: ISchedule
     logo: { public_id: string, url: string }
     logoWhite: { public_id: string, url: string }
+    instagram?: string
+    facebook?: string
+    tiktok?: string
+    whatsapp?: string
 }
 
 export interface ISchedule {

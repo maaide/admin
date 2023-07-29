@@ -52,7 +52,11 @@ const Configuration = () => {
       }
     },
     logo: { public_id: '', url: '' },
-    logoWhite: { public_id: '', url: '' }
+    logoWhite: { public_id: '', url: '' },
+    instagram: '',
+    facebook: '',
+    tiktok: '',
+    whatsapp: ''
   })
   const [regions, setRegions] = useState<Region[]>()
   const [citys, setCitys] = useState<City[]>()
@@ -187,9 +191,25 @@ const Configuration = () => {
                   <p className='text-sm mb-2'>Logo de la tienda</p>
                   <input onChange={imageChange} type='file' className='text-sm' />
                 </div>
-                <div>
+                <div className='mb-4'>
                   <p className='text-sm mb-2'>Logo blanco de la tienda</p>
                   <input onChange={imageChange2} type='file' className='text-sm' />
+                </div>
+                <div className='mb-4'>
+                  <p className='text-sm mb-2'>Instagram de la tienda</p>
+                  <input type='text' name='instagram' value={storeData.instagram} onChange={inputChange} placeholder='Instagram' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                </div>
+                <div className='mb-4'>
+                  <p className='text-sm mb-2'>Facebook de la tienda</p>
+                  <input type='text' name='facebook' value={storeData.facebook} onChange={inputChange} placeholder='Facebook' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                </div>
+                <div className='mb-4'>
+                  <p className='text-sm mb-2'>Tik Tok de la tienda</p>
+                  <input type='text' name='tiktok' value={storeData.tiktok} onChange={inputChange} placeholder='Tik Tok' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                </div>
+                <div className='mb-4'>
+                  <p className='text-sm mb-2'>WhatsApp de la tienda</p>
+                  <input type='text' name='whatsapp' value={storeData.whatsapp} onChange={inputChange} placeholder='WhatsApp' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                 </div>
               </div>
               <div className='bg-white border border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
