@@ -157,17 +157,17 @@ const NewSell = () => {
                               <p>{product.name}</p>
                               <p>${NumberFormat(product.price)}</p>
                               {
-                                products.find(prod => prod.name === product.name)?.nameVariations !== ''
+                                products.find(prod => prod.name === product.name)?.variations?.nameVariation !== ''
                                   ? (
                                     <select onChange={(e: any) => {
-                                      const variation = products.find(prod => prod.name === product.name)?.variations?.find(variation => variation.variation === e.target.value)
+                                      const variation = products.find(prod => prod.name === product.name)?.variations?.variations.find(variation => variation.variation === e.target.value)
                                       product.variation = variation
                                       sell.cart[index] = product
                                       setSell({...sell, cart: sell.cart})
                                     }} className='font-light p-1 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
                                       <option>Seleccionar variación</option>
                                       {
-                                        products.find(prod => prod.name === product.name)?.variations?.map(variation => (
+                                        products.find(prod => prod.name === product.name)?.variations?.variations.map(variation => (
                                           <option key={variation.variation}>{variation.variation}</option>
                                         ))
                                       }

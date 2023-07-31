@@ -48,7 +48,6 @@ const ProductPage = () => {
       stock: data.stock,
       slug: data.slug,
       variations: data.variations?.length ? data.variations : [{ variation: '', stock: 0, sku: '' }],
-      nameVariations: data.nameVariations || '',
       state: data.state,
       sku: data.sku,
       tags: data.tags,
@@ -74,7 +73,7 @@ const ProductPage = () => {
 
   const handleSubmit = async () => {
     setSubmitLoading(true)
-    await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/products/${information?._id}`, { name: information?.name, description: information?.description, category: information?.category, price: information?.price, beforePrice: information?.beforePrice, images: information?.images, stock: information?.stock, slug: information?.slug, state: information?.state, tags: information?.tags, titleSeo: information?.titleSeo, descriptionSeo: information?.descriptionSeo, variations: information?.variations, nameVariations: information?.nameVariations, productsOffer: productsOffer, cost: information?.cost, quantityOffers: quantityOffers })
+    await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/products/${information?._id}`, { name: information?.name, description: information?.description, category: information?.category, price: information?.price, beforePrice: information?.beforePrice, images: information?.images, stock: information?.stock, slug: information?.slug, state: information?.state, tags: information?.tags, titleSeo: information?.titleSeo, descriptionSeo: information?.descriptionSeo, variations: information?.variations, productsOffer: productsOffer, cost: information?.cost, quantityOffers: quantityOffers })
     router.push('/productos')
   }
 

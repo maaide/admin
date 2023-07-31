@@ -8,8 +8,7 @@ export interface IProduct {
   beforePrice?: number
   cost?: number
   timeOffer?: string
-  variations?: IVariation[]
-  nameVariations?: string
+  variations?: ITypeVariation
   productsOffer?: IProductsOffer[]
   slug: string
   tags: string[]
@@ -45,15 +44,22 @@ export interface IProductOffer {
   beforePrice: number
   images: string[]
   slug: string
-  variations?: IVariation[]
+  variations?: ITypeVariation
   category: string
   price: number
 }
 
+export interface ITypeVariation {
+  nameVariation: string
+  nameSubVariation?: string
+  variations: IVariation[]
+}
+
 export interface IVariation {
   variation: string
-  image?: { public_id: string, url: string }
+  subVariation?: string
   stock: number
+  image?: { public_id: string, url: string }
   sku?: string
 }
 

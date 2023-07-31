@@ -36,14 +36,6 @@ export const StockVariations: React.FC<Props> = ({information, setInformation}) 
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
-  const handleInputChange = (index: number, key: string, value: any) => {
-    setInformation((prev: any) => {
-      const newVariation = [...prev.variations]
-      newVariation[index][key] = value
-      return {...prev, variations: newVariation}
-    })
-  }
-
   return (
     <div className='bg-white p-4 rounded-md shadow border border-white dark:bg-neutral-800 dark:border-neutral-700'>
       <h2 className='mb-4'>Inventario</h2>
@@ -59,56 +51,114 @@ export const StockVariations: React.FC<Props> = ({information, setInformation}) 
           </div>
         </div>
       </div>
-      <div>
-        <h2 className='mb-4'>Variaciones</h2>
-        <h3 className='mb-2 text-sm font-light'>Ingresa el nombre de la variación</h3>
-        <input type='text' placeholder='Color' name='nameVariations' onChange={inputChange} value={information.nameVariations} className='text-sm font-light p-1.5 border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-        {
-          information.nameVariations !== ''
-            ? (
-              <div className='flex flex-col gap-2 mt-4'>
-                <div className='flex gap-2'>
-                  <p className='text-sm font-light w-20'>Imagen</p>
-                  <p className='text-sm font-light w-40'>Variación</p>
-                  <p className='text-sm font-light w-32'>Stock</p>
-                  <p className='text-sm font-light'>SKU</p>
-                </div>
+      <div className='flex flex-col gap-4'>
+        <h2>Variaciones</h2>
+        <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-2'>
+            <p className='text-sm'>Ingresa el nombre de la variación</p>
+            <input onChange={(e: any) => {
+              let mod = information.variations
+              mod!.nameVariation = e.target.value
+              setInformation({ ...information, variation: mod })
+            }} type='text' placeholder='Color' value={information.variations?.nameVariation} className='text-sm font-light p-1.5 w-64 border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+          </div>
+          {
+            information.variations?.nameSubVariation !== undefined
+              ? (
                 <div className='flex flex-col gap-2'>
+                  <p className='text-sm'>Ingresa el nombre de la subvariación</p>
+                  <input onChange={(e: any) => {
+                    let mod = information.variations
+                    mod!.nameSubVariation = e.target.value
+                    setInformation({ ...information, variation: mod })
+                  }} type='text' placeholder='Color' value={information.variations.nameSubVariation} className='text-sm font-light p-1.5 w-64 border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                </div>
+              )
+              : (
+                <button onClick={(e: any) => {
+                  e.preventDefault()
+                  let mod = information.variations
+                  mod!.nameSubVariation = ''
+                  setInformation({ ...information, variations: mod })
+                }} className='bg-main text-white w-fit py-1.5 px-6 rounded-md text-sm'>Crear subvariación</button>
+              )
+          }
+          {
+            information.variations?.nameVariation !== ''
+              ? (
+                <div className='flex flex-col gap-2'>
+                  <div className='flex gap-2'>
+                    <p className='text-sm font-light w-20'>Imagen</p>
+                    <p className='text-sm font-light w-32'>Variación</p>
+                    {
+                      information.variations?.nameSubVariation !== undefined || information.variations?.nameSubVariation !== ''
+                        ? <p className='text-sm font-light w-32'>Subvariación</p>  
+                        : ''
+                    }
+                    <p className='text-sm font-light w-20'>Stock</p>
+                    <p className='text-sm font-light'>SKU</p>
+                  </div>
                   {
-                    information.variations?.length
-                      ? information.variations.map((variation, index) => (
-                        <div key={index} className='flex gap-2 w-full'>
+                    information.variations?.variations.map((variation, index) => (
+                      <div className='flex flex-col gap-2' key={index}>
+                        <div className='flex gap-2'>
                           <div {...getRootProps()} className={`flex w-20 h-20 border rounded-lg cursor-pointer ${isDragActive ? 'bg-neutral-100' : 'bg-white'}`}>
                             <div onClick={() => indexImage = index} className='w-20 h-20 flex'>
                               <input {...getInputProps()} />
-                                {
-                                  variation.image
-                                    ? <img src={variation.image.url} alt={variation.image.url} className='w-16 h-16 m-auto' />
-                                    : <CiImageOn className='text-3xl m-auto text-neutral-400' />
-                                }
+                              {
+                                variation.image?.url !== undefined
+                                  ? <img src={variation.image?.url} alt={variation.image?.url} className='w-16 h-16 m-auto' />
+                                  : <CiImageOn className='text-3xl m-auto text-neutral-400' />
+                              }
                             </div>
                           </div>
-                          <input type='text' placeholder='Azul' name='variation' onChange={(e: any) => {handleInputChange(index, 'variation', e.target.value)}} value={variation.variation} className='text-sm font-light w-40 p-1.5 h-fit mb-auto mt-auto border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-                          <input type='number' placeholder='Stock' name='stock' onChange={(e: any) => {handleInputChange(index, 'stock', e.target.value)}} value={variation.stock} className='text-sm font-light w-32 p-1.5 h-fit mb-auto mt-auto border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-                          <input type='text' placeholder='SKU' name='sku' onChange={(e: any) => {handleInputChange(index, 'sku', e.target.value)}} value={variation.sku} className='text-sm font-light w-40 h-fit mb-auto mt-auto p-1.5 border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                          <input type='text' placeholder='Azul' onChange={(e: any) => {
+                            let mod = information.variations
+                            mod!.variations[index].variation = e.target.value
+                            setInformation({ ...information, variations: mod })
+                          }} value={variation.variation} className='text-sm font-light w-32 p-1.5 h-fit mb-auto mt-auto border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                          {
+                            information.variations?.nameSubVariation !== undefined || information.variations?.nameSubVariation !== ''
+                              ? (
+                                <input type='text' placeholder='Azul' onChange={(e: any) => {
+                                  let mod = information.variations
+                                  mod!.variations[index].subVariation = e.target.value
+                                  setInformation({ ...information, variations: mod })
+                                }} value={variation.subVariation} className='text-sm font-light w-32 p-1.5 h-fit mb-auto mt-auto border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                              )
+                              : ''
+                          }
+                          <input type='number' placeholder='Stock' onChange={(e: any) => {
+                            let mod = information.variations
+                            mod!.variations[index].stock = e.target.value
+                            setInformation({ ...information, variations: mod })
+                          }} value={variation.stock} className='text-sm font-light w-20 p-1.5 h-fit mb-auto mt-auto border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                          <input type='text' placeholder='SKU' name='sku' onChange={(e: any) => {
+                            let mod = information.variations
+                            mod!.variations[index].sku = e.target.value
+                            setInformation({ ...information, variations: mod })
+                          }} value={variation.sku} className='text-sm font-light w-32 h-fit mb-auto mt-auto p-1.5 border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                           <button onClick={(e: any) => {
                             e.preventDefault()
-                            const filterVariation = information.variations?.filter(vari => vari.variation !== variation.variation)
-                            setInformation({...information, variations: filterVariation})
+                            const updatedVariations = { ...information.variations }
+                            updatedVariations.variations = updatedVariations.variations?.filter((vari, i) => i !== index)
+                            setInformation({ ...information, variations: updatedVariations })
                           }}><AiOutlineClose /></button>
                         </div>
-                      ))
-                      : ''
+                      </div>
+                    ))
                   }
+                  <button onClick={(e: any) => {
+                    e.preventDefault()
+                    let mod = information.variations
+                    mod!.variations.push({ variation: '', stock: 0 })
+                    setInformation({ ...information, variations: mod })
+                  }} className='bg-main text-white w-fit py-1.5 px-6 rounded-md text-sm'>Agregar variación</button>
                 </div>
-                <button onClick={(e: any) => {
-                  e.preventDefault()
-                  setInformation({...information, variations: information.variations?.concat([{image: { public_id: '', url: '' }, variation: '', stock: 0}])})
-                }} className='w-fit bg-main pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4'>Crear nueva variación</button>
-              </div>
-            )
-            : ''
-        }
+              )
+              : ''
+          }
+        </div>
       </div>
     </div>
   )
