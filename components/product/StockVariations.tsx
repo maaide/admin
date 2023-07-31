@@ -28,8 +28,8 @@ export const StockVariations: React.FC<Props> = ({information, setInformation}) 
     })
     const img = { public_id: uploadImage.data.image.public_id, url: uploadImage.data.image.url }
     setInformation((prev: any) => {
-      const newVariation = [...prev.variations]
-      newVariation[indexImage].image = img
+      const newVariation = {...prev.variations}
+      newVariation.variations[indexImage].image = img
       return {...prev, variations: newVariation}
     })
   }
@@ -99,54 +99,56 @@ export const StockVariations: React.FC<Props> = ({information, setInformation}) 
                     <p className='text-sm font-light'>SKU</p>
                   </div>
                   {
-                    information.variations?.variations.map((variation, index) => (
-                      <div className='flex flex-col gap-2' key={index}>
-                        <div className='flex gap-2'>
-                          <div {...getRootProps()} className={`flex w-20 h-20 border rounded-lg cursor-pointer ${isDragActive ? 'bg-neutral-100' : 'bg-white'}`}>
-                            <div onClick={() => indexImage = index} className='w-20 h-20 flex'>
-                              <input {...getInputProps()} />
-                              {
-                                variation.image?.url !== undefined
-                                  ? <img src={variation.image?.url} alt={variation.image?.url} className='w-16 h-16 m-auto' />
-                                  : <CiImageOn className='text-3xl m-auto text-neutral-400' />
-                              }
+                    information.variations?.variations?.length
+                      ? information.variations?.variations.map((variation, index) => (
+                        <div className='flex flex-col gap-2' key={index}>
+                          <div className='flex gap-2'>
+                            <div {...getRootProps()} className={`flex w-20 h-20 border rounded-lg cursor-pointer ${isDragActive ? 'bg-neutral-100' : 'bg-white'}`}>
+                              <div onClick={() => indexImage = index} className='w-20 h-20 flex'>
+                                <input {...getInputProps()} />
+                                {
+                                  variation.image?.url !== undefined
+                                    ? <img src={variation.image?.url} alt={variation.image?.url} className='w-16 h-16 m-auto' />
+                                    : <CiImageOn className='text-3xl m-auto text-neutral-400' />
+                                }
+                              </div>
                             </div>
+                            <input type='text' placeholder='Azul' onChange={(e: any) => {
+                              let mod = information.variations
+                              mod!.variations[index].variation = e.target.value
+                              setInformation({ ...information, variations: mod })
+                            }} value={variation.variation} className='text-sm font-light w-32 p-1.5 h-fit mb-auto mt-auto border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                            {
+                              information.variations?.nameSubVariation !== undefined || information.variations?.nameSubVariation !== ''
+                                ? (
+                                  <input type='text' placeholder='Azul' onChange={(e: any) => {
+                                    let mod = information.variations
+                                    mod!.variations[index].subVariation = e.target.value
+                                    setInformation({ ...information, variations: mod })
+                                  }} value={variation.subVariation} className='text-sm font-light w-32 p-1.5 h-fit mb-auto mt-auto border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                                )
+                                : ''
+                            }
+                            <input type='number' placeholder='Stock' onChange={(e: any) => {
+                              let mod = information.variations
+                              mod!.variations[index].stock = e.target.value
+                              setInformation({ ...information, variations: mod })
+                            }} value={variation.stock} className='text-sm font-light w-20 p-1.5 h-fit mb-auto mt-auto border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                            <input type='text' placeholder='SKU' name='sku' onChange={(e: any) => {
+                              let mod = information.variations
+                              mod!.variations[index].sku = e.target.value
+                              setInformation({ ...information, variations: mod })
+                            }} value={variation.sku} className='text-sm font-light w-32 h-fit mb-auto mt-auto p-1.5 border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                            <button onClick={(e: any) => {
+                              e.preventDefault()
+                              const updatedVariations = { ...information.variations }
+                              updatedVariations.variations = updatedVariations.variations?.filter((vari, i) => i !== index)
+                              setInformation({ ...information, variations: updatedVariations })
+                            }}><AiOutlineClose /></button>
                           </div>
-                          <input type='text' placeholder='Azul' onChange={(e: any) => {
-                            let mod = information.variations
-                            mod!.variations[index].variation = e.target.value
-                            setInformation({ ...information, variations: mod })
-                          }} value={variation.variation} className='text-sm font-light w-32 p-1.5 h-fit mb-auto mt-auto border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-                          {
-                            information.variations?.nameSubVariation !== undefined || information.variations?.nameSubVariation !== ''
-                              ? (
-                                <input type='text' placeholder='Azul' onChange={(e: any) => {
-                                  let mod = information.variations
-                                  mod!.variations[index].subVariation = e.target.value
-                                  setInformation({ ...information, variations: mod })
-                                }} value={variation.subVariation} className='text-sm font-light w-32 p-1.5 h-fit mb-auto mt-auto border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-                              )
-                              : ''
-                          }
-                          <input type='number' placeholder='Stock' onChange={(e: any) => {
-                            let mod = information.variations
-                            mod!.variations[index].stock = e.target.value
-                            setInformation({ ...information, variations: mod })
-                          }} value={variation.stock} className='text-sm font-light w-20 p-1.5 h-fit mb-auto mt-auto border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-                          <input type='text' placeholder='SKU' name='sku' onChange={(e: any) => {
-                            let mod = information.variations
-                            mod!.variations[index].sku = e.target.value
-                            setInformation({ ...information, variations: mod })
-                          }} value={variation.sku} className='text-sm font-light w-32 h-fit mb-auto mt-auto p-1.5 border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
-                          <button onClick={(e: any) => {
-                            e.preventDefault()
-                            const updatedVariations = { ...information.variations }
-                            updatedVariations.variations = updatedVariations.variations?.filter((vari, i) => i !== index)
-                            setInformation({ ...information, variations: updatedVariations })
-                          }}><AiOutlineClose /></button>
                         </div>
-                      </div>
-                    ))
+                      ))
+                      : ''
                   }
                   <button onClick={(e: any) => {
                     e.preventDefault()
