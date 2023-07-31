@@ -47,7 +47,7 @@ const ProductPage = () => {
       images: data.images,
       stock: data.stock,
       slug: data.slug,
-      variations: data.variations?.length ? data.variations : [{ variation: '', stock: 0, sku: '' }],
+      variations: data.variations.variations.length ? data.variations : { nameVariation: '', variations: [{ variation: '', stock: 0 }] },
       state: data.state,
       sku: data.sku,
       tags: data.tags,
