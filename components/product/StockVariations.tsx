@@ -91,7 +91,7 @@ export const StockVariations: React.FC<Props> = ({information, setInformation}) 
                     <p className='text-sm font-light w-20'>Imagen</p>
                     <p className='text-sm font-light w-32'>Variación</p>
                     {
-                      information.variations?.nameSubVariation !== undefined || information.variations?.nameSubVariation !== ''
+                      information.variations?.nameSubVariation !== undefined
                         ? <p className='text-sm font-light w-32'>Subvariación</p>  
                         : ''
                     }
@@ -119,7 +119,7 @@ export const StockVariations: React.FC<Props> = ({information, setInformation}) 
                               setInformation({ ...information, variations: mod })
                             }} value={variation.variation} className='text-sm font-light w-32 p-1.5 h-fit mb-auto mt-auto border rounded focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                             {
-                              information.variations?.nameSubVariation !== undefined || information.variations?.nameSubVariation !== ''
+                              information.variations?.nameSubVariation !== undefined
                                 ? (
                                   <input type='text' placeholder='Azul' onChange={(e: any) => {
                                     let mod = information.variations

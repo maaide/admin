@@ -56,6 +56,13 @@ const SellPage = () => {
                                 <div className='mt-auto mb-auto'>
                                   <p className='text-sm'>{product.name}</p>
                                   <p className='font-light text-sm'>Cantidad: {product.quantity}</p>
+                                  {
+                                    product.variation?.variation
+                                      ? product.variation?.subVariation
+                                        ? <p className='font-light text-sm'>Variante: {product.variation.variation} / {product.variation.subVariation}</p>
+                                        : <p className='font-light text-sm'>Variante: {product.variation.variation}</p>
+                                      : ''
+                                  }
                                 </div>
                               </div>
                               <div className='mt-auto mb-auto'>
