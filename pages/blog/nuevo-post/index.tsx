@@ -1,10 +1,10 @@
 import { LeftMenu, Spinner2 } from '@/components/ui'
-import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
+import axios from 'axios'
 
 const BlogPage = () => {
 
