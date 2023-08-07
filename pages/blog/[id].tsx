@@ -1,14 +1,16 @@
 import { LeftMenu, Spinner2 } from '@/components/ui'
+import { IPost } from '@/interfaces'
+import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
-import axios from 'axios'
 
-const BlogPage = () => {
+const PostPage = () => {
 
   const [contentData, setContentData] = useState({
+    _id: '',
     title: '',
     content: [{
       type: 'Texto',
@@ -22,8 +24,17 @@ const BlogPage = () => {
     descriptionSeo: ''
   })
   const [submitLoading, setSubmitLoading] = useState(false)
-
   const router = useRouter()
+
+  const getPost = async () => {
+    const slug = router.asPath.replace('/blog/', '')
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${slug}`)
+    setContentData(res.data)
+  }
+
+  useEffect(() => {
+    getPost()
+  }, [])
 
   const imageChange = async (e: any) => {
     const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product-image-upload`, { image: e.target.files[0] }, {
@@ -38,7 +49,7 @@ const BlogPage = () => {
 
   const handleSubmit = async () => {
     setSubmitLoading(true)
-    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, contentData)
+    await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post/${contentData._id}`, contentData)
     router.push('/blog')
     setSubmitLoading(false)
   }
@@ -46,13 +57,13 @@ const BlogPage = () => {
   return (
     <>
       <Head>
-        <title>Nuevo post</title>
+        <title>Post {contentData?._id}</title>
       </Head>
       <LeftMenu>
         <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 256px)' }}>
           <div className='flex m-auto w-1280'>
             <div className='flex gap-2 ml-auto w-fit'>
-              <button onClick={handleSubmit} className='bg-main text-white text-sm rounded-md w-28 h-8'>{submitLoading ? <Spinner2 /> : 'Crear post'}</button>
+              <button onClick={handleSubmit} className='bg-main text-white text-sm rounded-md w-28 h-8'>{submitLoading ? <Spinner2 /> : 'Guardar post'}</button>
               <Link className='bg-red-600 pt-1.5 pb-1.5 text-white text-sm rounded-md pl-4 pr-4' href='/blog'>Descartar</Link>
             </div>
           </div>
@@ -60,14 +71,14 @@ const BlogPage = () => {
         <div className='p-6 mb-16 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
           <div className='flex gap-2 w-full max-w-1280 m-auto mb-4'>
             <Link href='/blog' className='border rounded p-2 bg-white hover:bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-600'><BiArrowBack className='text-xl' /></Link>
-            <h1 className='text-xl my-auto'>Nuevo post</h1>
+            <h1 className='text-xl my-auto'>Post {contentData._id}</h1>
           </div>
           <form onSubmit={handleSubmit} className='flex gap-4 max-w-1280 m-auto'>
             <div className='flex gap-4 flex-col w-2/3'>
               <div className='bg-white border flex flex-col gap-4 border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
                 <div className='flex flex-col gap-2'>
                   <h2>Titulo</h2>
-                  <input type='text' placeholder='Titulo del post' onChange={(e: any) => setContentData({ ...contentData, title: e.target.value })} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  <input type='text' placeholder='Titulo del post' onChange={(e: any) => setContentData({ ...contentData, title: e.target.value })} value={contentData.title} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                 </div>
                 <div className='flex flex-col gap-2'>
                   <h2>Contenido</h2>
@@ -180,4 +191,4 @@ const BlogPage = () => {
   )
 }
 
-export default BlogPage
+export default PostPage

@@ -6,4 +6,7 @@ export interface IPost {
     image: { public_id: string, url: string }
     titleSeo?: string
     descriptionSeo?: string
+
+    createdAt?: Date
+    updatedAt?: Date
 }
