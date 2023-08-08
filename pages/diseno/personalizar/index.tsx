@@ -12,6 +12,7 @@ const PersonalizePage = () => {
   const [bannerView, setBannerView] = useState(false)
   const [categoryView, setCategoryView] = useState(false)
   const [productsView, setProductsView] = useState(false)
+  const [seoView, setSeoView] = useState(false)
   const [design, setDesign] = useState({
     header: {
       topStrip: ''
@@ -32,6 +33,10 @@ const PersonalizePage = () => {
         title: '',
         sectionProducts: 'Todos los productos',
         category: ''
+      },
+      seo: {
+        metaTitle: '',
+        metaDescription: ''
       }
     },
     product: {
@@ -47,7 +52,9 @@ const PersonalizePage = () => {
     shop: {
       title: '',
       description: '',
-      banner: { public_id: '', url: '' }
+      banner: { public_id: '', url: '' },
+      metaTitle: '',
+      metaDescription: ''
     },
     subscription: {
       title: '',
@@ -285,6 +292,33 @@ const PersonalizePage = () => {
                       )
                       : ''
                   }
+                  <button onClick={() => seoView ? setSeoView(false) : setSeoView(true)} className='w-full flex gap-2 justify-between'>
+                    <h2>SEO</h2>
+                  </button>
+                  {
+                    seoView
+                      ? (
+                        <div className='flex flex-col gap-4'>
+                          <div className='flex flex-col gap-2'>
+                            <p className='text-sm'>Meta titulo</p>
+                            <input type='text' placeholder='Meta titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                              const updatedDesign = {...design}
+                              updatedDesign.home.seo.metaTitle = e.target.value
+                              setDesign(updatedDesign)
+                            }} value={design.home.seo.metaTitle} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                          </div>
+                          <div className='flex flex-col gap-2'>
+                            <p className='text-sm'>Meta descripción</p>
+                            <input type='text' placeholder='Meta descripción' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                              const updatedDesign = {...design}
+                              updatedDesign.home.seo.metaDescription = e.target.value
+                              setDesign(updatedDesign)
+                            }} value={design.home.seo.metaDescription} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                          </div>
+                        </div>
+                      )
+                      : ''
+                  }
                 </div>
               )
               : ''
@@ -386,6 +420,22 @@ const PersonalizePage = () => {
                   <div className='flex flex-col gap-2'>
                     <p className='text-sm'>Banner</p>
                     <input type='file' onChange={imageChange} className='font-light text-sm block w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-main/10 file:text-main hover:file:bg-main/20' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Meta titulo</p>
+                    <input type='text' placeholder='Meta titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.shop.metaTitle = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.shop.metaTitle}  className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Meta descripción</p>
+                    <input type='text' placeholder='Meta descripción' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.shop.metaDescription = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.shop.metaDescription}  className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                   </div>
                 </div>
               )
