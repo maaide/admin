@@ -12,7 +12,7 @@ export interface IProduct {
   productsOffer?: IProductsOffer[]
   slug: string
   tags: string[]
-  category: string
+  category: { category: string, slug: string }
   reviews?: IReview[]
   state: boolean,
   sku?: string,

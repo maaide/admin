@@ -101,7 +101,7 @@ const Products = () => {
                                 <p className='font-light'>{product.stock}</p>
                               </td>
                               <td className='p-2' style={{width: '20%'}} onClick={() => router.push(`/productos/${product.slug}`)}>
-                                <p className='font-light'>{product.category}</p>
+                                <p className='font-light'>{product.category.category}</p>
                               </td>
                               <td className='p-2'>
                                 <button onClick={async(e: any) => {
