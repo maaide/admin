@@ -116,7 +116,7 @@ const BlogPage = () => {
                       </tbody>
                     </table>
                   )
-                  : 'No hay productos'
+                  : 'No hay posts'
             }
           </div>
         </div>
