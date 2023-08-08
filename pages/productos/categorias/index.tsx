@@ -84,7 +84,7 @@ const Categories = () => {
                                 <p className='font-light'>{category.slug}</p>
                               </td>
                               <td className='p-2' onClick={() => router.push(`/productos/categorias/${category.slug}`)}>
-                                <p className='font-light'>{products.length ? products.filter(product => product.category === category.category).length : ''}</p>
+                                <p className='font-light'>{products.length ? products.filter(product => product.category.category === category.category).length : ''}</p>
                               </td>
                               <td className='p-2'>
                                 <button onClick={async(e: any) => {

@@ -19,7 +19,7 @@ const NewProduct: React.FC<Props> = () => {
   const [information, setInformation] = useState<IProduct>({
     name: '',
     description: '',
-    category: '',
+    category: { category: '', slug: '' },
     price: 0,
     images: [],
     stock: 0,

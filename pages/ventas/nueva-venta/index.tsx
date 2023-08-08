@@ -51,7 +51,7 @@ const NewSell = () => {
     const product = products.find(product => product.name === e.target.value)
     if (product) {
       setSell({...sell, cart: sell.cart.concat({
-        category: product.category,
+        category: product.category.category,
         image: product.images[0].url,
         name: product.name,
         price: product.price,
