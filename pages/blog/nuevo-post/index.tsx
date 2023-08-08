@@ -68,11 +68,11 @@ const BlogPage = () => {
               <div className='bg-white border flex flex-col gap-4 border-white p-4 rounded-md shadow dark:bg-neutral-800 dark:border-neutral-700'>
                 <div className='flex flex-col gap-2'>
                   <h2>Titulo</h2>
-                  <input type='text' placeholder='Titulo del post' onChange={(e: any) => setContentData({ ...contentData, title: e.target.value })} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  <input type='text' placeholder='Titulo del post' onChange={(e: any) => setContentData({ ...contentData, title: e.target.value })} value={contentData.title} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                 </div>
                 <div className='flex flex-col gap-2'>
                   <h2>Descripción</h2>
-                  <input type='text' placeholder='Descripción del post' onChange={(e: any) => setContentData({ ...contentData, description: e.target.value })} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  <textarea placeholder='Descripción del post' onChange={(e: any) => setContentData({ ...contentData, description: e.target.value })} value={contentData.description} className='font-light p-1.5 rounded border h-24 text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                 </div>
                 <div className='flex flex-col gap-2'>
                   <h2>Contenido</h2>
