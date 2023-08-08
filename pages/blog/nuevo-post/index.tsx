@@ -18,6 +18,7 @@ const BlogPage = () => {
     }],
     state: false,
     image: { public_id: '', url: '' },
+    description: '',
     titleSeo: '',
     descriptionSeo: ''
   })
@@ -68,6 +69,10 @@ const BlogPage = () => {
                 <div className='flex flex-col gap-2'>
                   <h2>Titulo</h2>
                   <input type='text' placeholder='Titulo del post' onChange={(e: any) => setContentData({ ...contentData, title: e.target.value })} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                </div>
+                <div className='flex flex-col gap-2'>
+                  <h2>Descripción</h2>
+                  <input type='text' placeholder='Descripción del post' onChange={(e: any) => setContentData({ ...contentData, description: e.target.value })} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                 </div>
                 <div className='flex flex-col gap-2'>
                   <h2>Contenido</h2>
