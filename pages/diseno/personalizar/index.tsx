@@ -101,7 +101,7 @@ const PersonalizePage = () => {
         'Content-Type': 'multipart/form-data'
       }
     })
-    const updatedDesign = {...design}
+    const updatedDesign = { ...design }
     updatedDesign.shop.banner = { public_id: data.image.public_id, url: data.image.url}
     setDesign(updatedDesign)
   }
