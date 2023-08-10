@@ -56,7 +56,10 @@ export const CategoryProduct: React.FC<Props> = ({information, setInformation, c
       <div className='mb-4'>
         <h2 className='mb-4'>Otros</h2>
         <h3 className='font-light text-sm mb-2'>Categoría</h3>
-        <select value={information.category.category} onChange={inputChange} name='category' className='p-1.5 rounded mb-2 w-full border text-sm font-light focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+        <select value={information.category.category} onChange={(e: any) => {
+          const category = categories?.find(category => category.category === e.target.value)
+          setInformation({ ...information, category: { category: category?.category, slug: category?.slug } })
+        }} name='category' className='p-1.5 rounded mb-2 w-full border text-sm font-light focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
           <option>Seleccionar categoría</option>
           {
             categories?.map(category => (

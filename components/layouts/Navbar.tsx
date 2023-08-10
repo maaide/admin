@@ -1,4 +1,4 @@
-import { INotification } from '@/interfaces'
+import { INotification, IStoreData } from '@/interfaces'
 import axios from 'axios'
 import { signOut, useSession } from 'next-auth/react'
 import { useTheme } from 'next-themes'
@@ -16,17 +16,24 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
   const { data: session } = useSession()
 
   const [mounted, setMounted] = useState(false)
-  const [loading, setLoading] = useState('block')
   const [notificationsView, setNotificationsView] = useState(false)
   const [notifications, setNotifications] = useState<INotification[]>([])
   const [accountView, setAccountView] = useState('hidden')
   const [accountMouse, setAccountMouse] = useState(false)
+  const [storeData, setStoreData] = useState<IStoreData>()
 
   const notificationsRef = useRef(notifications)
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  const getStoreData = async () => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/store-data`)
+    if (res.data) {
+      setStoreData(res.data)
+    }
+  }
 
   const getNotifications = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/notifications/ultimate`)
@@ -109,20 +116,25 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <>
-      <div className={`${loading} fixed h-full w-full z-50 bg-white`} />
       <div className='fixed w-full pl-2 pr-2 bg-white border-b z-50 dark:border-neutral-800 dark:bg-neutral-900'>
         <div className='w-full m-auto flex justify-between'>
           <div className='flex gap-2'>
             {
               !mounted
-                ? <Link href='/'><div className='h-14 w-1' /></Link>
-                : theme === 'system'
-                  ? systemTheme === 'dark'
-                    ? <Link href='/'><img className='h-14' onLoad={() => setLoading('hidden')} src='https://res.cloudinary.com/df7nchfnh/image/upload/v1687968894/Ecommerce/Logo_web_blanco_r82fka.png' /></Link>
-                    : <Link href='/'><img className='h-14' onLoad={() => setLoading('hidden')} src='https://res.cloudinary.com/df7nchfnh/image/upload/v1687968324/Ecommerce/Logo_web_rppkaa.png' /></Link>
-                  : theme === 'dark'
-                    ? <Link href='/'><img className='h-14' onLoad={() => setLoading('hidden')} src='https://res.cloudinary.com/df7nchfnh/image/upload/v1687968894/Ecommerce/Logo_web_blanco_r82fka.png' /></Link>
-                    : <Link href='/'><img className='h-14' onLoad={() => setLoading('hidden')} src='https://res.cloudinary.com/df7nchfnh/image/upload/v1687968324/Ecommerce/Logo_web_rppkaa.png' /></Link>
+                ? <Link href='/'><div className='h-14 w-1'><p>TIENDA</p></div></Link>
+                : storeData?.logo && storeData.logo.url !== ''
+                  ? theme === 'system'
+                    ? systemTheme === 'dark'
+                      ? storeData.logoWhite && storeData.logoWhite.url !== ''
+                        ? <Link href='/'><img className='h-14' src={storeData.logoWhite.url} /></Link>
+                        : <Link href='/'><div className='h-14 w-1 flex'><p className='text-3xl m-auto font-semibold'>TIENDA</p></div></Link>
+                      : <Link href='/'><img className='h-14' src={storeData.logo.url} /></Link>
+                    : theme === 'dark'
+                      ? storeData.logoWhite && storeData.logoWhite.url !== ''
+                        ? <Link href='/'><img className='h-14' src={storeData.logoWhite.url} /></Link>
+                        : <Link href='/'><div className='h-14 w-1 flex'><p className='text-3xl m-auto font-semibold'>TIENDA</p></div></Link>
+                      : <Link href='/'><img className='h-14' src={storeData.logo.url} /></Link>
+                  : <Link href='/'><div className='h-14 w-1 flex'><p className='text-3xl m-auto font-semibold'>TIENDA</p></div></Link>
             }
           </div>
           <div className='flex gap-4'>
