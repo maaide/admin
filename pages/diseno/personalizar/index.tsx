@@ -75,7 +75,7 @@ const PersonalizePage = () => {
 
   const getDesign = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/design`)
-    if (response.data.length) {
+    if (response.data.home) {
       setDesign(response.data)
     }
   }
