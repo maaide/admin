@@ -82,6 +82,8 @@ const PersonalizePage = () => {
   const [loading, setLoading] = useState(false)
   const [storeData, setStoreData] = useState<IStoreData>()
   const [tags, setTags] = useState([])
+  const [tag, setTag] = useState('')
+  const [tagLoading, setTagLoading] = useState(false)
 
   const getDesign = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/design`)
@@ -123,6 +125,15 @@ const PersonalizePage = () => {
     const updatedDesign = { ...design }
     updatedDesign.shop.banner = { public_id: data.image.public_id, url: data.image.url}
     setDesign(updatedDesign)
+  }
+
+  const newTagSubmit = async (e: any) => {
+    e.preventDefault()
+    setTagLoading(true)
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/client-tag`, {tag: tag})
+    getTags()
+    setTag('')
+    setTagLoading(false)
   }
   
   const handleSubmit = async () => {
@@ -623,6 +634,10 @@ const PersonalizePage = () => {
                         ))
                       }
                     </select>
+                  </div>
+                  <div className='flex gap-2'>
+                    <input type='text' placeholder='Nuevo Tag' onChange={(e: any) => setTag(e.target.value)} value={tag} className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                    <button onClick={newTagSubmit} className='bg-main text-white text-sm rounded-md h-8 w-24'>{tagLoading ? <Spinner2 /> : 'Crear'}</button>
                   </div>
                 </div>
               )
