@@ -72,10 +72,16 @@ const PersonalizePage = () => {
     blog: {
       metaTitle: '',
       metaDescription: ''
+    },
+    popup: {
+      title: '',
+      description: '',
+      tag: ''
     }
   })
   const [loading, setLoading] = useState(false)
   const [storeData, setStoreData] = useState<IStoreData>()
+  const [tags, setTags] = useState([])
 
   const getDesign = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/design`)
@@ -95,6 +101,15 @@ const PersonalizePage = () => {
 
   useEffect(() => {
     getStoreData()
+  }, [])
+
+  const getTags = async () => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/client-tag`)
+    setTags(res.data)
+  }
+
+  useEffect(() => {
+    getTags()
   }, [])
 
   const imageChange = async (e: any) => {
@@ -139,6 +154,7 @@ const PersonalizePage = () => {
                   <button onClick={() => setPart('Suscripcion')} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><p className='my-auto'>Zona de suscripción</p></button>
                   <button onClick={() => setPart('Carrito')} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><p className='my-auto'>Pagina de carrito</p></button>
                   <button onClick={() => setPart('Blog')} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><p className='my-auto'>Blog</p></button>
+                  <button onClick={() => setPart('Popup')} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><p className='my-auto'>Popup</p></button>
                 </div>
               )
               : ''
@@ -568,6 +584,50 @@ const PersonalizePage = () => {
               )
               : ''
           }
+          {
+            part === 'Popup'
+              ? (
+                <div className='flex flex-col gap-4'>
+                  <button onClick={(e: any) => {
+                    e.preventDefault()
+                    setPart('')
+                  }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
+                  <p className='text-lg border-b pb-2 dark:border-neutral-700'>Blog</p>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Titulo</p>
+                    <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.popup.title = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.popup.title} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Descripción</p>
+                    <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.popup.description = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.popup.description} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Tag</p>
+                    <select onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.popup.tag = e.target.value
+                      setDesign(updatedDesign)
+                    }} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                      <option>Seleccionar segmento</option>
+                      {
+                        tags.map((tag: any) => (
+                          <option key={tag.tag}>{tag.tag}</option>
+                        ))
+                      }
+                    </select>
+                  </div>
+                </div>
+              )
+              : ''
+          }
           <div className='flex flex-col gap-2'>
             <button onClick={handleSubmit} className='w-full bg-main text-white h-10 rounded-md'>{loading ? <Spinner2 /> : 'Guardar'}</button>
             <Link className='w-full flex' href='/diseno'><p className='m-auto'>Descartar</p></Link>
@@ -646,6 +706,27 @@ const PersonalizePage = () => {
         {
           part === 'Blog'
             ? <iframe className='m-auto bg-white' src={`${process.env.NEXT_PUBLIC_WEB_URL}/blog`} width="100%" height="100%" />
+            : ''
+        }
+        {
+          part === 'Popup'
+            ? (
+              <div className='w-full h-full bg-black/30 flex'>
+                <form className='m-auto p-8 w-[600px] flex flex-col gap-4 bg-white rounded-md'>
+                  <h4 className='text-xl font-medium tracking-widest'>{design.popup.title !== '' ? design.popup.title : 'SUSCRIBETE A NUESTRA LISTA'}</h4>
+                  <p>{design.popup.description !== '' ? design.popup.description : 'Dejanos tu nombre y tu correo para enviarte correos exclusivos'}</p>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Nombre</p>
+                    <input type='text' placeholder='Nombre' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Email</p>
+                    <input type='text' placeholder='Email' className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <button type='submit' className='bg-main text-white h-10'>Envíar</button>
+                </form>
+              </div>
+            )
             : ''
         }
       </div>
