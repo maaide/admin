@@ -68,6 +68,10 @@ const PersonalizePage = () => {
       title: '',
       sectionProducts: 'Todos los productos',
       category: ''
+    },
+    blog: {
+      metaTitle: '',
+      metaDescription: ''
     }
   })
   const [loading, setLoading] = useState(false)
@@ -134,6 +138,7 @@ const PersonalizePage = () => {
                   <button onClick={() => setPart('Tienda')} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><p className='my-auto'>Tienda</p></button>
                   <button onClick={() => setPart('Suscripcion')} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><p className='my-auto'>Zona de suscripción</p></button>
                   <button onClick={() => setPart('Carrito')} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><p className='my-auto'>Pagina de carrito</p></button>
+                  <button onClick={() => setPart('Blog')} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><p className='my-auto'>Blog</p></button>
                 </div>
               )
               : ''
@@ -534,6 +539,35 @@ const PersonalizePage = () => {
               )
               : ''
           }
+          {
+            part === 'Blog'
+              ? (
+                <div className='flex flex-col gap-4'>
+                  <button onClick={(e: any) => {
+                    e.preventDefault()
+                    setPart('')
+                  }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
+                  <p className='text-lg border-b pb-2 dark:border-neutral-700'>Blog</p>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Meta titulo</p>
+                    <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.blog.metaTitle = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.blog.metaTitle} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='text-sm'>Meta descripción</p>
+                    <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.blog.metaDescription = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.blog.metaDescription} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                </div>
+              )
+              : ''
+          }
           <div className='flex flex-col gap-2'>
             <button onClick={handleSubmit} className='w-full bg-main text-white h-10 rounded-md'>{loading ? <Spinner2 /> : 'Guardar'}</button>
             <Link className='w-full flex' href='/diseno'><p className='m-auto'>Descartar</p></Link>
@@ -607,6 +641,11 @@ const PersonalizePage = () => {
                 </div>
               </div>
             )
+            : ''
+        }
+        {
+          part === 'Blog'
+            ? <iframe className='m-auto bg-white' src={`${process.env.NEXT_PUBLIC_WEB_URL}/blog`} width="100%" height="100%" />
             : ''
         }
       </div>
