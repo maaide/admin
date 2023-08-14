@@ -84,6 +84,7 @@ const PersonalizePage = () => {
   const [tags, setTags] = useState([])
   const [tag, setTag] = useState('')
   const [tagLoading, setTagLoading] = useState(false)
+  const [deletePopupLoading, setDeletePopupLoading] = useState(false)
 
   const getDesign = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/design`)
@@ -639,6 +640,15 @@ const PersonalizePage = () => {
                     <input type='text' placeholder='Nuevo Tag' onChange={(e: any) => setTag(e.target.value)} value={tag} className='font-light p-1.5 w-full rounded border text-sm focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
                     <button onClick={newTagSubmit} className='bg-main text-white text-sm rounded-md h-8 w-24'>{tagLoading ? <Spinner2 /> : 'Crear'}</button>
                   </div>
+                  <button onClick={async (e: any) => {
+                    e.preventDefault()
+                    setDeletePopupLoading(true)
+                    let designUpdated = {...design}
+                    designUpdated.popup = { description: '', tag: '', title: '' }
+                    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/design`, designUpdated)
+                    setDeletePopupLoading(false)
+                    window.location.reload()
+                  }} className='bg-red-600 text-white text-sm rounded-md h-8 w-full'>{deletePopupLoading ? <Spinner2 /> : 'Eliminar popup'}</button>
                 </div>
               )
               : ''
