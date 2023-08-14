@@ -626,7 +626,7 @@ const PersonalizePage = () => {
                       const updatedDesign = {...design}
                       updatedDesign.popup.tag = e.target.value
                       setDesign(updatedDesign)
-                    }} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
+                    }} value={design.popup.tag} className='p-1.5 mb-2 rounded border text-sm font-light focus:outline-none w-full focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600'>
                       <option>Seleccionar segmento</option>
                       {
                         tags.map((tag: any) => (
