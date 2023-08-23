@@ -79,7 +79,7 @@ export const ProductOffer: React.FC<Props> = ({productsOffer, setProductsOffer})
                 {
                   sale.productsSale?.map(product => (
                     <div className='flex gap-2 rounded-lg border p-2 w-56 dark:border-neutral-600' key={product.name}>
-                      <img className='w-20 h-20 mt-auto mb-auto rounded-lg' src={product.images[0]} />
+                      <img className='w-20 h-20 mt-auto mb-auto rounded-lg' src={product.images[0].url} />
                       <div className='mt-auto mb-auto'>
                         <p className='text-sm'>{product.name}</p>
                         <p className='text-sm font-light'>${NumberFormat(product.price)}</p>

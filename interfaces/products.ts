@@ -42,7 +42,7 @@ export interface IProductsOffer {
 export interface IProductOffer {
   name: string
   beforePrice: number
-  images: string[]
+  images: { public_id: string, url: string }[]
   slug: string
   variations?: ITypeVariation
   category: string
