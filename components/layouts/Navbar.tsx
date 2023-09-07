@@ -35,6 +35,10 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
     }
   }
 
+  useEffect(() => {
+    getStoreData()
+  }, [])
+
   const getNotifications = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/notifications/ultimate`)
     setNotifications(response.data)
