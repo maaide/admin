@@ -40,6 +40,8 @@ const PersonalizePage = () => {
       }
     },
     product: {
+      titleInfo: '',
+      textInfo: '',
       title: '',
       sectionProducts: 'Todos los productos',
       category: ''
@@ -366,6 +368,22 @@ const PersonalizePage = () => {
                   }} className='font-light flex gap-2 pt-1 pb-1 pl-2 pr-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800'><BiArrowBack className='text-xl my-auto' /><p className='my-auto'>Volver</p></button>
                   <p className='text-lg border-b pb-2 dark:border-neutral-700'>Pagina de producto</p>
                   <div className='flex flex-col gap-2'>
+                    <p className='mb-2'>Zona de información</p>
+                    <p className='text-sm'>Titulo</p>
+                    <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.product.titleInfo = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.product.titleInfo} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                    <p className='text-sm'>Texto</p>
+                    <textarea placeholder='Texto' onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                      const updatedDesign = {...design}
+                      updatedDesign.product.textInfo = e.target.value
+                      setDesign(updatedDesign)
+                    }} value={design.product.textInfo} className='font-light p-1.5 rounded border text-sm w-full focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p className='mb-2'>Seccion de productos recomendados</p>
                     <p className='text-sm'>Titulo</p>
                     <input type='text' placeholder='Titulo' onChange={(e: ChangeEvent<HTMLInputElement>) => {
                       const updatedDesign = {...design}
@@ -665,7 +683,7 @@ const PersonalizePage = () => {
         }
         {
           part === 'Producto'
-            ? <iframe className='m-auto bg-white' src={`${process.env.NEXT_PUBLIC_WEB_URL}/productos/airpods-pro`} width="100%" height="100%" />
+            ? <iframe className='m-auto bg-white' src={`${process.env.NEXT_PUBLIC_WEB_URL}/tienda/audifonos-inalambricos/blaspods-pro`} width="100%" height="100%" />
             : ''
         }
         {
