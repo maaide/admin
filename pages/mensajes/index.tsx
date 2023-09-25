@@ -69,7 +69,6 @@ const MessagePage = () => {
       <Head>
         <title>Mensajes</title>
       </Head>
-      <LeftMenu>
         <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 70px)', overflow: 'overlay' }}>
           <div className='w-full max-w-1280 m-auto mb-4'>
             <h1 className='text-xl mb-4'>Mensajes</h1>
@@ -161,7 +160,6 @@ const MessagePage = () => {
             </div>
           </div>
         </div>
-      </LeftMenu>
     </>
   )
 }

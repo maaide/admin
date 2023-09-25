@@ -34,7 +34,6 @@ const Products = () => {
       <Head>
         <title>Productos</title>
       </Head>
-      <LeftMenu>
         <div onClick={() => !popupMouse ? setPopupView('hidden') : ''} className={`${popupView} right-0 fixed flex bg-black/20 dark:bg-black/40`} style={{ width: 'calc(100% - 70px)', height: 'calc(100vh - 56px)' }}>
           <div onMouseEnter={() => setPopupMouse(true)} onMouseLeave={() => setPopupMouse(false)} className='w-[500px] p-6 flex flex-col gap-2 rounded-md shadow-md bg-white m-auto'>
             <p>Estas seguro que deseas eliminar el producto <strong>{productSelect.name}</strong></p>
@@ -120,7 +119,6 @@ const Products = () => {
             }
           </div>
         </div>
-      </LeftMenu>
     </>
   )
 }

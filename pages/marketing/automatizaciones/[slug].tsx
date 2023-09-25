@@ -69,7 +69,6 @@ const NewAutomatization = () => {
       <Head>
         <title>Nueva automatización</title>
       </Head>
-      <LeftMenu>
         {
           automatization
             ? (
@@ -248,7 +247,6 @@ const NewAutomatization = () => {
               )
           }
         </div>
-      </LeftMenu>
     </>
   )
 }

@@ -14,7 +14,6 @@ const DesignPage = () => {
       <Head>
         <title>Diseño</title>
       </Head>
-      <LeftMenu>
         <div className={`fixed right-0 bg-black/20 ${popup} dark:bg-black/40`} onClick={() => onModal ? '' : setPopup('hidden') } style={{ width: 'calc(100% - 70px)', height: 'calc(100% - 56px)' }}>
           <div className='p-6 flex flex-col gap-2 bg-white w-[1000px] rounded-md shadow-md h-fit m-auto dark:bg-neutral-800' onMouseEnter={() => setOnModal(true)} onMouseLeave={() => setOnModal(false)}>
             <h2>Cambiar tema</h2>
@@ -22,7 +21,7 @@ const DesignPage = () => {
             </p>
           </div>
         </div>
-        <div className='p-6 bg-[#f6f6f7] flex flex-col gap-4 dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
+        <div className='p-6 bg-[#f6f6f7] flex flex-col gap-4 dark:bg-neutral-900' style={{ width: 'calc(100% - 70px)', overflow: 'overlay' }}>
           <div className='flex justify-between gap-4 w-full max-w-1280 m-auto'>
             <h1 className='text-xl'>Diseño</h1>
             <Link className='flex gap-2' href='https://tienda-1.vercel.app' target='_blank'><AiOutlineEye className='m-auto text-xl' /><p className='m-auto'>Ver sitio web</p></Link>
@@ -48,7 +47,6 @@ const DesignPage = () => {
             </div>
           </div>
         </div>
-      </LeftMenu>
     </>
   )
 }

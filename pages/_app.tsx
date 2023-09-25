@@ -4,6 +4,7 @@ import { ThemeProvider } from 'next-themes'
 import { Navbar } from '@/components/layouts'
 import { SWRConfig } from 'swr'
 import { SessionProvider } from "next-auth/react"
+import { LeftMenu } from '@/components/ui'
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
@@ -15,7 +16,9 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
       <SessionProvider session={session}>
         <ThemeProvider attribute='class'>
           <Navbar>
-            <Component {...pageProps} />
+            <LeftMenu>
+              <Component {...pageProps} />
+            </LeftMenu>
           </Navbar>
         </ThemeProvider>
       </SessionProvider>

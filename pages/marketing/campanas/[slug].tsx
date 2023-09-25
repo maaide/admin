@@ -54,7 +54,6 @@ const NewCampaign = () => {
       <Head>
         <title>Campaña: {email?._id}</title>
       </Head>
-      <LeftMenu>
         {
           email
             ? (
@@ -176,7 +175,6 @@ const NewCampaign = () => {
               )
           }
         </div>
-      </LeftMenu>
     </>
   )
 }

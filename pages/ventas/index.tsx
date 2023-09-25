@@ -16,7 +16,6 @@ const Sells = () => {
       <Head>
         <title>Ventas</title>
       </Head>
-      <LeftMenu>
       <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 70px)', overflow: 'overlay' }}>
         <div className='flex justify-between w-full max-w-1280 m-auto mb-4'>
           <h1 className='text-xl'>Ventas</h1>
@@ -79,7 +78,6 @@ const Sells = () => {
           }
         </div>
       </div>
-      </LeftMenu>
     </>
   )
 }

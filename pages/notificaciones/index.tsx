@@ -33,7 +33,6 @@ const NotificationsPage = () => {
       <Head>
         <title>Notificaciones</title>
       </Head>
-      <LeftMenu>
         <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 70px)', overflow: 'overlay' }}>
           <div className='flex flex-col gap-2 bg-white shadow-md p-4 rounded-xl justify-between w-full max-w-[900px] m-auto mb-4'>
             <h1 className='text-xl p-2'>Notificaciones</h1>
@@ -74,7 +73,6 @@ const NotificationsPage = () => {
             </div>
           </div>
         </div>
-      </LeftMenu>
     </>
   )
 }

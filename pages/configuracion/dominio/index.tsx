@@ -2,12 +2,20 @@ import { LeftMenu, Spinner2 } from '@/components/ui'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { ChangeEvent, useEffect, useState } from 'react'
+import { AiOutlineFileDone, AiOutlineLaptop } from 'react-icons/ai'
+import { BsCreditCard } from 'react-icons/bs'
+import { HiOutlineInformationCircle } from 'react-icons/hi'
+import { LiaShippingFastSolid } from 'react-icons/lia'
+import { TbWorldWww } from 'react-icons/tb'
 
 const Configuration = () => {
 
   const [loading, setLoading] = useState(false)
   const [domain, setDomain] = useState('')
+
+  const router = useRouter()
 
   const getDomain = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/domain`)
@@ -40,19 +48,19 @@ const Configuration = () => {
             </div>
           </div>
         </div>
-        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
+        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 70px)', overflow: 'overlay' }}>
           <div className='flex w-full max-w-1280 m-auto gap-8 mb-4'>
-            <div className='bg-white w-1/4 h-fit shadow-md p-4 rounded-md dark:bg-neutral-800'>
+            <div className='bg-white sticky top-0 w-1/4 h-fit shadow-md p-4 rounded-md dark:bg-neutral-800'>
               <div className='mb-4'>
-                <h1 className='text-lg pb-2 border-b dark:border-neutral-700'>Configuración</h1>
+                <h1 className='text-lg pb-2'>Configuración</h1>
               </div>
               <div className='flex flex-col gap-2'>
-                <Link href='/configuracion'>Información de la tienda</Link>
-                <Link href='/configuracion/pasarela-de-pago'>Pasarela de pago</Link>
-                <Link href='/configuracion/plan'>Plan</Link>
-                <Link href='/configuracion/politicas'>Politicas</Link>
-                <Link href='/configuracion/dominio'>Dominio</Link>
-                <Link href='/configuracion/envios'>Envíos</Link>
+                <Link className={`flex gap-2 ${router.asPath === '/configuracion' ? 'bg-main/10' : ''} p-1 rounded transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-700`} href='/configuracion'><HiOutlineInformationCircle className='my-auto text-main text-xl' />Información de la tienda</Link>
+                <Link className={`flex gap-2 ${router.asPath === '/configuracion/pasarela-de-pago' ? 'bg-main/10' : ''} p-1 rounded transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-700`} href='/configuracion/pasarela-de-pago'><BsCreditCard className='my-auto text-main text-xl' />Pasarela de pago</Link>
+                <Link className={`flex gap-2 ${router.asPath === '/configuracion/plan' ? 'bg-main/10' : ''} p-1 rounded transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-700`} href='/configuracion/plan'><AiOutlineLaptop className='my-auto text-main text-xl' />Plan</Link>
+                <Link className={`flex gap-2 ${router.asPath === '/configuracion/politicas' ? 'bg-main/10' : ''} p-1 rounded transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-700`} href='/configuracion/politicas'><AiOutlineFileDone className='my-auto text-main text-xl' />Politicas</Link>
+                <Link className={`flex gap-2 ${router.asPath === '/configuracion/dominio' ? 'bg-main/10' : ''} p-1 rounded transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-700`} href='/configuracion/dominio'><TbWorldWww className='my-auto text-main text-xl' />Dominio</Link>
+                <Link className={`flex gap-2 ${router.asPath === '/configuracion/envios' ? 'bg-main/10' : ''} p-1 rounded transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-700`} href='/configuracion/envios'><LiaShippingFastSolid className='my-auto text-main text-xl' />Envíos</Link>
               </div>
             </div>
             <div className='w-3/4'>
