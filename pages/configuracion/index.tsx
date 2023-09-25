@@ -145,7 +145,7 @@ const Configuration = () => {
         <title>Configuración</title>
       </Head>
       <LeftMenu>
-        <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 256px)' }}>
+        <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 70px)' }}>
           <div className='flex m-auto w-1280'>
             <div className='flex gap-2 ml-auto w-fit'>
               <button onClick={handleSubmit} className='bg-main text-white text-sm rounded-md w-40 h-8'>{loading ? <Spinner2 /> : 'Guardar datos'}</button>
@@ -153,7 +153,7 @@ const Configuration = () => {
             </div>
           </div>
         </div>
-        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900 mb-16' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
+        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900 mb-16' style={{ width: 'calc(100% - 70px)', overflow: 'overlay' }}>
           <div className='flex w-full max-w-1280 m-auto gap-8 mb-4'>
             <div className='bg-white w-1/4 h-fit shadow-md p-4 rounded-md dark:bg-neutral-800'>
               <div className='mb-4'>

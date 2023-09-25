@@ -15,7 +15,7 @@ module.exports = {
         '575': '575px'
       },
       colors: {
-        'main': '#3478f5'
+        'main': '#2284F0'
       },
       maxWidth: {
         '1280': '1280px'

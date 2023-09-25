@@ -73,7 +73,7 @@ const NewProduct: React.FC<Props> = () => {
         <title>Nuevo Producto</title>
       </Head>
       <LeftMenu>
-        <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 256px)' }}>
+        <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 70px)' }}>
           <div className='flex m-auto w-1280'>
             <div className='flex gap-2 ml-auto w-fit'>
               {
@@ -86,7 +86,7 @@ const NewProduct: React.FC<Props> = () => {
           </div>
         </div>
         <NewCategoryModal setCategories={setCategories} newCategory={newCategory} newCategoryData={newCategoryData} setNewCategory={setNewCategory} setNewCategoryData={setNewCategoryData} />
-        <div className='p-6 bg-[#f6f6f7] mb-16 overflow-y-scroll dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)' }}>
+        <div className='p-6 bg-[#f6f6f7] mb-16 overflow-y-scroll dark:bg-neutral-900' style={{ width: 'calc(100% - 70px)' }}>
           <div className='flex gap-3 mb-4 max-w-1280 m-auto'>
             <Link href='/productos' className='border rounded p-2 bg-white hover:bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-600'><BiArrowBack className='text-xl' /></Link>
             <h1 className='text-xl mt-auto mb-auto'>Nuevo Producto</h1>

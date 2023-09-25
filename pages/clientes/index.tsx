@@ -17,7 +17,7 @@ const ClientsPage = () => {
         <title>Clientes</title>
       </Head>
       <LeftMenu>
-        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
+        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 70px)', overflow: 'overlay' }}>
           <div className='flex justify-between w-full max-w-1280 m-auto mb-4'>
             <h1 className='text-xl'>Clientes</h1>
             <Link className='pt-1.5 pb-1.5 h-fit pl-7 pr-7 rounded-md bg-main text-white' href='/clientes/nuevo-cliente'>Agregar cliente</Link>

@@ -35,7 +35,7 @@ const Categories = () => {
         <title>Categorías</title>
       </Head>
       <LeftMenu>
-        <div onClick={() => !popupMouse ? setPopupView('hidden') : ''} className={`${popupView} right-0 fixed flex bg-black/20 dark:bg-black/40`} style={{ width: 'calc(100% - 256px)', height: 'calc(100vh - 56px)' }}>
+        <div onClick={() => !popupMouse ? setPopupView('hidden') : ''} className={`${popupView} right-0 fixed flex bg-black/20 dark:bg-black/40`} style={{ width: 'calc(100% - 70px)', height: 'calc(100vh - 56px)' }}>
           <div onMouseEnter={() => setPopupMouse(true)} onMouseLeave={() => setPopupMouse(false)} className='w-[500px] p-6 flex flex-col gap-2 rounded-md shadow-md bg-white m-auto'>
             <p>Estas seguro que deseas eliminar la categoria <strong>{categorySelect.name}</strong></p>
             <div className='flex gap-6'>
@@ -44,7 +44,7 @@ const Categories = () => {
             </div>
           </div>
         </div>
-        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
+        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 70px)', overflow: 'overlay' }}>
           <div className='flex justify-between w-full max-w-1280 m-auto mb-4'>
             <h1 className='text-xl'>Categorías</h1>
             <Link className='pt-1.5 pb-1.5 h-fit pl-7 pr-7 rounded-md bg-main text-white' href='/productos/categorias/nueva-categoria'>Nueva categoría</Link>

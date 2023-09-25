@@ -40,7 +40,7 @@ const PoliticsPage = () => {
         <title>Politicas de la tienda</title>
       </Head>
       <LeftMenu>
-        <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 256px)' }}>
+        <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 70px)' }}>
           <div className='flex m-auto w-1280'>
             <div className='flex gap-2 ml-auto w-fit'>
               <button onClick={handleSubmit} className='bg-main text-white text-sm rounded-md w-40 h-8'>{loading ? <Spinner2 /> : 'Guardar datos'}</button>

@@ -39,7 +39,7 @@ const NewPromotionalCode = () => {
         <title>Nuevo codigo promocional</title>
       </Head>
       <LeftMenu>
-        <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 256px)' }}>
+        <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 70px)' }}>
           <div className='flex m-auto w-1280'>
             <div className='flex gap-2 ml-auto w-fit'>
               {
@@ -51,7 +51,7 @@ const NewPromotionalCode = () => {
             </div>
           </div>
         </div>
-        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
+        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 70px)', overflow: 'overlay' }}>
           <div className='flex gap-3 mb-4 max-w-1280 m-auto'>
             <Link href='/productos/codigos-promocionales' className='border rounded p-2 bg-white hover:bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-600'><BiArrowBack className='text-xl' /></Link>
             <h1 className='text-xl mt-auto mb-auto'>Nuevo codigo promocional</h1>

@@ -21,7 +21,7 @@ const Configuration = () => {
         <title>Plan</title>
       </Head>
       <LeftMenu>
-        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
+        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 70px)', overflow: 'overlay' }}>
           <div className='flex w-full max-w-1280 m-auto gap-8 mb-4'>
             <div className='bg-white w-1/4 h-fit shadow-md p-4 rounded-md dark:bg-neutral-800'>
               <div className='mb-4'>

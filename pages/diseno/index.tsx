@@ -15,7 +15,7 @@ const DesignPage = () => {
         <title>Diseño</title>
       </Head>
       <LeftMenu>
-        <div className={`fixed right-0 bg-black/20 ${popup} dark:bg-black/40`} onClick={() => onModal ? '' : setPopup('hidden') } style={{ width: 'calc(100% - 256px)', height: 'calc(100% - 56px)' }}>
+        <div className={`fixed right-0 bg-black/20 ${popup} dark:bg-black/40`} onClick={() => onModal ? '' : setPopup('hidden') } style={{ width: 'calc(100% - 70px)', height: 'calc(100% - 56px)' }}>
           <div className='p-6 flex flex-col gap-2 bg-white w-[1000px] rounded-md shadow-md h-fit m-auto dark:bg-neutral-800' onMouseEnter={() => setOnModal(true)} onMouseLeave={() => setOnModal(false)}>
             <h2>Cambiar tema</h2>
             <p>Elije el tema que más encaje con tu tienda, los cambios pueden tardar hasta 24 horas habiles, se te enviara un correo cuando el cambio quede listo.

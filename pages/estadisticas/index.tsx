@@ -41,7 +41,7 @@ const StadisticsPage = () => {
         <title>Estadisticas</title>
       </Head>
       <LeftMenu>
-        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)', overflow: 'overlay' }}>
+        <div className='p-6 bg-[#f6f6f7] dark:bg-neutral-900' style={{ width: 'calc(100% - 70px)', overflow: 'overlay' }}>
           <div className='flex flex-col gap-2 w-full max-w-1280 m-auto mb-4'>
             <h1 className='text-xl'>Estadisticas</h1>
             <p>Estadisticas de la tienda</p>

@@ -120,25 +120,25 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <>
-      <div className='fixed w-full pl-2 pr-2 bg-white border-b z-50 dark:border-neutral-800 dark:bg-neutral-900'>
+      <div className='fixed w-full px-2 py-1 bg-white border-b z-50 dark:border-neutral-800 dark:bg-neutral-900'>
         <div className='w-full m-auto flex justify-between'>
           <div className='flex gap-2'>
             {
               !mounted
-                ? <Link href='/'><div className='h-14 w-1'><p>TIENDA</p></div></Link>
+                ? <Link href='/'><div className='h-10 w-1'><p>TIENDA</p></div></Link>
                 : storeData?.logo && storeData.logo.url !== ''
                   ? theme === 'system'
                     ? systemTheme === 'dark'
                       ? storeData.logoWhite && storeData.logoWhite.url !== ''
-                        ? <Link href='/'><img className='h-14' src={storeData.logoWhite.url} /></Link>
-                        : <Link href='/'><div className='h-14 w-1 flex'><p className='text-3xl m-auto font-semibold'>TIENDA</p></div></Link>
-                      : <Link href='/'><img className='h-14' src={storeData.logo.url} /></Link>
+                        ? <Link href='/'><img className='h-10' src={storeData.logoWhite.url} /></Link>
+                        : <Link href='/'><div className='h-10 w-1 flex'><p className='text-3xl m-auto font-semibold'>TIENDA</p></div></Link>
+                      : <Link href='/'><img className='h-10' src={storeData.logo.url} /></Link>
                     : theme === 'dark'
                       ? storeData.logoWhite && storeData.logoWhite.url !== ''
-                        ? <Link href='/'><img className='h-14' src={storeData.logoWhite.url} /></Link>
-                        : <Link href='/'><div className='h-14 w-1 flex'><p className='text-3xl m-auto font-semibold'>TIENDA</p></div></Link>
-                      : <Link href='/'><img className='h-14' src={storeData.logo.url} /></Link>
-                  : <Link href='/'><div className='h-14 w-1 flex'><p className='text-3xl m-auto font-semibold'>TIENDA</p></div></Link>
+                        ? <Link href='/'><img className='h-10' src={storeData.logoWhite.url} /></Link>
+                        : <Link href='/'><div className='h-10 w-1 flex'><p className='text-3xl m-auto font-semibold'>TIENDA</p></div></Link>
+                      : <Link href='/'><img className='h-10' src={storeData.logo.url} /></Link>
+                  : <Link href='/'><div className='h-10 w-1 flex'><p className='text-3xl m-auto font-semibold'>TIENDA</p></div></Link>
             }
           </div>
           <div className='flex gap-4'>
@@ -155,7 +155,7 @@ export const Navbar: React.FC<PropsWithChildren> = ({ children }) => {
           </div>
         </div>
       </div>
-      <div className='w-full h-14' />
+      <div className='w-full h-[49px]' />
       <div onClick={() => accountMouse ? setAccountView('flex') : setAccountView('hidden')} className={`${accountView} fixed z-50 w-full h-full mt-[1px]`}>
         <div onMouseEnter={() => setAccountMouse(true)} onMouseLeave={() => setAccountMouse(false)} className='p-6 w-64 bg-white rounded-md h-fit shadow-md ml-auto dark:bg-neutral-800'>
         <button onClick={async (e: any) => {

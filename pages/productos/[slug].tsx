@@ -91,7 +91,7 @@ const ProductPage = () => {
         <title>{information?.name}</title>
       </Head>
       <LeftMenu>
-        <div onClick={() => !popupMouse ? setPopupView('hidden') : ''} className={`${popupView} right-0 fixed flex bg-black/20 dark:bg-black/40`} style={{ width: 'calc(100% - 256px)', height: 'calc(100vh - 56px)' }}>
+        <div onClick={() => !popupMouse ? setPopupView('hidden') : ''} className={`${popupView} right-0 fixed flex bg-black/20 dark:bg-black/40`} style={{ width: 'calc(100% - 70px)', height: 'calc(100vh - 56px)' }}>
           <div onMouseEnter={() => setPopupMouse(true)} onMouseLeave={() => setPopupMouse(false)} className='w-[500px] p-6 flex flex-col gap-2 rounded-md shadow-md bg-white m-auto'>
             <p>Estas seguro que deseas eliminar el producto <strong>{information?.name}</strong></p>
             <div className='flex gap-6'>
@@ -100,7 +100,7 @@ const ProductPage = () => {
             </div>
           </div>
         </div>
-        <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 256px)' }}>
+        <div className='fixed flex bg-white border-t bottom-0 right-0 p-4 dark:bg-neutral-800 dark:border-neutral-700' style={{ width: 'calc(100% - 70px)' }}>
           <div className='flex m-auto w-1280'>
             <div className='flex gap-2 ml-auto w-fit'>
               <button onClick={handleSubmit} className='bg-main text-white text-sm rounded-md w-40 h-8'>{submitLoading ? <Spinner2 /> : 'Modificar producto'}</button>
@@ -109,7 +109,7 @@ const ProductPage = () => {
           </div>
         </div>
         <NewCategoryModal setCategories={setCategories} newCategory={newCategory} newCategoryData={newCategoryData} setNewCategory={setNewCategory} setNewCategoryData={setNewCategoryData} />
-        <div className='p-6 bg-[#f6f6f7] mb-16 overflow-y-scroll dark:bg-neutral-900' style={{ width: 'calc(100% - 252px)' }}>
+        <div className='p-6 bg-[#f6f6f7] mb-16 overflow-y-scroll dark:bg-neutral-900' style={{ width: 'calc(100% - 70px)' }}>
           {
             information
               ? (
