@@ -7,6 +7,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { ISell } from '../../interfaces'
 import { NumberFormat } from '@/utils'
+import { offer } from '@/utils/QuantityOffer'
 
 const SellPage = () => {
 
@@ -65,14 +66,14 @@ const SellPage = () => {
                                 </div>
                               </div>
                               <div className='mt-auto mb-auto'>
-                                <p className='text-sm font-light'>${NumberFormat(product.price * product.quantity)}</p>
+                                <p className='text-sm font-light'>${NumberFormat(product.quantityOffers?.length ? offer(product) : product.price * product.quantity)}</p>
                               </div>
                             </div>
                           ))
                         }
                         <div className='flex gap-2 justify-between mb-2'>
                           <p className='font-light text-sm'>Subtotal</p>
-                          <p className='font-light text-sm'>${NumberFormat(sell?.cart?.reduce((prev, curr) => prev + curr.price * curr.quantity, 0)!)}</p>
+                          <p className='font-light text-sm'>${NumberFormat(sell?.cart?.reduce((bef, curr) => curr.quantityOffers?.length ? offer(curr) : bef + curr.price * curr.quantity, 0)!)}</p>
                         </div>
                         <div className='flex gap-2 justify-between mb-2'>
                           <p className='font-light text-sm'>Envío</p>

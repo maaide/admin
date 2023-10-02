@@ -64,6 +64,7 @@ export interface IVariation {
 }
 
 export interface IQuantityOffer {
+  _id?: string
   quantity: number
   descount: number
 }

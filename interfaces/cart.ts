@@ -1,4 +1,4 @@
-import { IVariation } from "./products"
+import { IQuantityOffer, IVariation } from "./products"
 
 export interface ICartProduct {
     _id?: string
@@ -10,5 +10,7 @@ export interface ICartProduct {
     slug: string
     quantity: number
     stock?: number
-    category: string
+    category: { category: string, slug: string }
+    quantityOffers?: IQuantityOffer[]
+    sku?: string
 }
