@@ -10,7 +10,7 @@ export interface ICartProduct {
     slug: string
     quantity: number
     stock?: number
-    category: { category: string, slug: string }
+    category: string
     quantityOffers?: IQuantityOffer[]
     sku?: string
 }
