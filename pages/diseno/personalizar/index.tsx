@@ -151,7 +151,7 @@ const PersonalizePage = () => {
       <Head>
         <title>Personalizar sitio web</title>
       </Head>
-      <div className='fixed flex w-full' style={{ height: 'calc(100% - 56px)' }}>
+      <div className='flex' style={{ width: 'calc(100% - 70px)' }}>
         <div className='w-[500px] border-r pt-6 pb-6 pl-4 pr-4 flex flex-col justify-between dark:border-neutral-800' style={{ overflow: 'overlay' }}>
           {
             part === ''
