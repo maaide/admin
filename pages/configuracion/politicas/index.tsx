@@ -13,6 +13,7 @@ import { TbWorldWww } from 'react-icons/tb'
 const PoliticsPage = () => {
 
   const [politics, setPolitics] = useState({
+    terms: '',
     shipping: '',
     privacy: '',
     devolutions: ''
@@ -74,12 +75,16 @@ const PoliticsPage = () => {
             <div className='w-3/4 flex flex-col gap-4'>
               <h2 className='text-lg mt-3 pb-3 border-b dark:border-neutral-700'>Politicas de la tienda</h2>
               <div className='flex flex-col gap-2'>
+                <h3>Terminos y condiciones</h3>
+                <textarea onChange={handleChange} name='terms' value={politics.terms} placeholder='Terminos y Condiciones' className='w-full mb-1 p-1.5 border rounded text-sm font-light h-64 focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+              </div>
+              <div className='flex flex-col gap-2'>
                 <h3>Politicas de envíos</h3>
                 <textarea onChange={handleChange} name='shipping' value={politics.shipping} placeholder='Politicas de envíos' className='w-full mb-1 p-1.5 border rounded text-sm font-light h-64 focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
               </div>
               <div className='flex flex-col gap-2'>
                 <h3>Politicas de privacidad</h3>
-                <textarea onChange={handleChange} name='privacity' value={politics.privacy} placeholder='Politicas de privacidad' className='w-full mb-1 p-1.5 border rounded text-sm font-light h-64 focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
+                <textarea onChange={handleChange} name='privacy' value={politics.privacy} placeholder='Politicas de privacidad' className='w-full mb-1 p-1.5 border rounded text-sm font-light h-64 focus:outline-none focus:border-main focus:ring-1 focus:ring-main dark:border-neutral-600' />
               </div>
               <div className='flex flex-col gap-2'>
                 <h3>Politicas de devoluciones y reembolsos</h3>
